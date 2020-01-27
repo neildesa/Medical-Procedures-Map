@@ -30,9 +30,9 @@
 <div id="map"></div>
     <script>
       var map;
-      var address = "757 WESTWOOD PLAZA";
+      var address = "5 Blackness Avenue";
       function initMap() {
-    	  // The location of Uluru
+    	  //Dundee Location
     	  var position = {lat: 56.46913, lng: -2.97489};
     	  // The map, centered at Uluru
     	  var map = new google.maps.Map(
