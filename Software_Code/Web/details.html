@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container-flex">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Help! I'm a Fish</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="details.html">Find a Hospital</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="about.html">About us<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-flex px-lg-5 w-auto content-box">    
+                <form>
+
+                    <!-- Procedure -->
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Procedure</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Heart Transplant</option>
+                            <option>Foot Amputation</option>
+                            <option>Recussitation</option>
+                            <option>Example Procedure</option>
+                            <option>Another Thing</option>
+                        </select>
+                    </div>
+
+                    <!-- Price -->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="slidecontainer">                        
+                                <p>Minimum Price: $<span id="min"></span></p>
+                                <input type="range" min="1" max="2000000" value="150000" class="slider" id="minRange">
+                            </div>
+        
+                            <script>
+                                var minSlider = document.getElementById("minRange");
+                                var minOutput = document.getElementById("min");
+                                minOutput.innerHTML = minSlider.value; // Display the default slider value
+            
+                                // Update the current slider value (each time you drag the slider handle)
+                                minSlider.oninput = function() {
+                                    minOutput.innerHTML = this.value;
+                                }
+                            </script>
+                        </div>
+                        <div class="col">
+                            <div class="slidecontainer">                        
+                                <p>Maximum Price: $<span id="max"></span></p>
+                                <input type="range" min="1" max="2000000" value="300000" class="slider" id="maxRange">
+                            </div>
+        
+                            <script>
+                                var maxSlider = document.getElementById("maxRange");
+                                var maxOutput = document.getElementById("max");
+                                maxOutput.innerHTML = maxSlider.value; // Display the default slider value
+            
+                                // Update the current slider value (each time you drag the slider handle)
+                                maxSlider.oninput = function() {
+                                    maxOutput.innerHTML = this.value;
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    
+                    <!-- Star Rating -->
+                    <label for="exampleFormControlSelect2">Minimum Star Rating</label>
+                    <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option1">
+                            <label class="form-check-label" for="inlineCheckbox1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="option2">
+                            <label class="form-check-label" for="inlineCheckbox2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3">
+                            <label class="form-check-label" for="inlineCheckbox3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox4" value="option4">
+                            <label class="form-check-label" for="inlineCheckbox4">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox5" value="option5">
+                            <label class="form-check-label" for="inlineCheckbox5">5</label>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Where are you?</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+
+                    <!-- Range -->
+                    <div class="slidecontainer">                        
+                        <p>Distance from you: <span id="range"></span> KM</p>
+                        <input type="range" min="10" max="5000" value="50" class="slider" id="rangeRange">
+                    </div>
+
+                    <script>
+                        var ranSlider = document.getElementById("rangeRange");
+                        var ranOutput = document.getElementById("range");
+                        ranOutput.innerHTML = ranSlider.value; // Display the default slider value
+    
+                        // Update the current slider value (each time you drag the slider handle)
+                        ranSlider.oninput = function() {
+                            ranOutput.innerHTML = this.value;
+                        }
+                    </script>
+
+                    <a href="hospital.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Hit Me Up</a>
+                </form>  
+            </div>
+        </div>
+    </body>
+</html>
