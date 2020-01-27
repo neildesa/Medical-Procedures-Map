@@ -1,16 +1,21 @@
 .title-box {
     padding: 3%;
     text-align: center;
+
     background-color: grey;
+
 }
 
 .title-text {
     font-size: 60px;
+
     color: white;
+
 }
 
 .content-box {
     height: 100%;
+
     padding: 5%;
 }
 
@@ -20,4 +25,5 @@
     vertical-align: middle;
     display: flex;
     margin: auto;
+
 }
