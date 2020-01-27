@@ -1,0 +1,14 @@
+.title-box {
+    padding: 3%;
+    text-align: center;
+    background-color: lightgrey;
+}
+
+.title-text {
+    font-size: 60px;
+    color: black;
+}
+
+.content-box {
+    height: 100%;
+}
