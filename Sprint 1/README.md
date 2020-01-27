@@ -19,7 +19,7 @@ The team currently has prioritised three main aims to get up and running first:
 
 Today's focus is primarily on initliasing some base functionality for each of our aims and making sure they are stable and can be worked upon.
 
-### Day 1 follow-up meeting (12:15pm)
+## Day 1 follow-up meeting (12:15pm)
 Everyone was present for this meeting.
 
 ### Summary of Progress:
