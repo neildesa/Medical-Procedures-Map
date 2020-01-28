@@ -31,3 +31,16 @@ Haonan, Neilson, Ryan - Outlining Views and Procedures for the database, outlini
 Christian, Archie, Finn - Integrating the bootstrap html with the jsp file that contains the dynamic google maps. Add some basic functionality for adding and removing markers for specific hospitals.
 
 ---
+## Day 2 (28/01/2020) - Scrum Meeting Summary (10am)
+The Scrum Master for this meeting was **Neilson Desa**
+
+### Members Present:
+All members present 
+
+### Summary of Conversation
+The team concluded their current progress with the creation of the front-end website that contains the boostrap UI and google maps. The database was set-up with both the full data entries and some views and procedures to access the data in Java.
+
+The current aims of the team for today's scrum are:
+1. Getting the jsp web files (i.e. our website) hosted online and continue imporving the UI and functionality.
+2. Testing dummy data from a MySQL database in Java on the jsp files to practice for the real data.
+3. Create search function for cost and distance in Java.
