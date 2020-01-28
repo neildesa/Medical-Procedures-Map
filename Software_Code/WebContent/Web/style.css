@@ -12,6 +12,12 @@
 .content-box {
     height: 100%;
     padding: 5%;
+    text-align: center;
+    margin: auto;
+}
+
+.bottom-paragraph {
+  margin-bottom: 12rem;
 }
 
 .sidebar {
@@ -33,9 +39,9 @@
 
 .slidecontainer {
     width: 100%;
-  }
+}
   
-  .slider {
+.slider {
     -webkit-appearance: none;
     width: 100%;
     height: 25px;
@@ -46,23 +52,29 @@
     transition: opacity .2s;
   }
   
-  .slider:hover {
+.slider:hover {
     opacity: 1;
-  }
+}
   
-  .slider::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 25px;
     height: 25px;
     background: #4CAF50;
     cursor: pointer;
-  }
+}
   
-  .slider::-moz-range-thumb {
+.slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     background: #4CAF50;
+<<<<<<< HEAD:Software_Code/Web/style.css
+	cursor: pointer;
+}
+	
+=======
     cursor: pointer;
   }
 >>>>>>> master:Software_Code/Web/style.css
+>>>>>>> master:Software_Code/WebContent/Web/style.css
