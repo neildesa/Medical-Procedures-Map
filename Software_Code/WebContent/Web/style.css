@@ -26,6 +26,9 @@
     vertical-align: middle;
     display: flex;
     margin: auto;
+<<<<<<< HEAD:Software_Code/WebContent/Web/style.css
+}
+=======
 }
 
 .slidecontainer {
@@ -62,3 +65,4 @@
     background: #4CAF50;
     cursor: pointer;
   }
+>>>>>>> master:Software_Code/Web/style.css
