@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,6 +62,15 @@
                               </tr>
                             </thead>
                             <tbody>
+                                <tr><td><% out.println(JavaFunctionsForJsp.returnMessage()); %>	</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
@@ -70,15 +80,7 @@
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
+                                <tr><td id="HospitalName">Hospital Name</td></tr>
                             </tbody>
                           </table>
                    		</div>
@@ -86,6 +88,7 @@
             	</div>
     	<script>
 	      var map;
+
 	      var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
 	    	  
 	      function initMap() {
@@ -101,6 +104,7 @@
 				for(var location in locations){
 						codeAddress(geocoder, map, location);
 				}
+
 	      }
 	     
 
@@ -121,16 +125,17 @@
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading"> ' + locations[address][1] + '</h5>'+
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][1] + ' </h5>'+
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][0] +'<br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b> 1840 AMHERST ST <br> <b>Cost:</b> $6,778.64 <br>' +
 	                  '</div>'+
 	                  '</div>'
 	            	});
 
 	            	google.maps.event.addListener(marker, 'click', function() {
-	            	  infowindow.open(map,marker);
-	            	});
+                  infowindow.open(map,marker)
+                  highlightClick()}                        
+	            	);
 	            
 	          } else {
 	            alert('Geocode was not successful for the following reason: ' + status);
@@ -139,7 +144,11 @@
 	        
 	      }
 	      
-	     
+        function highlightClick(){
+          var elmnt = document.getElementById("HospitalName");
+                  elmnt.scrollIntoView({behavior: "smooth"});
+                  elmnt.style.backgroundColor = "#FDFF47";
+        }
 	     
 	      var key = config.API_KEY;
 	      var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
