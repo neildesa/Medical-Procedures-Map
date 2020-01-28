@@ -88,9 +88,8 @@
             	</div>
     	<script>
 	      var map;
-
 	      var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
-	    	  
+	      var origin = 'Denver';
 	      function initMap() {
 	    	  //Dundee Location
 	    	  var position = {lat: 56.46913, lng: -2.97489};
@@ -99,17 +98,14 @@
 	    	      document.getElementById('map'), {zoom: 4, center: position});
 	    	  // The marker, positioned at Uluru
 	    	  
+	    	  var service = new google.maps.DistanceMatrixService();
 	          geocoder = new google.maps.Geocoder();
-	          
 				for(var location in locations){
-						codeAddress(geocoder, map, location);
+					codeAddress(geocoder, map, location, service);
 				}
-
 	      }
-	     
-
 	      
-	      function codeAddress(geocoder, map, address) {
+	      function codeAddress(geocoder, map, address, distanceMatrix) {
 	        geocoder.geocode({'address': locations[address][0]}, function(results, status) {
 	          if (status === 'OK') {
 	            map.setCenter(results[0].geometry.location);
@@ -121,13 +117,19 @@
 	              position: results[0].geometry.location
 	            });
 	            
+	            var distance = distanceMatrix.getDistanceMatrix(
+	            		  {
+	            			    origins: ["Dundee"],
+	            			    destinations: ["Aberdeen"],
+	            		  }, callback);
+	            	            	    
 	            var infowindow = new google.maps.InfoWindow({
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][1] + ' </h5>'+
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][1] + ' </h5>' + 'Distance: ' + distance +
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b> 1840 AMHERST ST <br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][0] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
 	                  '</div>'+
 	                  '</div>'
 	            	});
@@ -136,20 +138,34 @@
                   infowindow.open(map,marker)
                   highlightClick()}                        
 	            	);
-	            
 	          } else {
 	            alert('Geocode was not successful for the following reason: ' + status);
 	          }
 	        });
-	        
 	      }
+	      
+          function callback(respone, status){
+          	if (status == 'OK') {
+          		var origins = response.originAddresses;
+          	    var destinations = response.destinationAddresses;
+
+          	    for (var i = 0; i < origins.length; i++) {
+          	      var results = response.rows[i].elements;
+          	      for (var j = 0; j < results.length; j++) {
+          	        var element = results[j];
+          	        var distance = element.distance.text;
+          	        alert(distance);
+          	      }
+          	    }
+          	  }
+          }
 	      
         function highlightClick(){
           var elmnt = document.getElementById("HospitalName");
                   elmnt.scrollIntoView({behavior: "smooth"});
                   elmnt.style.backgroundColor = "#FDFF47";
         }
-	     
+
 	      var key = config.API_KEY;
 	      var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
 	      var script = document.createElement('script');
