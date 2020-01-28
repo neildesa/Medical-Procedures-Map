@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,18 @@
                               </tr>
                             </thead>
                             <tbody>
-                            	<tr><td><% out.println(JavaFunctionsForJsp.returnMessage()); %>	</td></tr>
+                            	<tr><td>
+                            	<% 
+                            		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
+                   			  		
+                   				  	//out.println("hospitalList size: " + hospitalList.size()); 
+                   				  	//for (int i = 0; i < hospitalList.size(); i++) 
+                   				  	//{ 
+                   				  	//	out.println(hospitalList.get(i)); 
+                   				  	//}
+                            	%>	
+                            	</td></tr>
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
