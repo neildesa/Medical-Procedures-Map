@@ -86,7 +86,7 @@
             	</div>
     	<script>
 	      var map;
-	      var locations = [["619 SOUTH 19TH STREET", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
+	      var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
 	    	  
 	      function initMap() {
 	    	  //Dundee Location
@@ -98,9 +98,8 @@
 	    	  
 	          geocoder = new google.maps.Geocoder();
 	          
-	          
 				for(var location in locations){
-					codeAddress(geocoder, map, location);
+						codeAddress(geocoder, map, location);
 				}
 	      }
 	     
