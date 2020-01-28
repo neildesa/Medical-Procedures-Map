@@ -41,6 +41,6 @@ All members present
 The team concluded their current progress with the creation of the front-end website that contains the boostrap UI and google maps. The database was set-up with both the full data entries and some views and procedures to access the data in Java.
 
 The current aims of the team for today's scrum are:
-1. Getting the jsp web files (i.e. our website) hosted online and continue imporving the UI and functionality.
+1. Getting the jsp web files (i.e. our website) hosted online and continue improving the UI and functionality.
 2. Testing dummy data from a MySQL database in Java on the jsp files to practice for the real data.
 3. Create search function for cost and distance in Java.
