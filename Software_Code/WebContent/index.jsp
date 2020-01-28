@@ -88,7 +88,9 @@
             	</div>
     	<script>
 	      var map;
-	      var locations = [["619 SOUTH 19TH STREET", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
+
+	      var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
+	    	  
 	      function initMap() {
 	    	  //Dundee Location
 	    	  var position = {lat: 56.46913, lng: -2.97489};
@@ -98,11 +100,10 @@
 	    	  // The marker, positioned at Uluru
 	    	  
 	          geocoder = new google.maps.Geocoder();
-	          codeAddress(geocoder, map);
-            
-            for(var location in locations){
-					    codeAddress(geocoder, map, location);
-				    }
+	          
+				for(var location in locations){
+						codeAddress(geocoder, map, location);
+				}
 
 	      }
 	     
