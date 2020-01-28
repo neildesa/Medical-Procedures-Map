@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,6 +62,7 @@
                               </tr>
                             </thead>
                             <tbody>
+                            	<tr><td><% out.println(JavaFunctionsForJsp.returnMessage()); %>	</td></tr>
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
