@@ -62,6 +62,37 @@
                     </div>
                 </div>
             </div>
+            <button id="getLocation" type="button" onclick = "testfunc()" class="btn btn-primary">Find Location</button>
+            <p id="startLat">Click me.</p>
+            <p id="startLon">Click me.</p>
+            <script >
+            function testfunc() 
+            {
+               // document.getElementById("getLocation").onclick 
+
+                console.log('Button Clicked!')
+                if (navigator.geolocation) {
+                        console.log('Geolocation is supported!');
+                    }
+                else {
+                    console.log('Geolocation is not supported for this Browser/OS.');
+                }
+
+               // window.onload = function() {
+                var startPos;
+                var geoSuccess = function(position) {
+                    startPos = position;
+                    console.log(startPos.coords.latitude);
+                    console.log(startPos.coords.longitude);
+                };
+                navigator.geolocation.getCurrentPosition(geoSuccess);
+                
+
+            }
+             
+            
+            
+            </script>
         </div>
     </body>
 </html>
