@@ -12,6 +12,12 @@
 .content-box {
     height: 100%;
     padding: 5%;
+    text-align: center;
+    margin: auto;
+}
+
+.bottom-paragraph {
+  margin-bottom: 12rem;
 }
 
 .sidebar {
