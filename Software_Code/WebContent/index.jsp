@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="JavaCode.JavaDatabaseCode.JavaFunctionsForJsp" %>
+
+<%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
+<%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -81,8 +84,92 @@
       <script>
 	    var map;
 
-	    var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
-	    	  
+
+</head>
+<body>
+	
+       
+  
+	         
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 75px">
+                <a class="navbar-brand" href="#">Help! I'm a Fish</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="Web/index.html">Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.js">Find a Hospital<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Web/about.html">About us</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+	      <div id="map"></div> 
+            <div class="container-flex content-box">    
+                <div class="row align-items-center">
+                    <div class="col overflow-auto" style="height: calc(100vh - 75px)">
+                        <table class="table table-hover table-borderless table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Hospital</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            	<% 
+                            		// procedureName would be received from the details.html drop-down object the user selects
+                            		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
+								
+                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
+                   				%>
+                   				  	<tr>
+                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+                   				  	</tr>
+                   				  	<% } %>	
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                            </tbody>
+                          </table>
+                   		</div>
+                	</div>
+            	</div>
+    	<script>
+	      var map;
+	      var locations = []
+	      <% 
+	      	for (int i = 0; i < hospitalList.size(); i++){ 
+	      %>
+	   // note: hospitalList.get(i).get(1) = hospitalAddress; hospitalList.get(i).get(0) = hospitalName 
+      		var hospitalName = "<%= hospitalList.get(i).get(0) %>";
+      		var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
+      		var row = [hospitalName, hospitalAddress]
+      		locations.push(row)
+	      <% } %>
+	      
+	   
+
 	      function initMap() {
 	  	    //Dundee Location
     	    var position = {lat: 56.46913, lng: -2.97489};
@@ -114,15 +201,17 @@
 	            });
 	            
 	            var infowindow = new google.maps.InfoWindow({
-	          	  content:'<div id="content">'+
-                '<div id="siteNotice">'+
-	              '</div>'+
-	              '<h5 id="firstHeading" class="firstHeading">' + locations[address][1] + ' </h5>'+
-	              '<div id="bodyContent">'+
-	              '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b> ' + locations[address][0] + '<br> <b>Cost:</b> $6,778.64 <br>' +
-	              '</div>'+
-	              '</div>'
-	          	});
+
+	            	  content:'<div id="content">'+
+	                  '<div id="siteNotice">'+
+	                  '</div>'+
+	                  '<h5 id="firstHeading" class="firstHeading"> ' + locations[address][0] + '</h5>'+
+	                  '<div id="bodyContent">'+
+	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][1] +'<br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '</div>'+
+	                  '</div>'
+	            	});
+
 
 	          	google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(map,marker)
