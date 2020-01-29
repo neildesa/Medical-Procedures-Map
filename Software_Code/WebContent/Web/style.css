@@ -16,6 +16,15 @@
     margin: auto;
 }
 
+.form-item {
+	padding-bottom: 5%;
+}
+
+.stuff-holder {
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
 .bottom-paragraph {
   margin-bottom: 12rem;
 }
