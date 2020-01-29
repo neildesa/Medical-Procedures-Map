@@ -3,6 +3,9 @@
     <head>
         <link rel="stylesheet" href="./style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="container-flex">
@@ -27,12 +30,12 @@
             </nav>
 
             <div class="container-flex px-lg-5 w-auto content-box">    
-                <form>
+                <form action="../index.jsp" method="POST">
 
                     <!-- Procedure -->
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Procedure</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <select class="form-control" name="procedure" id="procedure">
                             <option>Heart Transplant</option>
                             <option>Foot Amputation</option>
                             <option>Recussitation</option>
@@ -47,7 +50,7 @@
                         <div class="col">
                             <div class="slidecontainer">                        
                                 <p>Minimum Price: $<span id="min"></span></p>
-                                <input type="range" min="1" max="2000000" value="150000" class="slider" id="minRange">
+                                <input type="range" name="minRange" min="1" max="2000000" value="150000" class="slider" id="minRange">
                             </div>
         
                             <script>
@@ -64,7 +67,7 @@
                         <div class="col">
                             <div class="slidecontainer">                        
                                 <p>Maximum Price: $<span id="max"></span></p>
-                                <input type="range" min="1" max="2000000" value="300000" class="slider" id="maxRange">
+                                <input type="range" name="maxRange" min="1" max="2000000" value="300000" class="slider" id="maxRange">
                             </div>
         
                             <script>
@@ -106,15 +109,14 @@
                     </div>
 
                     <!-- Location -->
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Where are you?</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Where are you?</button>
+					
+					
 
                     <!-- Range -->
                     <div class="slidecontainer">                        
                         <p>Distance from you: <span id="range"></span> KM</p>
-                        <input type="range" min="10" max="5000" value="50" class="slider" id="rangeRange">
+                        <input type="range" name="rangeRange" min="10" max="5000" value="50" class="slider" id="rangeRange">
                     </div>
 
                     <script>
@@ -127,8 +129,40 @@
                             ranOutput.innerHTML = this.value;
                         }
                     </script>
+                    
+                    <!-- Location Modal -->
+					<div class="modal fade" id="myModal">
+					    <div class="modal-dialog modal-dialog-centered">
+					      	<div class="modal-content">
+					      
+					        	<!-- Modal Header -->
+					        	<div class="modal-header">
+					          		<h4 class="modal-title">Where you at?</h4>
+					          		<button type="button" class="close" data-dismiss="modal">&times;</button>
+					        	</div>
+					        
+					        	<!-- Modal body -->
+					        	<div class="modal-body">
+					          		<button class="btn btn-warning">Let us find you</button>
+					        	</div>
+					        	<div class="modal-body">
+					          		OR
+					        	</div>
+					        	<div class="modal-body">
+					          		<label class="form-col-label">Tell me where you are</label><br>
+					          		<input type="text" class="form-control" name="location"></input>
+					        	</div>
+					        
+					        	<!-- Modal footer -->
+					        	<div class="modal-footer">
+					          		<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					        	</div>
+					      	</div>
+					    </div>
+					</div>
+                    
+                    <input class="btn btn-success" type="submit" value="Hit Me Up" />
 
-                    <a href="hospital.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Hit Me Up</a>
                 </form>  
             </div>
         </div>
