@@ -26,66 +26,7 @@
       }
     </style>
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 75px">
-        <a class="navbar-brand" href="#">Help! I'm a Fish</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="Web/index.html">Home</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="index.js">Find a Hospital<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Web/about.html">About us</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-	  <div id="map"></div> 
-    <div class="container-flex content-box">    
-      <div class="row align-items-center">
-        <div class="col overflow-auto" style="height: calc(100vh - 75px)">
-          <table class="table table-hover table-borderless table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Hospital</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td><% out.println(JavaFunctionsForJsp.returnMessage()); %>	</td></tr>
-              <tr><td>Mark</td></tr>
-              <tr><td>Jacob</td></tr>
-              <tr><td>Larry</td></tr>
-              <tr><td>Mark</td></tr>
-              <tr><td>Jacob</td></tr>
-              <tr><td>Larry</td></tr>
-              <tr><td>Mark</td></tr>
-              <tr><td>Jacob</td></tr>
-              <tr><td>Mark</td></tr>
-              <tr><td>Jacob</td></tr>
-              <tr><td>Larry</td></tr>
-              <tr><td>Mark</td></tr>
-              <tr><td>Jacob</td></tr>
-              <tr><td>Larry</td></tr>
-              <tr><td>Mark</td></tr>
-              <tr><td>Jacob</td></tr>
-              <tr><td>Larry</td></tr>
-              <tr><td id="HospitalName">Hospital Name</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- <div> -->
-      <script>
-	    var map;
 
-
-</head>
 <body>
 	
        
