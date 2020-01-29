@@ -68,11 +68,13 @@
                             		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
                    			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
                    			  		
-                   				  	//out.println("hospitalList size: " + hospitalList.size()); 
-                   				  	//for (int i = 0; i < hospitalList.size(); i++) 
-                   				  	//{ 
-                   				  	//	out.println(hospitalList.get(i)); 
-                   				  	//}
+                   			  		out.print("HospitalList size: " + hospitalList.size());
+                   			  		
+                   				  	out.print("hospitalList size: " + hospitalList.size()); 
+                   				  	for (int i = 0; i < hospitalList.size(); i++) 
+                   				  	{ 
+                   				  		out.println(hospitalList.get(i)); 
+                   				  	}
                             	%>	
                             	</td></tr>
                                 <tr><td>Mark</td></tr>

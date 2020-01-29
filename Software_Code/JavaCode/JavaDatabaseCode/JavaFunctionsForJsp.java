@@ -26,13 +26,14 @@ public class JavaFunctionsForJsp {
 		return "Hi there";
 	}
 	
-	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure)
+	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
 	{
 		ArrayList<ArrayList<String>> hospitalListToReturn = new ArrayList<ArrayList<String>>();
 		
 		// structure for code taken from: https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-connect-drivermanager.html
 		try 
 		{
+			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, user, psw);
 			
 			// Do something with the Connection
