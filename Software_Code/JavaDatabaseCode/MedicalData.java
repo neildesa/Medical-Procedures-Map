@@ -1,5 +1,12 @@
 package jdbc.domain;
 
+//don't use yet, will be changed or removed
+//don't use yet, will be changed or removed
+//don't use yet, will be changed or removed
+//don't use yet, will be changed or removed
+//don't use yet, will be changed or removed
+
+//Corresponds to a MedicalData
 public class MedicalData {
 
 	int medID;

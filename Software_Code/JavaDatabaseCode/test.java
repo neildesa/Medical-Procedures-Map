@@ -2,26 +2,18 @@ package Test;
 
 
 import org.junit.Test;
-import jdbc.dao.MedicalDataDao;
-
+import jdbc.dao.HospitalDao;
 
 public class test {
 	
-	
-	@Test
-	public void DisplayAll() {
-		MedicalDataDao med = new MedicalDataDao();
-		med.DisplayAll();
+	public static void main(String[] args) {
+		
 	}
-	
-	
+
 	@Test
-	public void DisplayOrderByCost() {
-		MedicalDataDao med = new MedicalDataDao();
-		med.DisplayOrderByCost();
+	public void displayHospitalData() {
+		HospitalDao hos= new HospitalDao();
+		hos.displayDataOrderById();
 	}
-	
-	
-	
 	
 }
