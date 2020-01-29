@@ -21,11 +21,6 @@ public class JavaFunctionsForJsp {
 		findHospitalByProcedure(procedureName);
 	}
 	
-	public static String returnMessage()
-	{
-		return "Hi there";
-	}
-	
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
 	{
 		ArrayList<ArrayList<String>> hospitalListToReturn = new ArrayList<ArrayList<String>>();

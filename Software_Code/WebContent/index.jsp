@@ -63,20 +63,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                            	<tr><td>
                             	<% 
+                            		// procedureName would be received from the details.html drop-down object the user selects
                             		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
                    			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
-                   			  		
-                   			  		out.print("HospitalList size: " + hospitalList.size());
-                   			  		
-                   				  	out.print("hospitalList size: " + hospitalList.size()); 
-                   				  	for (int i = 0; i < hospitalList.size(); i++) 
-                   				  	{ 
-                   				  		out.println(hospitalList.get(i)); 
-                   				  	}
-                            	%>	
-                            	</td></tr>
+								
+                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
+                   				%>
+                   				  	<tr>
+                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+                   				  	</tr>
+                   				  	<% } %>	
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
@@ -102,8 +99,18 @@
             	</div>
     	<script>
 	      var map;
-	      var locations = [["619 SOUTH 19TH STREET", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
-	    	  
+	      var locations = []
+	      <% 
+	      	for (int i = 0; i < hospitalList.size(); i++){ 
+	      %>
+	   // note: hospitalList.get(i).get(1) = hospitalAddress; hospitalList.get(i).get(0) = hospitalName 
+      		var hospitalName = "<%= hospitalList.get(i).get(0) %>";
+      		var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
+      		var row = [hospitalName, hospitalAddress]
+      		locations.push(row)
+	      <% } %>
+	      
+	   
 	      function initMap() {
 	    	  //Dundee Location
 	    	  var position = {lat: 56.46913, lng: -2.97489};
@@ -138,9 +145,9 @@
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading"> ' + locations[address][1] + '</h5>'+
+	                  '<h5 id="firstHeading" class="firstHeading"> ' + locations[address][0] + '</h5>'+
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][0] +'<br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][1] +'<br> <b>Cost:</b> $6,778.64 <br>' +
 	                  '</div>'+
 	                  '</div>'
 	            	});
