@@ -98,6 +98,12 @@
             	</div>
     	<script>
 	      var map;
+
+	      
+	      var origin = 'New York';
+	      var distance = "Caclulating...";
+	      
+
 	      var locations = []
 	      <% 
 	      	for (int i = 0; i < hospitalList.size(); i++){ 
@@ -111,6 +117,7 @@
 	      
 	   
 
+
 	      function initMap() {
 	  	    //Dundee Location
     	    var position = {lat: 56.46913, lng: -2.97489};
@@ -119,59 +126,135 @@
 	  	      document.getElementById('map'), {zoom: 4, center: position});
 	  	    // The marker, positioned at Uluru
 	    	  
-          geocoder = new google.maps.Geocoder();
+
+	    	  var service = new google.maps.DistanceMatrixService();
+	          geocoder = new google.maps.Geocoder();
 	          
-				  for(var location in locations){
-					  codeAddress(geocoder, map, location);
-			    }
+	          codeAddress(geocoder, map, origin, service, true);
+	          
+				for(var location in locations){
+					codeAddress(geocoder, map, location, service, false);
+				}
+
+
+
 
 	      }
-	     
-
 	      
-	      function codeAddress(geocoder, map, address) {
-	        geocoder.geocode({'address': locations[address][0]}, function(results, status) {
-	          if (status === 'OK') {
-	            map.setCenter(results[0].geometry.location);
+	      function getDistance(distanceMatrix, map, address, result, distance){
+	    	  dest = locations[address][0];
+	    	  distanceMatrix.getDistanceMatrix(
+            		  {
+            			    origins: [origin],
+            			    destinations: [dest],
+            			    travelMode: 'DRIVING',
+            			    unitSystem: google.maps.UnitSystem.IMPERIAL,
+            		  }, function(response, status){
+            	          	if (status == 'OK') {
+            	          		var origins = response.originAddresses;
+            	          	    var destinations = response.destinationAddresses;
+            	          	    
+            	          	  for (var i = 0; i < origins.length; i++) {
+            	          	      var results = response.rows[i].elements;
+            	          	      for (var j = 0; j < results.length; j++) {
+            	          	        var element = results[j];
+            	          	        distance = element.distance.text;
+            	          	        var duration = element.duration.text;
+            	          	        var from = origins[i];
+            	          	        var to = destinations[j];
+            	          	      	placeMarker(map, address, result, distance);
+            	          	      }
+            	          	    }
+            	          	  }
+            	          	if (status == 'NOT_FOUND') {
+            	          		  alert("The origin and/or destination of this pairing could not be geocoded.");
+            	          		  }
+            				if (status == 'ZERO_RESULTS'){
+            					alert("No route could be found between the origin and destination.");				
+            					}
+            				});    
+	    }
+	      	      
+	      function codeAddress(geocoder, map, address, distanceMatrix, user) {
+	    	  
+	    	  if(user == true){
+	    		  
+	    		  geocoder.geocode({'address': address}, function(results, status) {
+	    	          if (status === 'OK') { 
+    	        		  placeMarkerUser(map, results[0].geometry.location);
+    	        		  alert("TESTING");
+    	  			}
+	    	          else {
+    		            alert('Geocode was not successful for the following reason: ' + status);
+    		          }
+	    	 	 });
+	    	  }
+	    	  else{
+	    		  geocoder.geocode({'address': locations[address][0]}, function(results, status) {
+	    	          if (status === 'OK') { 
+	    	        	  getDistance(distanceMatrix, map, address, results[0].geometry.location, distance); 
+	    		  } 
+	    	          else {
+	  	            	alert('Geocode was not successful for the following reason: ' + status);
+	  	          }
+	        	});
+	      	}
+	      }
+	      
+              
+	    function placeMarker(map, address, result, distance){
+	    	
 	            var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png',  scaledSize: new google.maps.Size(35,35) }
               var marker = new google.maps.Marker({
 	              map: map,
 	              icon: image,
 	              animation: google.maps.Animation.DROP,
-	              position: results[0].geometry.location
+	              position: result
 	            });
-	            
+
 	            var infowindow = new google.maps.InfoWindow({
 
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading"> ' + locations[address][0] + '</h5>'+
+
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + ' </h5>' + 'Distance: ' + distance +
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][1] +'<br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][1] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
+
+
+
 	                  '</div>'+
 	                  '</div>'
 	            	});
 
 
-	          	google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker)
-                highlightClick()}                        
-	          	);
-	            
-	          } else {
-	            alert('Geocode was not successful for the following reason: ' + status);
-            }
-	        });
-	        
-	      }
+	            	google.maps.event.addListener(marker, 'click', function() {
+               infowindow.open(map,marker)
+               highlightClick()}                        
+	            	);
+	    }
+	    
+	    function placeMarkerUser(map, result){
+	    	map.setCenter(result);
+            var image = { url: 'https://cdn0.iconfinder.com/data/icons/real-estate-240/32/10_Location_home_house_pin_gps-512.png',  scaledSize: new google.maps.Size(35,35) }
+            var marker = new google.maps.Marker({
+              map: map,
+              icon: image,
+              animation: google.maps.Animation.DROP,
+              position: result
+            });
+	    }
+
+
+
 	      
         function highlightClick(){
           var elmnt = document.getElementById("HospitalName");
           elmnt.scrollIntoView({behavior: "smooth"});
           elmnt.style.backgroundColor = "#FDFF47";
         }
-	     
+
 	      var key = config.API_KEY;
 	      var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
 	      var script = document.createElement('script');
