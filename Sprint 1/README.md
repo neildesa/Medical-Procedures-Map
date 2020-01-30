@@ -56,7 +56,7 @@ Improving our functionality with the google maps api by letting the marker shown
 
 ---
 ## Day 3 (29/01/2020) - Scrum Meeting Summary (10am)
-The Scrum Master for this meeting was **Neilson Desa""
+The Scrum Master for this meeting was **Neilson Desa**
 
 ### Members Present:
 All members present
@@ -80,3 +80,20 @@ The Java code now succesffully runs in the jsp file and connects with the MySQL 
 
 ### Summary of what we will work on next
 The team will begin to integrate the different sections of the front-end and back-end that haven't been fully joined. Additionally the team will work on finishing the core search function of hospitals by procedure in a basic form (this will enable us to build upon it as a team and add searching by cost, rating and/or distance). The team will continues to work on improving the problems that occur with the live-hosted website crashing during java code execution, and with coming up to a solution to solve our troublesome limited query rate with the google api (Only 10 requests allowed per second which is not ideal when searching hundreds of hospitals).
+
+---
+## Day 4 (30/01/2020) - Scrum Meeting Summary (10am)
+The Scrum Master for this meeting was **Neilson Desa**
+
+### Members Present:
+All members present
+
+### Summary of Conversation
+The team concluded their current progress with the integration of the basic search procedure with the google maps api, database and front-end UI, all ran on a local server.
+
+The aims for today are:
+1. Fixing the limited query rate with the google api; our solution to this is to store the coordinates of each hospital in the database.
+2. Fixing the java compilation error for the live website.
+3. Adding the ability to remove markers on the map for multiple procedure searches.
+4. Adding the ability to add a visual radius when doing the search medical procedure by distance.
+5. Create the Java methods for searching by distance and by cost
