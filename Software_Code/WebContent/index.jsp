@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
     <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
 <!DOCTYPE html>
 <html>
@@ -89,16 +90,17 @@
     	<script>
 	      var map;
 	      var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
-	      var origin = 'New York';
+	      var origin = 'Iowa';
 	      var distance = "Caclulating...";
+	      var prevInfoWindow;
+	      var markerArray = [];
+	      var markerDistance = [];
+	      var range = 1430;
 	      
 	      function initMap() {
-	    	  //Dundee Location
 	    	  var position = {lat: 56.46913, lng: -2.97489};
-	    	  // The map, centered at Uluru
 	    	  var map = new google.maps.Map(
 	    	      document.getElementById('map'), {zoom: 4, center: position});
-	    	  // The marker, positioned at Uluru
 	    	  
 	    	  var service = new google.maps.DistanceMatrixService();
 	          geocoder = new google.maps.Geocoder();
@@ -108,6 +110,7 @@
 				for(var location in locations){
 					codeAddress(geocoder, map, location, service, false);
 				}
+
 	      }
 	      
 	      function getDistance(distanceMatrix, map, address, result, distance){
@@ -132,8 +135,10 @@
             	          	        var from = origins[i];
             	          	        var to = destinations[j];
             	          	      	placeMarker(map, address, result, distance);
+            	          	      	
             	          	      }
             	          	    }
+            	          		removeMarkers();
             	          	  }
             	          	if (status == 'NOT_FOUND') {
             	          		  alert("The origin and/or destination of this pairing could not be geocoded.");
@@ -143,15 +148,14 @@
             					}
             				});    
 	    }
-	      	      
+	      
+	      
 	      function codeAddress(geocoder, map, address, distanceMatrix, user) {
 	    	  
 	    	  if(user == true){
-	    		  
 	    		  geocoder.geocode({'address': address}, function(results, status) {
 	    	          if (status === 'OK') { 
     	        		  placeMarkerUser(map, results[0].geometry.location);
-    	        		  alert("TESTING");
     	  			}
 	    	          else {
     		            alert('Geocode was not successful for the following reason: ' + status);
@@ -180,6 +184,9 @@
 	              animation: google.maps.Animation.DROP,
 	              position: result
 	            });
+	            
+	            markerArray.push(marker);
+	            markerDistance.push(distance);
 
 	            var infowindow = new google.maps.InfoWindow({
 	            	  content:'<div id="content">'+
@@ -193,10 +200,18 @@
 	            	});
 
 	            	google.maps.event.addListener(marker, 'click', function() {
+	            		
+	            if(prevInfoWindow){
+	            	prevInfoWindow.close();
+	            }
+	            
+	            prevInfoWindow = infowindow;
+	          	
                infowindow.open(map,marker)
                highlightClick()}                        
 	            	);
 	    }
+	    
 	    
 	    function placeMarkerUser(map, result){
 	    	map.setCenter(result);
@@ -207,19 +222,51 @@
               animation: google.maps.Animation.DROP,
               position: result
             });
+            
+            drawCircle(map, result);
 	    }
-	      
+	     
+	    
         function highlightClick(){
           var elmnt = document.getElementById("HospitalName");
                   elmnt.scrollIntoView({behavior: "smooth"});
                   elmnt.style.backgroundColor = "#FDFF47";
         }
 
-	      var key = config.API_KEY;
-	      var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
-	      var script = document.createElement('script');
-	      script.src = srcText
-	      document.body.appendChild(script)
+        
+        function removeMarkers(){
+			for(var marker in markerArray){
+				var distance = (markerDistance[marker].replace(" mi", "")).replace(",", "");
+				var distanceInt = parseInt(distance, 10); 
+				
+				if(distanceInt > range ){
+					markerArray[marker].setMap(null);
+				}
+			}
+        }
+        
+        
+        function drawCircle(map, address) {
+        	circleRadius = range*1.60934;
+            var antennasCircle = new google.maps.Circle({
+              strokeColor: "#000000",
+              strokeOpacity: 0.4,
+              strokeWeight: 2,
+              fillColor: "#00ffff",
+              fillOpacity: 0.1,
+              map: map,
+              center: address,
+              radius: circleRadius * 1000
+            });
+            map.fitBounds(antennasCircle.getBounds());
+          }
+        
+        
+      var key = config.API_KEY;
+      var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
+      var script = document.createElement('script');
+      script.src = srcText
+      document.body.appendChild(script)
      </script>
     
    
