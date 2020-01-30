@@ -9,6 +9,10 @@
     color: white;
 }
 
+.black-text {
+    color: black;
+}
+
 .content-box {
     height: 100%;
     padding: 5%;
@@ -45,6 +49,11 @@
     vertical-align: middle;
     display: flex;
     margin: auto;
+}
+
+.bottom-page {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
 }
 
 .slidecontainer {
