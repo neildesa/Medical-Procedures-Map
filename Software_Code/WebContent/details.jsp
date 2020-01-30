@@ -50,12 +50,9 @@
                         <label for="procedure">Procedure</label>
 	                    <select class="js-example-basic-single form-control" data-placeholder="Select a Procedure" id="procedure">
 	                    	<% 
-	                    		String [] procedure = new String[10];
-	                    		for (int i=0; i<procedure.length; i++) {
-	                    			procedure[i] = Integer.toString(i);
-	                    		}
-								for (int i=0; i<procedure.length; i++) { %> 
-									<option> <% out.println(procedure[i]); %> </option> 
+                        		ArrayList<String> procedure = JavaFunctionsForJsp.returnListOfProcedures();
+								for (int i=0; i<procedure.size(); i++) { %> 
+									<option> <% out.println(procedure.get(i)); %> </option> 
 								<% } 
 							%>
 						</select>
