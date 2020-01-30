@@ -17,8 +17,13 @@ public class JavaFunctionsForJsp {
 	
 	public static void main(String[] args) throws Exception
 	{
-		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
-		findHospitalByProcedure(procedureName);
+		/*
+		 * String procedureName =
+		 * "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		 * findHospitalByProcedure(procedureName);
+		 */
+		
+		returnListOfProcedures();
 	}
 	
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
@@ -70,5 +75,43 @@ public class JavaFunctionsForJsp {
 		}
 		
 		return hospitalListToReturn;
+	}
+	
+	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 
+	{
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, user, psw);
+			
+			ArrayList<String> procedureList = new ArrayList<String>();
+			
+			Statement statement = conn.createStatement();
+			String sql = "call 19agileteam3db.returnSortedProcedures();";
+			ResultSet rs = statement.executeQuery(sql);
+			
+			while (rs.next())
+			{
+				String procedure = rs.getString("DRG_Definition");
+				procedureList.add(procedure);
+			}
+			
+			/* call this locally to print out the entire array list for testing
+			 * for (int i = 0; i < procedureList.size() ; i++) {
+			 * System.out.println(procedureList.get(i) + ", "); }
+			 */
+			
+			return procedureList;
+
+		} 
+		catch (SQLException ex) 
+		{
+		    // handle any errors
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		    
+		    return null;
+		}
 	}
 }
