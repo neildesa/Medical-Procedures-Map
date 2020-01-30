@@ -1,4 +1,4 @@
-package JavaDatabaseCode;
+package jdbc.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JDBCUtil {
-	public static String url = "jdbc:mysql://35.195.221.186:3306";
-	public static String user = "Zeng";
-	public static String psw = "agile";
-	public static String DriverName = "com.mysql.jdbc.Driver";
+	public static String url = "jdbc:mysql://silva.computing.dundee.ac.uk:3306";
+	public static String user = "19agileteam3";
+	public static String psw = "9047.at3.7409";
+	public static String DriverName = "com.mysql.cj.jdbc.Driver";
 
 	// load driver (only need to be loaded once)
 	static {

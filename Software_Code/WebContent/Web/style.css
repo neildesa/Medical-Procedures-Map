@@ -16,8 +16,21 @@
     margin: auto;
 }
 
+.form-item {
+	padding-bottom: 5%;
+}
+
+.stuff-holder {
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
 .bottom-paragraph {
   margin-bottom: 12rem;
+}
+
+.modal-box {
+	width: 50vh;
 }
 
 .sidebar {
@@ -32,9 +45,6 @@
     vertical-align: middle;
     display: flex;
     margin: auto;
-<<<<<<< HEAD:Software_Code/WebContent/Web/style.css
-}
-=======
 }
 
 .slidecontainer {
@@ -69,12 +79,5 @@
     width: 25px;
     height: 25px;
     background: #4CAF50;
-<<<<<<< HEAD:Software_Code/Web/style.css
 	cursor: pointer;
 }
-	
-=======
-    cursor: pointer;
-  }
->>>>>>> master:Software_Code/Web/style.css
->>>>>>> master:Software_Code/WebContent/Web/style.css
