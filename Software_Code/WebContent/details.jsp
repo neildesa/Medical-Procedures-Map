@@ -103,23 +103,23 @@
 	                    <label for="exampleFormControlSelect2">Minimum Star Rating</label>
 	                    <div class="form-group">
 	                        <div class="form-check form-check-inline">
-	                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option1">
+	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox1" value="1">
 	                            <label class="form-check-label" for="inlineCheckbox1">1</label>
 	                        </div>
 	                        <div class="form-check form-check-inline">
-	                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="option2">
+	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox2" value="2">
 	                            <label class="form-check-label" for="inlineCheckbox2">2</label>
 	                        </div>
 	                        <div class="form-check form-check-inline">
-	                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3">
+	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox3" value="3">
 	                            <label class="form-check-label" for="inlineCheckbox3">3</label>
 	                        </div>
 	                        <div class="form-check form-check-inline">
-	                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox4" value="option4">
+	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox4" value="4">
 	                            <label class="form-check-label" for="inlineCheckbox4">4</label>
 	                        </div>
 	                        <div class="form-check form-check-inline">
-	                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineCheckbox5" value="option5">
+	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox5" value="5">
 	                            <label class="form-check-label" for="inlineCheckbox5">5</label>
 	                        </div>
 	                    </div>
