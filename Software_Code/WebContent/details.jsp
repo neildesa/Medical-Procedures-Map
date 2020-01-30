@@ -25,20 +25,20 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
+                            <a class="nav-link" href="Web/index.html">Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="details.html">Find a Hospital<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="details.jsp">Find a Hospital<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.html">About us</a>
+                            <a class="nav-link" href="Web/about.html">About us</a>
                         </li>
                     </ul>
                 </div>
             </nav>
 
             <div class="container-flex px-lg-5 w-auto content-box stuff-holder">    
-                <form action="./index.jsp" method="POST">
+                <form action="index.jsp" method="POST">
 
                     <script>
 	                    $(document).ready(function() {
