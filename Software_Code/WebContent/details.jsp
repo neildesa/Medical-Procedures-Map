@@ -1,7 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+<%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
+<%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./Web/style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 		<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -32,7 +38,7 @@
             </nav>
 
             <div class="container-flex px-lg-5 w-auto content-box stuff-holder">    
-                <form action="../index.jsp" method="POST">
+                <form action="./index.jsp" method="POST">
 
                     <script>
 	                    $(document).ready(function() {
@@ -42,14 +48,16 @@
 					
 					<div class="form-group form-item">
                         <label for="procedure">Procedure</label>
-	                    <select class="js-example-basic-single form-control" data-placeholder="Select a state" id="procedure">
-	                   		<option>Heart Transplant</option>
-	                      	<option>Foot Amputation</option>
-	                      	<option>Recussitation</option>
-	                      	<option>Example Procedure</option>
-	                      	<option>Another Thing</option>
-						  	<option>Alabama</option>
-						  	<option>Wyoming</option>
+	                    <select class="js-example-basic-single form-control" data-placeholder="Select a Procedure" id="procedure">
+	                    	<% 
+	                    		String [] procedure = new String[10];
+	                    		for (int i=0; i<procedure.length; i++) {
+	                    			procedure[i] = Integer.toString(i);
+	                    		}
+								for (int i=0; i<procedure.length; i++) { %> 
+									<option> <% out.println(procedure[i]); %> </option> 
+								<% } 
+							%>
 						</select>
 					</div>
                     
