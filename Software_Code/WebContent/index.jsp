@@ -63,7 +63,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                                <tr><td><% out.println(JavaFunctionsForJsp.returnMessage()); %>	</td></tr>
+<% 
+                            		// procedureName would be received from the details.html drop-down object the user selects
+                            		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
+								
+                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
+                   				%>
+                   				  	<tr>
+                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+                   				  	</tr>
+                   				  	<% } %>	
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
@@ -89,7 +99,16 @@
             	</div>
     	<script>
 	      var map;
-	      var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
+	     var locations = []
+	      <% 
+	      	for (int i = 0; i < hospitalList.size(); i++){ 
+	      %>
+	   // note: hospitalList.get(i).get(1) = hospitalAddress; hospitalList.get(i).get(0) = hospitalName 
+      		var hospitalName = "<%= hospitalList.get(i).get(0) %>";
+      		var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
+      		var row = [hospitalName, hospitalAddress]
+      		locations.push(row)
+	      <% } %>
 	      var origin = 'Iowa';
 	      var distance = "Caclulating...";
 	      var prevInfoWindow;
