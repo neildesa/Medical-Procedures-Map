@@ -3,14 +3,30 @@ package jdbc.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+import java.util.ArrayList;
 
 import jdbc.domain.HospitalData;
+import jdbc.domain.MixData;
 import jdbc.domain.ProcedureData;
 
 public class HospitalDao {
 
+//	public String orderByCost(){
+//		return "procedurestable.AverageCoveredCharges";
+//	}
+//	public String orderByID() {
+//		return "Provider_Id";
+//	}
+//	public String orderByRating(){
+//		return "";
+//	}
 	
-	public void SearchByCost(String DRGdefinition,double minCost, double maxCost){
+	
+	
+	
+	
+	public List<MixData> GetSearchByCost(String DRGdefinition,double minCost, double maxCost){
 		
 		Connection conn = null;
 		Statement st =null;
@@ -24,42 +40,52 @@ public class HospitalDao {
 			sql="call SearchByCost('"+DRGdefinition+"',"+minCost+","+maxCost+")";
 			
 			res = st.executeQuery(sql);
+			List<MixData> list = new ArrayList<MixData>();
 			
 			while(res.next()) {
 				HospitalData hos = new HospitalData();
 				ProcedureData pro = new ProcedureData();
+				MixData mix = new MixData();
 				hos.setProviderId(res.getInt("Provider_Id"));
+				hos.setProviderName(res.getString("Provider_Name"));
 				hos.setProviderStreetAddress(res.getString("Provider_Street_Address"));
 				hos.setProviderCity(res.getString("Provider_City"));
 				hos.setProviderZipCode(res.getString("Provider_Zip_Code"));
 				pro.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
 				pro.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
 				pro.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				System.out.print("Provider Name:"+hos.getProviderName()
-								+"\nProvider Street Address:"+hos.getProviderStreetAddress()
-								+"\nProvider City:"+hos.getProviderCity()
-								+"\nProvider Zip_Code:"+hos.getProviderCity()
-								+"\nProvider Zip Code:"+hos.getProviderZipCode()
-								+"\nAverage Covered Charges:"+pro.getAvgCoveredCharges()
-								+"\nAverage Total Payments:"+pro.getAvgTotalPayments()
-								+"\nAverage Medicare Payments:"+pro.getAvgMedicarePayments());
-				System.out.println("");
-				System.out.println("");
 				
+				mix.setProviderId(hos.getProviderId());
+				mix.setProviderName(hos.getProviderName());
+				mix.setProviderStreetAddress(hos.getProviderStreetAddress());
+				mix.setProviderCity(hos.getProviderCity());
+				mix.setProviderZipCode(hos.getProviderZipCode());
+				mix.setAvgCoveredCharges(pro.getAvgCoveredCharges());
+				mix.setAvgTotalPayments(pro.getAvgTotalPayments());
+				mix.setAvgMedicarePayments(pro.getAvgMedicarePayments());
+				
+				list.add(mix);
 			}	
+			return list;
 			
 		}catch(Exception E) {
 			E.printStackTrace();
 		}finally{
 			JDBCUtil.close(conn, st, res);
 		}
+		return null;
 	}
 	
 	
+
+
 	
+
+
+
+
 	
-	public void SearchByProcedure(String procedure){
-		
+	public List<MixData> GetSearchByProcedure(String procedure){
 		Connection conn = null;
 		Statement st =null;
 		ResultSet res=null;
@@ -73,37 +99,108 @@ public class HospitalDao {
 			
 			res = st.executeQuery(sql);
 			
+			List<MixData> hosList = new ArrayList<MixData>();
+			
 			while(res.next()) {
 				HospitalData hos = new HospitalData();
 				ProcedureData pro = new ProcedureData();
+				MixData mix = new MixData();
 				hos.setProviderId(res.getInt("Provider_Id"));
+				hos.setProviderName(res.getString("Provider_Name"));
 				hos.setProviderStreetAddress(res.getString("Provider_Street_Address"));
 				hos.setProviderCity(res.getString("Provider_City"));
 				hos.setProviderZipCode(res.getString("Provider_Zip_Code"));
 				pro.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
 				pro.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
 				pro.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				System.out.print("Provider Name:"+hos.getProviderName()
-								+"\nProvider Street Address:"+hos.getProviderStreetAddress()
-								+"\nProvider City:"+hos.getProviderCity()
-								+"\nProvider Zip_Code:"+hos.getProviderCity()
-								+"\nProvider Zip Code:"+hos.getProviderZipCode()
-								+"\nAverage Covered Charges:"+pro.getAvgCoveredCharges()
-								+"\nAverage Total Payments:"+pro.getAvgTotalPayments()
-								+"\nAverage Medicare Payments:"+pro.getAvgMedicarePayments());
-				System.out.println("");
-				System.out.println("");
-		
+				
+				mix.setProviderId(hos.getProviderId());
+				mix.setProviderName(hos.getProviderName());
+				mix.setProviderStreetAddress(hos.getProviderStreetAddress());
+				mix.setProviderCity(hos.getProviderCity());
+				mix.setProviderZipCode(hos.getProviderZipCode());
+				mix.setAvgCoveredCharges(pro.getAvgCoveredCharges());
+				mix.setAvgTotalPayments(pro.getAvgTotalPayments());
+				mix.setAvgMedicarePayments(pro.getAvgMedicarePayments());
+				hosList.add(mix);
 			}	
+			return hosList;
 			
 		}catch(Exception E) {
 			E.printStackTrace();
 		}finally{
 			JDBCUtil.close(conn, st, res);
 		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public List<MixData> CallLocationBasedOnIP(String ip,String procedure){
+		Connection conn = null;
+		Statement st =null;
+		ResultSet res=null;
+		try{
+			conn = JDBCUtil.getconn();
+			String sql="use 19agileteam3db";
+			st = conn.createStatement();
+			st.execute(sql);
+			
+			sql="call locationbasedonIp('"+ip+"','"+procedure+"')";
+			
+			res = st.executeQuery(sql);
+			
+			List<MixData> hosList = new ArrayList<MixData>();
+			
+			while(res.next()) {
+				HospitalData hos = new HospitalData();
+				ProcedureData pro = new ProcedureData();
+				MixData mix = new MixData();
+				hos.setProviderId(res.getInt("Provider_Id"));
+				hos.setProviderName(res.getString("Provider_Name"));
+				hos.setProviderZipCode(res.getString("Provider_Zip_Code"));
+				pro.setDrgDefinition(res.getString("DRGDefinition"));
+				pro.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
+				pro.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
+				pro.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
+				
+				mix.setProviderId(hos.getProviderId());
+				mix.setProviderName(hos.getProviderName());
+				mix.setProviderZipCode(hos.getProviderZipCode());
+				mix.setDrgDefinition(pro.getDrgDefinition());
+				mix.setAvgCoveredCharges(pro.getAvgCoveredCharges());
+				mix.setAvgTotalPayments(pro.getAvgTotalPayments());
+				mix.setAvgMedicarePayments(pro.getAvgMedicarePayments());
+				hosList.add(mix);
+			}	
+			return hosList;
+			
+		}catch(Exception E) {
+			E.printStackTrace();
+		}finally{
+			JDBCUtil.close(conn, st, res);
+		}
+		return null;
 	}
 	
 	
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
