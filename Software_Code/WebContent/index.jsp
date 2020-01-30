@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
-    <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
+<%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 <head>
