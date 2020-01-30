@@ -1,22 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
-<%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
-<%@ page import="java.util.ArrayList" %>
-
+    
+    <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
 <!DOCTYPE html>
 <html>
-  <head>
-  <link rel="stylesheet" href="/Web/style.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <meta charset="ISO-8859-1">
-  <title>Maps</title>
-  <script type='text/javascript' src='config.js'></script>
-    <style>
+<head>
+<link rel="stylesheet" href="/Web/style.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<meta charset="ISO-8859-1">
+<title>Maps</title>
+
+<script type='text/javascript' src='config.js'></script>
+
+
+<style>
       #map {
-		    height: calc(100% - 75px);
-		    width: 70%;
-		    float: right;
+		height: calc(100% - 75px);
+		width: 70%;
+		float: right;
       }
       
       html, body {
@@ -25,8 +26,8 @@
         padding: 0;
       }
     </style>
-  </head>
 
+</head>
 <body>
 	
        
@@ -43,7 +44,7 @@
                             <a class="nav-link" href="Web/index.html">Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="details.jsp">Find a Hospital<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="index.js">Find a Hospital<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Web/about.html">About us</a>
@@ -62,17 +63,15 @@
                               </tr>
                             </thead>
                             <tbody>
-                            	<% 
-                            		// procedureName would be received from the details.html drop-down object the user selects
-                            		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
-                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
-								
-                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
-                   				%>
-                   				  	<tr>
-                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
-                   				  	</tr>
-                   				  	<% } %>	
+                                <tr><td><% out.println(JavaFunctionsForJsp.returnMessage()); %>	</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
+                                <tr><td>Larry</td></tr>
+                                <tr><td>Mark</td></tr>
+                                <tr><td>Jacob</td></tr>
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
@@ -82,15 +81,7 @@
                                 <tr><td>Mark</td></tr>
                                 <tr><td>Jacob</td></tr>
                                 <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
+                                <tr><td id="HospitalName">Hospital Name</td></tr>
                             </tbody>
                           </table>
                    		</div>
@@ -98,35 +89,19 @@
             	</div>
     	<script>
 	      var map;
-
-	      
-	      var origin = 'New York';
+	      var locations = [["619 SOUTH 19TH STREET, AL", "UNIVERSITY OF ALABAMA HOSPITAL"],["5777 EAST MAYO BOULEVARD", "MAYO CLINIC HOSPITAL"],["9601 INTERSTATE 630, EXIT 7", "BAPTIST HEALTH MEDICAL CENTER-LITTLE ROCK"]];
+	      var origin = 'Iowa';
 	      var distance = "Caclulating...";
+	      var prevInfoWindow;
+	      var markerArray = [];
+	      var markerDistance = [];
+	      var range = 1430;
 	      
-
-	      var locations = []
-	      <% 
-	      	for (int i = 0; i < hospitalList.size(); i++){ 
-	      %>
-	   // note: hospitalList.get(i).get(1) = hospitalAddress; hospitalList.get(i).get(0) = hospitalName 
-      		var hospitalName = "<%= hospitalList.get(i).get(0) %>";
-      		var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
-      		var row = [hospitalName, hospitalAddress]
-      		locations.push(row)
-	      <% } %>
-	      
-	   
-
-
 	      function initMap() {
-	  	    //Dundee Location
-    	    var position = {lat: 56.46913, lng: -2.97489};
-	    	  // The map, centered at Uluru
-	        var map = new google.maps.Map(
-	  	      document.getElementById('map'), {zoom: 4, center: position});
-	  	    // The marker, positioned at Uluru
+	    	  var position = {lat: 56.46913, lng: -2.97489};
+	    	  var map = new google.maps.Map(
+	    	      document.getElementById('map'), {zoom: 4, center: position});
 	    	  
-
 	    	  var service = new google.maps.DistanceMatrixService();
 	          geocoder = new google.maps.Geocoder();
 	          
@@ -135,9 +110,6 @@
 				for(var location in locations){
 					codeAddress(geocoder, map, location, service, false);
 				}
-
-
-
 
 	      }
 	      
@@ -163,8 +135,10 @@
             	          	        var from = origins[i];
             	          	        var to = destinations[j];
             	          	      	placeMarker(map, address, result, distance);
+            	          	      	
             	          	      }
             	          	    }
+            	          		removeMarkers();
             	          	  }
             	          	if (status == 'NOT_FOUND') {
             	          		  alert("The origin and/or destination of this pairing could not be geocoded.");
@@ -174,15 +148,14 @@
             					}
             				});    
 	    }
-	      	      
+	      
+	      
 	      function codeAddress(geocoder, map, address, distanceMatrix, user) {
 	    	  
 	    	  if(user == true){
-	    		  
 	    		  geocoder.geocode({'address': address}, function(results, status) {
 	    	          if (status === 'OK') { 
     	        		  placeMarkerUser(map, results[0].geometry.location);
-    	        		  alert("TESTING");
     	  			}
 	    	          else {
     		            alert('Geocode was not successful for the following reason: ' + status);
@@ -205,35 +178,40 @@
 	    function placeMarker(map, address, result, distance){
 	    	
 	            var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png',  scaledSize: new google.maps.Size(35,35) }
-              var marker = new google.maps.Marker({
+	            var marker = new google.maps.Marker({
 	              map: map,
 	              icon: image,
 	              animation: google.maps.Animation.DROP,
 	              position: result
 	            });
+	            
+	            markerArray.push(marker);
+	            markerDistance.push(distance);
 
 	            var infowindow = new google.maps.InfoWindow({
-
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-
-	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + ' </h5>' + 'Distance: ' + distance +
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][1] + ' </h5>' + 'Distance: ' + distance +
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][1] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
-
-
-
+	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][0] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
 	                  '</div>'+
 	                  '</div>'
 	            	});
 
-
 	            	google.maps.event.addListener(marker, 'click', function() {
+	            		
+	            if(prevInfoWindow){
+	            	prevInfoWindow.close();
+	            }
+	            
+	            prevInfoWindow = infowindow;
+	          	
                infowindow.open(map,marker)
                highlightClick()}                        
 	            	);
 	    }
+	    
 	    
 	    function placeMarkerUser(map, result){
 	    	map.setCenter(result);
@@ -244,22 +222,54 @@
               animation: google.maps.Animation.DROP,
               position: result
             });
+            
+            drawCircle(map, result);
 	    }
-
-
-
-	      
+	     
+	    
         function highlightClick(){
           var elmnt = document.getElementById("HospitalName");
-          elmnt.scrollIntoView({behavior: "smooth"});
-          elmnt.style.backgroundColor = "#FDFF47";
+                  elmnt.scrollIntoView({behavior: "smooth"});
+                  elmnt.style.backgroundColor = "#FDFF47";
         }
 
-	      var key = config.API_KEY;
-	      var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
-	      var script = document.createElement('script');
-        script.src = srcText
-	      document.body.appendChild(script)
-    </script>
-  </body>
+        
+        function removeMarkers(){
+			for(var marker in markerArray){
+				var distance = (markerDistance[marker].replace(" mi", "")).replace(",", "");
+				var distanceInt = parseInt(distance, 10); 
+				
+				if(distanceInt > range ){
+					markerArray[marker].setMap(null);
+				}
+			}
+        }
+        
+        
+        function drawCircle(map, address) {
+        	circleRadius = range*1.60934;
+            var antennasCircle = new google.maps.Circle({
+              strokeColor: "#000000",
+              strokeOpacity: 0.4,
+              strokeWeight: 2,
+              fillColor: "#00ffff",
+              fillOpacity: 0.1,
+              map: map,
+              center: address,
+              radius: circleRadius * 1000
+            });
+            map.fitBounds(antennasCircle.getBounds());
+          }
+        
+        
+      var key = config.API_KEY;
+      var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
+      var script = document.createElement('script');
+      script.src = srcText
+      document.body.appendChild(script)
+     </script>
+    
+   
+
+</body>
 </html>
