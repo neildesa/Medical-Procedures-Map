@@ -17,13 +17,14 @@ public class JavaFunctionsForJsp {
 	
 	public static void main(String[] args) throws Exception
 	{
-		/*
-		 * String procedureName =
-		 * "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
-		 * findHospitalByProcedure(procedureName);
-		 */
+		 ArrayList<ArrayList<String>> hospitalListTest = new ArrayList<ArrayList<String>>();
 		
-		returnListOfProcedures();
+		  String procedureName =
+		  "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		  hospitalListTest = findHospitalByProcedure(procedureName);
+		  System.out.println("size: " + hospitalListTest.size());
+		  
+		/* returnListOfProcedures(); */
 	}
 	
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
@@ -38,7 +39,8 @@ public class JavaFunctionsForJsp {
 			
 			// Do something with the Connection
 			Statement statement = conn.createStatement();
-			String sql = "call 19agileteam3db.searchHospitalByProcedure('" + procedure + "')";
+			System.out.println("procedure: " + procedure);
+			String sql = "call 19agileteam3db.SearchByProcedure('" + procedure + "');";
 			ResultSet rs = statement.executeQuery(sql);
 					
 			ArrayList<ArrayList<String>> hospitalList = new ArrayList<ArrayList<String>>();
@@ -47,21 +49,22 @@ public class JavaFunctionsForJsp {
 				
 				// store and add each hospital and address into hospitalList
 				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
-				String hospital = rs.getString("Hospital");
+				String hospital = rs.getString("Provider_Name");
 				hospitalListRowToAdd.add(hospital);
-				String address = rs.getString("Address");
+				String address = rs.getString("Provider_Street_Address");
 				hospitalListRowToAdd.add(address);
 				
 				hospitalList.add(hospitalListRowToAdd);
 				
 			}
+			
 			/*
 			 * System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
 			 * 0; i < hospitalList.size(); i++) { System.out.println(hospitalList.get(i)); }
 			 */
 			 
 			// set return list if procedure successfully ran
-			hospitalListToReturn = hospitalList;
+			return hospitalList;
 		} 
 		catch (SQLException ex) 
 		{
@@ -71,10 +74,10 @@ public class JavaFunctionsForJsp {
 		    System.out.println("VendorError: " + ex.getErrorCode());
 		    
 		    // set return list to null if errors occur
-		    hospitalListToReturn = null;
+		    return null;
 		}
 		
-		return hospitalListToReturn;
+	
 	}
 	
 	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 
