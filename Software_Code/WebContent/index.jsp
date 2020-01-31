@@ -29,10 +29,8 @@
 
 </head>
 <body>
-	
-       
-  
-	         
+
+
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 75px">
                 <a class="navbar-brand" href="#">Help! I'm a Fish</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,43 +61,46 @@
                               </tr>
                             </thead>
                             <tbody>
-<% 
+								<% 
                             		// procedureName would be received from the details.html drop-down object the user selects
-                            		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
-                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
-								
+                            		String procedure = request.getParameter("procedure"); 
+                            		String procedureName = procedure;
+                            		
+                            		String name = procedureName.trim();
+                            		
+                            		System.out.println("e:" + procedureName);
+                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
+									
+                   			  		System.out.println("hospital size: " + hospitalList.size());
+                   			  		
                    				  	for (int i = 0; i < hospitalList.size(); i++) { 
                    				%>
                    				  	<tr>
                    				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
                    				  	</tr>
                    				  	<% } %>	
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
-                                <tr><td>Mark</td></tr>
-                                <tr><td>Jacob</td></tr>
-                                <tr><td>Larry</td></tr>
                                 <tr><td id="HospitalName">Hospital Name</td></tr>
                             </tbody>
                           </table>
+                          
+                          
                    		</div>
                 	</div>
             	</div>
+            	
+           <% String loc = request.getParameter("location"); %>
+           <% String range = request.getParameter("rangeRange"); %>
+           <% String procedures = request.getParameter("procedure"); %>
+            	
     	<script>
-	      var map;
-	     var locations = []
+    	
+    	var origin = "<%= loc%>"; 
+    	var procedure = "<%= procedure%>"; 
+  	 	var range = "<%= range%>" * 0.621371; 
+  	 	
+ 		
+	     var map;
+	     var locations = [];
 	      <% 
 	      	for (int i = 0; i < hospitalList.size(); i++){ 
 	      %>
@@ -109,12 +110,10 @@
       		var row = [hospitalName, hospitalAddress]
       		locations.push(row)
 	      <% } %>
-	      var origin = 'Iowa';
 	      var distance = "Caclulating...";
 	      var prevInfoWindow;
 	      var markerArray = [];
 	      var markerDistance = [];
-	      var range = 1430;
 	      
 	      function initMap() {
 	    	  var position = {lat: 56.46913, lng: -2.97489};
@@ -211,9 +210,9 @@
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][1] + ' </h5>' + 'Distance: ' + distance +
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + ' </h5>' + '<b>Distance:</b> ' + distance +
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure:</b> 812 - RED BLOOD CELL DISORDERS <hr> <b>Address:</b>' + locations[address][0] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '<p><b>Procedure: </b>' + procedure + '<hr> <b>Address:</b>' + locations[address][1] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
 	                  '</div>'+
 	                  '</div>'
 	            	});

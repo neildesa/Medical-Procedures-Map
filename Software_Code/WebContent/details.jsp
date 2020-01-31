@@ -48,14 +48,14 @@
 					
 					<div class="form-group form-item">
                         <label for="procedure">Procedure</label>
-	                    <select class="js-example-basic-single form-control" data-placeholder="Select a Procedure" id="procedure">
-	                    	<% 
+	                    <select class="js-example-basic-single form-control" data-placeholder="Select a Procedure" name="procedure" id="procedure">
+	                    	<%
                         		ArrayList<String> procedure = JavaFunctionsForJsp.returnListOfProcedures();
 								for (int i=0; i<procedure.size(); i++) { %> 
 									<option> <% out.println(procedure.get(i)); %> </option> 
-								<% } 
-							%>
+								<% } %> 
 						</select>
+						
 					</div>
                     
 
