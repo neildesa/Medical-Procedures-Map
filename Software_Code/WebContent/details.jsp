@@ -18,7 +18,7 @@
     <body>
         <div class="container-flex">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="index.html">Help! I'm a Fish</a>
+                <a class="navbar-brand" href="Web/index.html">Help! I'm a Fish</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

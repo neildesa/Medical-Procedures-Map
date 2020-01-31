@@ -32,7 +32,7 @@
 
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 75px">
-                <a class="navbar-brand" href="#">Help! I'm a Fish</a>
+                <a class="navbar-brand" href="Web/index.html">Help! I'm a Fish</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -42,7 +42,7 @@
                             <a class="nav-link" href="Web/index.html">Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.js">Find a Hospital<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="index.jsp">Find a Hospital<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Web/about.html">About us</a>
