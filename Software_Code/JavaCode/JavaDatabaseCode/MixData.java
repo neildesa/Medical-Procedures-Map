@@ -1,4 +1,4 @@
-package jdbc.domain;
+package JavaDatabaseCode;
 
 public class MixData {
 	int procedureId;
