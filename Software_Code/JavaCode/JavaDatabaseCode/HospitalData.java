@@ -1,4 +1,4 @@
-package jdbc.domain;
+package JavaDatabaseCode;
 
 public class HospitalData {
 	int providerId;

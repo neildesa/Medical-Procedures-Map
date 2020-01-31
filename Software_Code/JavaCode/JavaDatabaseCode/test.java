@@ -1,12 +1,12 @@
-package Test;
+package JavaDatabaseCode;
 
 
 
 import java.util.List;
 
 import org.junit.Test;
-import jdbc.domain.*;
-import jdbc.dao.HospitalDao;
+
+
 
 public class test {
 	
@@ -63,9 +63,9 @@ public class test {
 	
 	
 	@Test
-	public void testCallLocationBasedOnIP() {
+	public void testCallLocationBasedOnIpv4() {
 		HospitalDao hos = new HospitalDao();
-		List<MixData> list = hos.CallLocationBasedOnIP("18933760", "038 - EXTRACRANIAL PROCEDURES W CC");
+		List<MixData> list = hos.CallLocationBasedOnIpv4("18933760", "038 - EXTRACRANIAL PROCEDURES W CC");
 		for(MixData obj:list) {
 			System.out.println(obj.getProviderId());
 			System.out.println(obj.getProviderName());
@@ -77,6 +77,23 @@ public class test {
 			System.out.println("");
 		}
 		System.out.println("Test call location based on ip finished");
+	}
+	
+	@Test
+	public void testCallLocationBasedOnZipCode() {
+		HospitalDao hos = new HospitalDao();
+		List<MixData> list = hos.CallLocationBasedOnZipCode("36301", "027 - CRANIOTOMY & ENDOVASCULAR INTRACRANIAL PROCEDURES W/O CC/MCC");
+		for(MixData obj:list) {
+			System.out.println(obj.getProviderId());
+			System.out.println(obj.getProviderName());
+			System.out.println(obj.getProviderZipCode());
+			System.out.println(obj.getDrgDefinition());
+			System.out.println(obj.getAvgCoveredCharges());
+			System.out.println(obj.getAvgTotalPayments());
+			System.out.println(obj.getAvgMedicarePayments());
+			System.out.println("");
+		}
+		System.out.println("Test call location based on Zip Code finished");
 	}
 	
 }
