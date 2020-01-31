@@ -127,7 +127,7 @@
                     
                     <!-- Range -->
                     <div class="slidecontainer form-item">                        
-                        <p>Distance from you: <span id="range"></span> KM</p>
+                        <p>Distance from you: <span id="range"></span> Miles</p>
                         <input type="range" name="rangeRange" min="10" max="5000" value="50" class="slider" id="rangeRange">
                     </div>
 

@@ -53,7 +53,7 @@
 	      <div id="map"></div> 
             <div class="container-flex content-box">    
                 <div class="row align-items-center">
-                    <div class="col overflow-auto" style="height: calc(100vh - 75px)">
+                    <div class="col overflow-auto" style="height: calc(100vh - 75px); padding: 0px">
                         <table class="table table-hover table-borderless table-striped">
                             <thead>
                               <tr>
