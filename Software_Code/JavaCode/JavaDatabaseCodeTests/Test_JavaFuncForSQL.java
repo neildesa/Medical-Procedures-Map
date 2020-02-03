@@ -1,10 +1,13 @@
-package JavaDatabaseCode;
+package JavaDatabaseCodeTests;
 
 
 
 import java.util.List;
 
 import org.junit.Test;
+
+import JavaDatabaseCode.JavaFuncForSQL;
+import JavaDatabaseCode.MixData;
 
 
 
@@ -62,23 +65,6 @@ public class Test_JavaFuncForSQL {
 	
 	
 	
-	@Test
-	public void testCallLocationBasedOnIpv4() {
-		JavaFuncForSQL hos = new JavaFuncForSQL();
-		List<MixData> list = hos.CallLocationBasedOnIpv4("18933760", "038 - EXTRACRANIAL PROCEDURES W CC");
-		for(MixData obj:list) {
-			System.out.println(obj.getProviderId());
-			System.out.println(obj.getProviderName());
-			System.out.println(obj.getProviderZipCode());
-			System.out.println(obj.getDrgDefinition());
-			System.out.println(obj.getAvgCoveredCharges());
-			System.out.println(obj.getAvgTotalPayments());
-			System.out.println(obj.getAvgMedicarePayments());
-			System.out.println("");
-		}
-		System.out.println("function callLocationBasedOnIpv4 finished");
-	}
-	
 	
 	@Test
 	public void testCallLocationBasedOnZipCode() {
@@ -106,5 +92,12 @@ public class Test_JavaFuncForSQL {
 			System.out.println(obj.getDrgDefinition());
 		}
 		System.out.println("function testReturnsortedProcedures finished");
+	}
+	
+	
+	@Test
+	public void testAddReview() {
+		JavaFuncForSQL func = new JavaFuncForSQL();
+		func.AddReview(392933,4 );
 	}
 }
