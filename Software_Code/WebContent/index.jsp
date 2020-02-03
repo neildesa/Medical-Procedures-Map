@@ -71,7 +71,7 @@
                             		String name = procedureName.trim();
                             		
                             		System.out.println("e:" + procedureName);
-                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
 									
                    			  		System.out.println("hospital size: " + hospitalList.size());
                    			  		
@@ -99,6 +99,7 @@
     	var origin = "<%= loc%>"; 
     	var procedure = "<%= procedure%>"; 
   	 	var range = "<%= range%>" * 0.621371; 
+  	 	var cost = 10000;
   	 	
  		
 	     var map;
@@ -159,6 +160,7 @@
             	          	      }
             	          	    }
             	          		removeMarkers();
+            	          		changeColour();
             	          	  }
             	          	if (status == 'NOT_FOUND') {
             	          		  alert("The origin and/or destination of this pairing could not be geocoded.");
@@ -208,13 +210,23 @@
 	            markerArray.push(marker);
 	            markerDistance.push(distance);
 
+            	if(cost < 50000){
+            		var color = "green";
+            	}
+            	else if(cost < 1000000){
+            		var color = "orange";
+            	}
+            	else if(cost < 1500000){
+            		var color = "red";
+            	}
+	            
 	            var infowindow = new google.maps.InfoWindow({
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + ' </h5>' + '<b>Distance:</b> ' + distance +
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + '</h5> <h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5> <br> <b>Distance:</b>' + distance +
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure: </b>' + procedure + '<hr> <b>Address:</b>' + locations[address][1] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '<p><b>Procedure: </b>' + procedure + '<hr> <b>Address:</b>' + locations[address][1]  +
 	                  '</div>'+
 	                  '</div>'
 	            	});
@@ -281,7 +293,7 @@
             map.fitBounds(antennasCircle.getBounds());
           }
         
-        
+            
       var key = config.API_KEY;
       var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
       var script = document.createElement('script');
