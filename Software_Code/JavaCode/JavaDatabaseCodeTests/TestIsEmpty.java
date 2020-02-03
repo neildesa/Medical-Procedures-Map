@@ -28,7 +28,7 @@ public class TestIsEmpty {
 	}
 	
 	@Test
-	public void testCallLocationBasedOnZipCode() {
+	public void testCallLocationBasedOnZipCodeIsEmpty() {
 		JavaFuncForSQL hos = new JavaFuncForSQL();
 		List<MixData> list = hos.CallLocationBasedOnZipCode("36301", "027 - CRANIOTOMY & ENDOVASCULAR INTRACRANIAL PROCEDURES W/O CC/MCC");
 		boolean isEmpty = list.isEmpty();
@@ -36,7 +36,7 @@ public class TestIsEmpty {
 	}
 	
 	@Test
-	public void testReturnsortedProcedures() {
+	public void testReturnsortedProceduresIsEmpty() {
 		JavaFuncForSQL func = new JavaFuncForSQL();
 		List<MixData> list = func.ReturnsortedProcedures();
 		boolean isEmpty = list.isEmpty();
