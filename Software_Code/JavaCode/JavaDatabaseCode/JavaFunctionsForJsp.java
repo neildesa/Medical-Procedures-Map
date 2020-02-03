@@ -19,9 +19,8 @@ public class JavaFunctionsForJsp {
 	{
 		 ArrayList<ArrayList<String>> hospitalListTest = new ArrayList<ArrayList<String>>();
 		
-		  String procedureName =
-		  "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
-		  hospitalListTest = findHospitalByProcedure(procedureName);
+		  String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		  hospitalListTest = findHospitalByProcedure(procedureName, 600000, 800000);
 		  System.out.println("size: " + hospitalListTest.size());
 		  
 		/* returnListOfProcedures(); */
@@ -78,6 +77,59 @@ public class JavaFunctionsForJsp {
 		}
 		
 	
+	}
+	
+	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure, int lowerBound, int upperBound) throws ClassNotFoundException
+	{
+		ArrayList<ArrayList<String>> hospitalListToReturn = new ArrayList<ArrayList<String>>();
+		
+		// structure for code taken from: https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-connect-drivermanager.html
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, user, psw);
+			
+			// Do something with the Connection
+			Statement statement = conn.createStatement();
+			System.out.println("Procedure : " + procedure);
+			System.out.println("Cost      : " + lowerBound + " - " + upperBound);
+			String sql = "call 19agileteam3db.SearchByCost('" + procedure + "', "+ lowerBound +", "+ upperBound +");";
+			ResultSet rs = statement.executeQuery(sql);
+					
+			ArrayList<ArrayList<String>> hospitalList = new ArrayList<ArrayList<String>>();
+			while (rs.next()) 
+			{   //Retrieve by column name 
+				
+				// store and add each hospital and address into hospitalList
+				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
+				String hospital = rs.getString("Provider_Name");
+				hospitalListRowToAdd.add(hospital);
+				String address = rs.getString("Provider_Street_Address");
+				hospitalListRowToAdd.add(address);
+				
+				hospitalList.add(hospitalListRowToAdd);
+				
+			}
+			
+			/*
+			 * System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
+			 * 0; i < hospitalList.size(); i++) { System.out.println(hospitalList.get(i)); }
+			 */
+			 
+			// set return list if procedure successfully ran
+			return hospitalList;
+		} 
+		catch (SQLException ex) 
+		{
+		    // handle any errors
+		    System.out.println("SQLException: " + ex.getMessage());
+		    System.out.println("SQLState: " + ex.getSQLState());
+		    System.out.println("VendorError: " + ex.getErrorCode());
+		    
+		    // set return list to null if errors occur
+		    return null;
+		}
+		
 	}
 	
 	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 

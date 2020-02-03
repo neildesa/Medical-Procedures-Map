@@ -42,7 +42,7 @@
                             <a class="nav-link" href="Web/index.html">Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.jsp">Find a Hospital<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="details.jsp">Find a Hospital<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Web/about.html">About us</a>
@@ -65,11 +65,13 @@
                             		// procedureName would be received from the details.html drop-down object the user selects
                             		String procedure = request.getParameter("procedure"); 
                             		String procedureName = procedure;
+                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
+                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
                             		
                             		String name = procedureName.trim();
                             		
                             		System.out.println("e:" + procedureName);
-                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
+                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
 									
                    			  		System.out.println("hospital size: " + hospitalList.size());
                    			  		
@@ -176,7 +178,7 @@
     	        		  placeMarkerUser(map, results[0].geometry.location);
     	  			}
 	    	          else {
-    		            alert('Geocode was not successful for the following reason: ' + status);
+    		            //alert('Geocode was not successful for the following reason: ' + status);
     		          }
 	    	 	 });
 	    	  }
@@ -186,7 +188,7 @@
 	    	        	  getDistance(distanceMatrix, map, address, results[0].geometry.location, distance); 
 	    		  } 
 	    	          else {
-	  	            	alert('Geocode was not successful for the following reason: ' + status);
+	  	            	//alert('Geocode was not successful for the following reason: ' + status);
 	  	          }
 	        	});
 	      	}
