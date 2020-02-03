@@ -24,20 +24,20 @@ public class JavaFunctionsForJsp {
 		 ArrayList<ArrayList<String>> hospitalListTest = new ArrayList<ArrayList<String>>();
 		
 		  String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
-		  hospitalListTest = findHospitalByProcedure(procedureName, 600000, 800000);
-		  System.out.println("size: " + hospitalListTest.size());
+		/*
+		 * hospitalListTest = findHospitalByProcedure(procedureName, 600000, 800000);
+		 * System.out.println("size: " + hospitalListTest.size());
+		 */
+		 
+		  //findHospitalByProcedure(procedureName);
 		  
 		/* returnListOfProcedures(); */
 	}
 	
 	
-	
-	
-	
+
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
-	{
-		ArrayList<ArrayList<String>> hospitalListToReturn = new ArrayList<ArrayList<String>>();
-		
+	{		
 		// structure for code taken from: https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-connect-drivermanager.html
 		try 
 		{
@@ -47,28 +47,40 @@ public class JavaFunctionsForJsp {
 			// Do something with the Connection
 			Statement statement = conn.createStatement();
 			System.out.println("procedure: " + procedure);
-			String sql = "call 19agileteam3db.SearchByProcedure('" + procedure + "');";
+			String sql = "call 19agileteam3db.callLongitudeAndLatitude('" + procedure + "');";
 			ResultSet rs = statement.executeQuery(sql);
 					
 			ArrayList<ArrayList<String>> hospitalList = new ArrayList<ArrayList<String>>();
 			while (rs.next()) 
 			{   //Retrieve by column name 
 				
-				// store and add each hospital and address into hospitalList
+				// store and add each hospital and address 
 				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
 				String hospital = rs.getString("Provider_Name");
 				hospitalListRowToAdd.add(hospital);
 				String address = rs.getString("Provider_Street_Address");
 				hospitalListRowToAdd.add(address);
 				
+				// store, convert to string, and add each hospital longitude & latitude 
+				Double x = rs.getDouble("longitude");
+				String longitude = Double.toString(x);
+				hospitalListRowToAdd.add(longitude);
+				
+				Double y = rs.getDouble("latitude");
+				String latitude = Double.toString(y);
+				hospitalListRowToAdd.add(latitude);
+				
+				// add facility (hospital) of procedure and associated info to hospitalList
 				hospitalList.add(hospitalListRowToAdd);
 				
 			}
+			
 			
 			/*
 			 * System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
 			 * 0; i < hospitalList.size(); i++) { System.out.println(hospitalList.get(i)); }
 			 */
+			 
 			 
 			// set return list if procedure successfully ran
 			return hospitalList;
@@ -88,9 +100,7 @@ public class JavaFunctionsForJsp {
 	}
 	
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure, int lowerBound, int upperBound) throws ClassNotFoundException
-	{
-		ArrayList<ArrayList<String>> hospitalListToReturn = new ArrayList<ArrayList<String>>();
-		
+	{		
 		// structure for code taken from: https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-connect-drivermanager.html
 		try 
 		{
@@ -108,13 +118,21 @@ public class JavaFunctionsForJsp {
 			while (rs.next()) 
 			{   //Retrieve by column name 
 				
-				// store and add each hospital and address into hospitalList
+				// store and add each hospital and address
 				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
 				String hospital = rs.getString("Provider_Name");
 				hospitalListRowToAdd.add(hospital);
 				String address = rs.getString("Provider_Street_Address");
 				hospitalListRowToAdd.add(address);
 				
+				// add cost of procedure (as a double converted to string)
+				double cost = rs.getDouble("AverageTotalPayments");
+				String procedureCost = Double.toString(cost);
+				hospitalListRowToAdd.add(procedureCost);
+				
+				
+				
+				// add facility (hospital) of procedure and associated info to hospitalList
 				hospitalList.add(hospitalListRowToAdd);
 				
 			}
