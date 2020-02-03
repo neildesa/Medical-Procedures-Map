@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
@@ -7,13 +8,7 @@
 <head>
 <link rel="stylesheet" href="/Web/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
 <meta charset="ISO-8859-1">
 <title>Maps</title>
 
@@ -65,66 +60,43 @@
                     </ul>
                 </div>
             </nav>
-            
-            
-            
-      		<div id="map">
-      			
-			</div> 
-            <div class="container-flex content-box"> 
-            	<div class="dropdown"  >
-						  <button style="width: 30%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    Filter By
-						  </button>
-						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						    <a class="dropdown-item" href="#">Cost</a>
-						    <a class="dropdown-item" href="#">Distance</a>
-						    <a class="dropdown-item" href="#">Rating</a>
-						  </div>
-						</div>
+	      <div id="map"></div> 
+            <div class="container-flex content-box">    
                 <div class="row align-items-center">
-
-
-
-                	
-                    <div class="col overflow-auto" style="height: calc(100vh - 113px); padding: 0px">
-                    	<div class="overflow-auto">
-	                        <table class="table table-hover table-borderless table-striped">
-	                            <thead>
-	                              <tr>
-	                                <th scope="col">Hospital</th>
-	                              </tr>
-	                            </thead>
-	                            <tbody>
-									<% 
-	                            		// procedureName would be received from the details.html drop-down object the user selects
-	                            		String procedure = request.getParameter("procedure"); 
-	                            		String procedureName = procedure;
-	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
-	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
-	                            		
-	                            		String name = procedureName.trim();
-	                            		
-	                            		System.out.println("e:" + procedureName);
-	                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
-										
-	                   			  		System.out.println("hospital size: " + hospitalList.size());
-	                   			  		
-	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
-	                   				%>
-	                   				  	<tr>
-	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
-	                   				  	</tr>
-	                   				  	<% } %>	
-	                                <tr><td id="HospitalName">Hospital Name</td></tr>
-	                            </tbody>
-	                          </table>
-                          </div>
-
+                    <div class="col overflow-auto" style="height: calc(100vh - 75px); padding: 0px">
+                        <table class="table table-hover table-borderless table-striped">
+                            <thead>
+                              <tr>
+                                <th scope="col">Hospital</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+								<% 
+                            		// procedureName would be received from the details.html drop-down object the user selects..
+                            		String procedure = request.getParameter("procedure"); 
+                            		String procedureName = procedure;
+                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
+                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
+                            		
+                            		String name = procedureName.trim();
+                            		
+                            		System.out.println("e:" + procedureName);
+                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
+									
+                   			  		System.out.println("hospital size: " + hospitalList.size());
+                   			  		
+                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
+                   				%>
+                   				  	<tr>
+                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+                   				  	</tr>
+                   				  	<% } %>	
+                                <tr><td id="HospitalName">Hospital Name</td></tr>
+                            </tbody>
+                          </table>
                           
                           
                    		</div>
-                   			
                 	</div>
             	</div>
             	
@@ -134,187 +106,200 @@
             	
     	<script>
     	
+    	//Converts Java variables into javascript variables.
     	var origin = "<%= loc%>"; 
     	var procedure = "<%= procedure%>"; 
   	 	var range = "<%= range%>" * 0.621371; 
-  	 	var cost = 10000;
-  	 	
 
-	     var map;
-	     var locations = [];
-	      <% 
-	      	for (int i = 0; i < hospitalList.size(); i++){ 
-	      %>
-	   // note: hospitalList.get(i).get(1) = hospitalAddress; hospitalList.get(i).get(0) = hospitalName 
-      		var hospitalName = "<%= hospitalList.get(i).get(0) %>";
-      		var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
-      		var row = [hospitalName, hospitalAddress]
-      		locations.push(row)
-	      <% } %>
-	      var distance = "Caclulating...";
-	      var prevInfoWindow;
-	      var markerArray = [];
-	      var markerDistance = [];
+  	 	//Global Variable Initialization.
+	  	var cost = 10000;
+		var map;
+	  	var distance = "Caclulating...";
+		var prevInfoWindow;
+	   	var markerArray = [];
+	   	var markerDistance = [];
 	      
-	      function initMap() {
-	    	  var position = {lat: 56.46913, lng: -2.97489};
-	    	  var map = new google.maps.Map(
-	    	      document.getElementById('map'), {zoom: 4, center: position});
+	    //2D Array of Hospital Names, along with their Address.  
+		var locations = [];
+	    
+	    //Convery Java array of hospitals into javascript variables to place in the locations[] array.
+		<% 
+			for (int i = 0; i < hospitalList.size(); i++){ 
+		%>
+		   // note: hospitalList.get(i).get(1) = hospitalAddress; hospitalList.get(i).get(0) = hospitalName. 
+	    	var hospitalName = "<%= hospitalList.get(i).get(0) %>";
+	      	var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
+	      	var row = [hospitalName, hospitalAddress]
+	      	locations.push(row)
+		  <% } %>
+		      
+		
+		//Function that initialises the Google Maps API map, creates the Geocoder and DistanceMatrix objects and calls codeAddress to geocode addresses and palce markers.
+	   	function initMap() {
+	 		var position = {lat: 56.46913, lng: -2.97489};
+	   		var map = new google.maps.Map(
+	 		document.getElementById('map'), {zoom: 4, center: position});
 	    	  
-	    	  var service = new google.maps.DistanceMatrixService();
-	          geocoder = new google.maps.Geocoder();
+	  		var service = new google.maps.DistanceMatrixService();
+	      	geocoder = new google.maps.Geocoder();
 	          
-	          codeAddress(geocoder, map, origin, service, true);
+	      	codeAddress(geocoder, map, origin, service, true);
 	          
-				for(var location in locations){
-					codeAddress(geocoder, map, location, service, false);
-				}
-
-	      }
+			for(var location in locations){
+				codeAddress(geocoder, map, location, service, false);
+			}
+	 	}
 	      
-	      function getDistance(distanceMatrix, map, address, result, distance){
-	    	  dest = locations[address][0];
-	    	  distanceMatrix.getDistanceMatrix(
-            		  {
-            			    origins: [origin],
-            			    destinations: [dest],
-            			    travelMode: 'DRIVING',
-            			    unitSystem: google.maps.UnitSystem.IMPERIAL,
-            		  }, function(response, status){
-            	          	if (status == 'OK') {
-            	          		var origins = response.originAddresses;
-            	          	    var destinations = response.destinationAddresses;
+		//Function to calculate the distance between origin and destination. Uses callback function so call methods to run after in this method.
+		function getDistance(distanceMatrix, map, address, result, distance){
+			dest = locations[address][0];
+			distanceMatrix.getDistanceMatrix({
+            	origins: [origin],
+            	destinations: [dest],
+            	travelMode: 'DRIVING',
+            	unitSystem: google.maps.UnitSystem.IMPERIAL,
+          	}, function(response, status){
+          		
+            	if (status == 'OK') {
+           			var origins = response.originAddresses;
+            		var destinations = response.destinationAddresses;
             	          	    
-            	          	  for (var i = 0; i < origins.length; i++) {
-            	          	      var results = response.rows[i].elements;
-            	          	      for (var j = 0; j < results.length; j++) {
-            	          	        var element = results[j];
-            	          	        distance = element.distance.text;
-            	          	        var duration = element.duration.text;
-            	          	        var from = origins[i];
-            	          	        var to = destinations[j];
-            	          	      	placeMarker(map, address, result, distance);
-            	          	      	
-            	          	      }
-            	          	    }
-            	          		removeMarkers();
-            	          		changeColour();
-            	          	  }
-            	          	if (status == 'NOT_FOUND') {
-            	          		  alert("The origin and/or destination of this pairing could not be geocoded.");
-            	          		  }
-            				if (status == 'ZERO_RESULTS'){
-            					alert("No route could be found between the origin and destination.");				
-            					}
-            				});    
+            		for (var i = 0; i < origins.length; i++) {
+            	      	var results = response.rows[i].elements;
+            	    	for (var j = 0; j < results.length; j++) {
+            	         	var element = results[j];
+            	          	distance = element.distance.text;
+            	         	var duration = element.duration.text;
+            	         	var from = origins[i];
+            	         	var to = destinations[j];
+            	        	placeMarker(map, address, result, distance);	      	
+            	       	}
+            	 	}
+            		removeMarkers();
+            	 	changeColour();
+           		}
+            	
+            	if (status == 'NOT_FOUND') {
+            		alert("The origin and/or destination of this pairing could not be geocoded.");
+            	}
+            	
+           		if (status == 'ZERO_RESULTS'){
+            		alert("No route could be found between the origin and destination.");				
+            	}
+     		});    
 	    }
 	      
-	      
-	      function codeAddress(geocoder, map, address, distanceMatrix, user) {
+	 	//Method that utilises the Google Maps Geocoding API. Input address, output latatude/longitude.
+	 	//N.b.Query limit of ~10 queries/s
+		function codeAddress(geocoder, map, address, distanceMatrix, user) {
 	    	  
-	    	  if(user == true){
-	    		  geocoder.geocode({'address': address}, function(results, status) {
-	    	          if (status === 'OK') { 
-    	        		  placeMarkerUser(map, results[0].geometry.location);
-    	  			}
-	    	          else {
-    		            //alert('Geocode was not successful for the following reason: ' + status);
-    		          }
-	    	 	 });
-	    	  }
-	    	  else{
-	    		  geocoder.geocode({'address': locations[address][0]}, function(results, status) {
-	    	          if (status === 'OK') { 
-	    	        	  getDistance(distanceMatrix, map, address, results[0].geometry.location, distance); 
-	    		  } 
-	    	          else {
-	  	            	//alert('Geocode was not successful for the following reason: ' + status);
-	  	          }
-	        	});
-	      	}
-	      }
+			if(user == true){
+				geocoder.geocode({'address': address}, function(results, status) {
+					if (status === 'OK') { 
+						placeMarkerUser(map, results[0].geometry.location);
+					}
+					else {
+	    				alert('Geocode was not successful for the following reason: ' + status);
+					}
+				});
+			}
+		    	  
+			else{
+		  		geocoder.geocode({'address': locations[address][0]}, function(results, status) {
+		    		if (status === 'OK') { 
+		    	 		getDistance(distanceMatrix, map, address, results[0].geometry.location, distance); 
+		    		} 
+		    	
+		    		else {
+		  	      		alert('Geocode was not successful for the following reason: ' + status);
+		  	  		}
+		        });
+			}
+		}
 	      
-              
+        //Function to place marker a custom marker on the map given the latatude/longatude. Also creates an infowindow linked to the marker.  
 	    function placeMarker(map, address, result, distance){
 	    	
-	            var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png',  scaledSize: new google.maps.Size(35,35) }
-	            var marker = new google.maps.Marker({
-	              map: map,
-	              icon: image,
-	              animation: google.maps.Animation.DROP,
-	              position: result
-	            });
+			var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png',  scaledSize: new google.maps.Size(35,35) }
+	     	var marker = new google.maps.Marker({
+	        	map: map,
+	        	icon: image,
+	       		animation: google.maps.Animation.DROP,
+	         	position: result
+	     	});
 	            
-	            markerArray.push(marker);
-	            markerDistance.push(distance);
+	      	markerArray.push(marker);
+	      	markerDistance.push(distance);
 
-            	if(cost < 50000){
-            		var color = "green";
-            	}
-            	else if(cost < 1000000){
-            		var color = "orange";
-            	}
-            	else if(cost < 1500000){
-            		var color = "red";
-            	}
+          	if(cost < 50000){
+          		var color = "green";
+           	}
+          	
+           	else if(cost < 1000000){
+            	var color = "orange";
+          	}
+          	
+          	else if(cost < 1500000){
+           		var color = "red";
+          	}
 	            
-	            var infowindow = new google.maps.InfoWindow({
-	            	  content:'<div id="content">'+
-	                  '<div id="siteNotice">'+
-	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + 	
-	                  '<div style="float:right">' +
-	                  '<span class="fa fa-star checked"></span>' +
-	                  '<span class="fa fa-star checked"></span>' +
-	                  '<span class="fa fa-star checked"></span>' +
-	                  '<span class="fa fa-star checked"></span>' +
-	                  '<span class="fa fa-star"></span>' +  
-	                  '</div>' +
-	                  '<h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5></h5> <hr>'  +
-	                  '<div id="bodyContent">'+
-	                  '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
-	                  '<br> <b>Address: </b>' + locations[address][1]  + 
-	                  '<br> <b>Procedure: </b>' + procedure  + 
-	                  '</p>' +
-	                  '</div>'+
-	                  '</div>'
-	            	});
+            var infowindow = new google.maps.InfoWindow({
+           		content:'<div id="content">'+
+                 '<div id="siteNotice">'+
+                 '</div>'+
+                 '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + 	
+                 '<div style="float:right">' +
+                 '<span class="fa fa-star checked"></span>' +
+                 '<span class="fa fa-star checked"></span>' +
+                 '<span class="fa fa-star checked"></span>' +
+                 '<span class="fa fa-star checked"></span>' +
+                 '<span class="fa fa-star"></span>' +  
+                 '</div>' +
+                 '<h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5></h5> <hr>'  +
+                 '<div id="bodyContent">'+
+                 '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
+                 '<br> <b>Address: </b>' + locations[address][1]  + 
+                 '<br> <b>Procedure: </b>' + procedure  + 
+                 '</p>' +
+                 '</div>'+
+                 '</div>'
+           	});
 
-	            	google.maps.event.addListener(marker, 'click', function() {
+           	google.maps.event.addListener(marker, 'click', function() {
 	            		
 	            if(prevInfoWindow){
 	            	prevInfoWindow.close();
 	            }
-	            
+		            
 	            prevInfoWindow = infowindow;
-	          	
-               infowindow.open(map,marker)
-               highlightClick()}                        
-	            	);
+		          	
+	 			infowindow.open(map,marker)
+	            highlightClick()}                        
+	   		);
 	    }
 	    
-	    
+	    //Function to place current location marker for the user and then draws circle with radius of the selected range.
 	    function placeMarkerUser(map, result){
-	    	map.setCenter(result);
+	  		map.setCenter(result);
             var image = { url: 'https://cdn0.iconfinder.com/data/icons/real-estate-240/32/10_Location_home_house_pin_gps-512.png',  scaledSize: new google.maps.Size(35,35) }
             var marker = new google.maps.Marker({
-              map: map,
-              icon: image,
-              animation: google.maps.Animation.DROP,
-              position: result
+          		map: map,
+              	icon: image,
+              	animation: google.maps.Animation.DROP,
+              	position: result
             });
             
-            drawCircle(map, result);
+			drawCircle(map, result);
 	    }
 	     
-	    
+	    //Function to highlight corresponding table entry when map marker is clicked.
         function highlightClick(){
-          var elmnt = document.getElementById("HospitalName");
-                  elmnt.scrollIntoView({behavior: "smooth"});
-                  elmnt.style.backgroundColor = "#FDFF47";
+			var elmnt = document.getElementById("HospitalName");
+        	elmnt.scrollIntoView({behavior: "smooth"});
+           	elmnt.style.backgroundColor = "#FDFF47";
         }
 
-        
+        //Function to remove markers outside of the user's range.
         function removeMarkers(){
 			for(var marker in markerArray){
 				var distance = (markerDistance[marker].replace(" mi", "")).replace(",", "");
@@ -326,18 +311,18 @@
 			}
         }
         
-        
+        //Method that uses Google Maps Javascript API to draw circle on map, with radius equal to user's range.
         function drawCircle(map, address) {
         	circleRadius = range*1.60934;
             var antennasCircle = new google.maps.Circle({
-              strokeColor: "#000000",
-              strokeOpacity: 0.4,
-              strokeWeight: 2,
-              fillColor: "#00ffff",
-              fillOpacity: 0.1,
-              map: map,
-              center: address,
-              radius: circleRadius * 1000
+              	strokeColor: "#000000",
+              	strokeOpacity: 0.4,
+              	strokeWeight: 2,
+              	fillColor: "#00ffff",
+              	fillOpacity: 0.1,
+              	map: map,
+              	center: address,
+              	radius: circleRadius * 1000
             });
             map.fitBounds(antennasCircle.getBounds());
           }
