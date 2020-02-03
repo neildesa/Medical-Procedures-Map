@@ -15,6 +15,10 @@ public class JavaFunctionsForJsp {
 	
 	public static Connection conn = null;
 	
+	
+	
+	
+	
 	public static void main(String[] args) throws Exception
 	{
 		/*
@@ -25,6 +29,10 @@ public class JavaFunctionsForJsp {
 		
 		returnListOfProcedures();
 	}
+	
+	
+	
+	
 	
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
 	{
@@ -76,6 +84,12 @@ public class JavaFunctionsForJsp {
 		
 		return hospitalListToReturn;
 	}
+	
+	
+	
+	
+	
+	
 	
 	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 
 	{

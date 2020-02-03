@@ -8,26 +8,16 @@ import org.junit.Test;
 
 
 
-public class test {
+public class Test_JavaFuncForSQL {
 	
-	
-
-	//@Test
-	//public void testSearchByCost() {
-	//	HospitalDao hos = new HospitalDao();
-	//	hos.SearchByCost("038 - EXTRACRANIAL PROCEDURES W CC", 1000, 11000);
-	//}
-	
-	//@Test
-	//public void testSearchByProcedure() {
-	//	HospitalDao hos = new HospitalDao();
-	//	hos.SearchByProcedure("057 - DEGENERATIVE NERVOUS SYSTEM DISORDERS W/O MCC");
-	//}
 	
 	@Test
 	public void testGetSearchByCost(){
-		HospitalDao hos = new HospitalDao();
-		List<MixData> list = hos.GetSearchByCost("038 - EXTRACRANIAL PROCEDURES W CC", 1000.0, 13000.0);
+		JavaFuncForSQL func = new JavaFuncForSQL();
+		boolean success=true;
+		double min=1000;
+		double max=13000;
+		List<MixData> list = func.GetSearchByCost("038 - EXTRACRANIAL PROCEDURES W CC", min, max);
 		for(MixData obj:list) {
 			System.out.println(obj.getProviderId());
 			System.out.println(obj.getProviderName());
@@ -37,15 +27,24 @@ public class test {
 			System.out.println(obj.getAvgCoveredCharges());
 			System.out.println(obj.getAvgTotalPayments());
 			System.out.println(obj.getAvgMedicarePayments());
+			System.out.println(obj.getLatitude());
+			System.out.println(obj.getLongitude());
 			System.out.println("");
+			if(obj.getAvgCoveredCharges()<min||obj.getAvgCoveredCharges()>max) {
+				success=false;
+				break;
+			}
 		}
-		System.out.println("Test Get data search by cost finished");
+		if(success) {
+			System.out.println("function getSearchByCost successfully done");
+		}
+
 	}
-	
+
 	
 	@Test
 	public void testGetSearchByProcedure() {
-		HospitalDao hos = new HospitalDao();
+		JavaFuncForSQL hos = new JavaFuncForSQL();
 		List<MixData> list = hos.GetSearchByProcedure("038 - EXTRACRANIAL PROCEDURES W CC");
 		for(MixData obj:list) {
 			System.out.println(obj.getProviderId());
@@ -58,13 +57,14 @@ public class test {
 			System.out.println(obj.getAvgMedicarePayments());
 			System.out.println("");
 		}
-		System.out.println("Test Get data search by procudure finished");
+		System.out.println("function getSearchByProcedur finished");
 	}
+	
 	
 	
 	@Test
 	public void testCallLocationBasedOnIpv4() {
-		HospitalDao hos = new HospitalDao();
+		JavaFuncForSQL hos = new JavaFuncForSQL();
 		List<MixData> list = hos.CallLocationBasedOnIpv4("18933760", "038 - EXTRACRANIAL PROCEDURES W CC");
 		for(MixData obj:list) {
 			System.out.println(obj.getProviderId());
@@ -76,12 +76,13 @@ public class test {
 			System.out.println(obj.getAvgMedicarePayments());
 			System.out.println("");
 		}
-		System.out.println("Test call location based on ip finished");
+		System.out.println("function callLocationBasedOnIpv4 finished");
 	}
+	
 	
 	@Test
 	public void testCallLocationBasedOnZipCode() {
-		HospitalDao hos = new HospitalDao();
+		JavaFuncForSQL hos = new JavaFuncForSQL();
 		List<MixData> list = hos.CallLocationBasedOnZipCode("36301", "027 - CRANIOTOMY & ENDOVASCULAR INTRACRANIAL PROCEDURES W/O CC/MCC");
 		for(MixData obj:list) {
 			System.out.println(obj.getProviderId());
@@ -93,7 +94,17 @@ public class test {
 			System.out.println(obj.getAvgMedicarePayments());
 			System.out.println("");
 		}
-		System.out.println("Test call location based on Zip Code finished");
+		System.out.println("function callLocationBasedOnZipCode finished");
 	}
 	
+	
+	@Test
+	public void testReturnsortedProcedures() {
+		JavaFuncForSQL func = new JavaFuncForSQL();
+		List<MixData> list = func.ReturnsortedProcedures();
+		for(MixData obj:list) {
+			System.out.println(obj.getDrgDefinition());
+		}
+		System.out.println("function testReturnsortedProcedures finished");
+	}
 }
