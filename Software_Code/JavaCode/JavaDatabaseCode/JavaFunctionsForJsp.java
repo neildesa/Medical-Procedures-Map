@@ -15,6 +15,10 @@ public class JavaFunctionsForJsp {
 	
 	public static Connection conn = null;
 	
+	
+	
+	
+	
 	public static void main(String[] args) throws Exception
 	{
 		 ArrayList<ArrayList<String>> hospitalListTest = new ArrayList<ArrayList<String>>();
@@ -31,6 +35,7 @@ public class JavaFunctionsForJsp {
 	}
 	
 	
+
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
 	{		
 		// structure for code taken from: https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-connect-drivermanager.html
@@ -152,6 +157,12 @@ public class JavaFunctionsForJsp {
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
 	
 	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 
 	{

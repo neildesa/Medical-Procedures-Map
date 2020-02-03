@@ -82,7 +82,7 @@ The Java code now succesffully runs in the jsp file and connects with the MySQL 
 The team will begin to integrate the different sections of the front-end and back-end that haven't been fully joined. Additionally the team will work on finishing the core search function of hospitals by procedure in a basic form (this will enable us to build upon it as a team and add searching by cost, rating and/or distance). The team will continues to work on improving the problems that occur with the live-hosted website crashing during java code execution, and with coming up to a solution to solve our troublesome limited query rate with the google api (Only 10 requests allowed per second which is not ideal when searching hundreds of hospitals).
 
 ---
-## Day 4 (30/01/2020) - Scrum Meeting Summary (10am)
+## Day 4 (30/01/2020) - Scrum Meeting Summary (11:30am)
 The Scrum Master for this meeting was **Neilson Desa**
 
 ### Members Present:
@@ -98,4 +98,16 @@ The aims for today are:
 4. Adding the ability to add a visual radius when doing the search medical procedure by distance.
 5. Create the Java methods for searching by distance and by cost
 
-## Day 5 (31/01/2020) 
+## Day 5 (31/01/2020) - Scrum Meeting Summary (11:30am)
+The Scrum Master for this meetgin was **Neilson Desa**
+
+### Members Present:
+All members present
+
+### Summary of Converstaion
+The team conlcuded their current progress with a demo-able application that, when run locally, could allow clients to search for procedures by a distance certain (appearing as a radius on the map). The SQL procedures for searchin by cost and rating were created.
+
+The aims for today are:
+1. storing longitude and latitude of each hopsital zipcode and passing them through to Java via a SQL procedure.
+2. Preparing for the Sprint Review with the clients.
+3. Fixing any compilation errors on the local host.

@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
@@ -7,6 +8,13 @@
 <head>
 <link rel="stylesheet" href="/Web/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 <meta charset="ISO-8859-1">
 <title>Maps</title>
 
@@ -25,6 +33,14 @@
         margin: 0;
         padding: 0;
       }
+      
+      .checked {
+  		color: orange;
+		}
+		
+		h1, h2, h3, h4, h5, h6{
+  			line-height: 15px; 
+		}
     </style>
 
 </head>
@@ -50,51 +66,66 @@
                     </ul>
                 </div>
             </nav>
-	      <div id="map"></div> 
-            <div class="container-flex content-box">    
+            
+            
+            
+      		<div id="map">
+      			
+			</div> 
+            <div class="container-flex content-box"> 
+            	<div class="dropdown"  >
+						  <button style="width: 30%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Filter By
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="#">Cost</a>
+						    <a class="dropdown-item" href="#">Distance</a>
+						    <a class="dropdown-item" href="#">Rating</a>
+						  </div>
+						</div>
                 <div class="row align-items-center">
-                    <div class="col overflow-auto" style="height: calc(100vh - 75px); padding: 0px">
-                        <table class="table table-hover table-borderless table-striped">
-                            <thead>
-                              <tr>
-                                <th scope="col">Hospital</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-								<% 
-                            		// procedureName would be received from the details.html drop-down object the user selects
-                            		String procedure = request.getParameter("procedure"); 
-                            		String procedureName = procedure;
-                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
-                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
-                            		
-                            		String name = procedureName.trim();
-                            		
-                            		System.out.println("e:" + procedureName);
-                            		
-                            		// Call this function if we are searching by cost
-                   			  		//ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
-                            		
-                            		// Call this function if we are searching by Rating
-                            		
-                            		// Call this function if we are searching by distance
-									ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
-                            		
-                            		
-                   			  		System.out.println("hospital size: " + hospitalList.size());
-                   			  		
-                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
-                   				%>
-                   				  	<tr>
-                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
-                   				  	</tr>
-                   				  	<% } %>	
-                                <tr><td id="HospitalName">Hospital Name</td></tr>
-                            </tbody>
-                          </table>
+
+
+
+                	
+                    <div class="col overflow-auto" style="height: calc(100vh - 113px); padding: 0px">
+                    	<div class="overflow-auto">
+	                        <table class="table table-hover table-borderless table-striped">
+	                            <thead>
+	                              <tr>
+	                                <th scope="col">Hospital</th>
+	                              </tr>
+	                            </thead>
+	                            <tbody>
+									<% 
+	                            		// procedureName would be received from the details.html drop-down object the user selects
+	                            		String procedure = request.getParameter("procedure"); 
+	                            		String procedureName = procedure;
+	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
+	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
+	                            		
+	                            		String name = procedureName.trim();
+	                            		
+	                            		System.out.println("e:" + procedureName);
+	                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+										
+	                   			  		System.out.println("hospital size: " + hospitalList.size());
+	                   			  		
+	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
+	                   				%>
+	                   				  	<tr>
+	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+	                   				  	</tr>
+	                   				  	<% } %>	
+	                                <tr><td id="HospitalName">Hospital Name</td></tr>
+	                            </tbody>
+	                          </table>
+                          </div>
+
                           
                           
                    		</div>
+                   			
                 	</div>
             	</div>
             	
@@ -107,8 +138,9 @@
     	var origin = "<%= loc%>"; 
     	var procedure = "<%= procedure%>"; 
   	 	var range = "<%= range%>" * 0.621371; 
+  	 	var cost = 10000;
   	 	
- 		
+
 	     var map;
 	     var locations = [];
 	      <% 
@@ -167,6 +199,7 @@
             	          	      }
             	          	    }
             	          		removeMarkers();
+            	          		changeColour();
             	          	  }
             	          	if (status == 'NOT_FOUND') {
             	          		  alert("The origin and/or destination of this pairing could not be geocoded.");
@@ -216,13 +249,34 @@
 	            markerArray.push(marker);
 	            markerDistance.push(distance);
 
+            	if(cost < 50000){
+            		var color = "green";
+            	}
+            	else if(cost < 1000000){
+            		var color = "orange";
+            	}
+            	else if(cost < 1500000){
+            		var color = "red";
+            	}
+	            
 	            var infowindow = new google.maps.InfoWindow({
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + ' </h5>' + '<b>Distance:</b> ' + distance +
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + 	
+	                  '<div style="float:right">' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star"></span>' +  
+	                  '</div>' +
+	                  '<h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5></h5> <hr>'  +
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure: </b>' + procedure + '<hr> <b>Address:</b>' + locations[address][1] + ' <br> <b>Cost:</b> $6,778.64 <br>' +
+	                  '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
+	                  '<br> <b>Address: </b>' + locations[address][1]  + 
+	                  '<br> <b>Procedure: </b>' + procedure  + 
+	                  '</p>' +
 	                  '</div>'+
 	                  '</div>'
 	            	});
@@ -289,7 +343,7 @@
             map.fitBounds(antennasCircle.getBounds());
           }
         
-        
+            
       var key = config.API_KEY;
       var srcText = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
       var script = document.createElement('script');
@@ -301,3 +355,4 @@
 
 </body>
 </html>
+
