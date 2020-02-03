@@ -7,6 +7,9 @@
 <head>
 <link rel="stylesheet" href="/Web/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <meta charset="ISO-8859-1">
 <title>Maps</title>
 
@@ -50,43 +53,62 @@
                     </ul>
                 </div>
             </nav>
-	      <div id="map"></div> 
-            <div class="container-flex content-box">    
+            
+            
+            
+      		<div id="map">
+      			
+			</div> 
+            <div class="container-flex content-box"> 
+            	<div class="dropdown"  >
+						  <button style="width: 30%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Filter By
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="#">Cost</a>
+						    <a class="dropdown-item" href="#">Distance</a>
+						    <a class="dropdown-item" href="#">Rating</a>
+						  </div>
+						</div>
                 <div class="row align-items-center">
-                    <div class="col overflow-auto" style="height: calc(100vh - 75px); padding: 0px">
-                        <table class="table table-hover table-borderless table-striped">
-                            <thead>
-                              <tr>
-                                <th scope="col">Hospital</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-								<% 
-                            		// procedureName would be received from the details.html drop-down object the user selects
-                            		String procedure = request.getParameter("procedure"); 
-                            		String procedureName = procedure;
-                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
-                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
-                            		
-                            		String name = procedureName.trim();
-                            		
-                            		System.out.println("e:" + procedureName);
-                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
-									
-                   			  		System.out.println("hospital size: " + hospitalList.size());
-                   			  		
-                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
-                   				%>
-                   				  	<tr>
-                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
-                   				  	</tr>
-                   				  	<% } %>	
-                                <tr><td id="HospitalName">Hospital Name</td></tr>
-                            </tbody>
-                          </table>
+                	
+                    <div class="col overflow-auto" style="height: calc(100vh - 113px); padding: 0px">
+                    	<div class="overflow-auto">
+	                        <table class="table table-hover table-borderless table-striped">
+	                            <thead>
+	                              <tr>
+	                                <th scope="col">Hospital</th>
+	                              </tr>
+	                            </thead>
+	                            <tbody>
+									<% 
+	                            		// procedureName would be received from the details.html drop-down object the user selects
+	                            		String procedure = request.getParameter("procedure"); 
+	                            		String procedureName = procedure;
+	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
+	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
+	                            		
+	                            		String name = procedureName.trim();
+	                            		
+	                            		System.out.println("e:" + procedureName);
+	                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+										
+	                   			  		System.out.println("hospital size: " + hospitalList.size());
+	                   			  		
+	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
+	                   				%>
+	                   				  	<tr>
+	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+	                   				  	</tr>
+	                   				  	<% } %>	
+	                                <tr><td id="HospitalName">Hospital Name</td></tr>
+	                            </tbody>
+	                          </table>
+                          </div>
                           
                           
                    		</div>
+                   			
                 	</div>
             	</div>
             	
@@ -100,7 +122,7 @@
     	var procedure = "<%= procedure%>"; 
   	 	var range = "<%= range%>" * 0.621371; 
   	 	
- 		
+
 	     var map;
 	     var locations = [];
 	      <% 

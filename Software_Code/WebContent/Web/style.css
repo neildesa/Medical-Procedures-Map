@@ -20,6 +20,11 @@
     margin: auto;
 }
 
+.filter-box {
+	width: 100%;
+	background: lightgrey;
+}
+
 .form-item {
 	padding-bottom: 5%;
 }
