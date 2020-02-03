@@ -14,6 +14,7 @@ import JavaDatabaseCode.MixData;
 public class Test_JavaFuncForSQL {
 	
 	
+	
 	@Test
 	public void testGetSearchByCost(){
 		JavaFuncForSQL func = new JavaFuncForSQL();
@@ -45,6 +46,8 @@ public class Test_JavaFuncForSQL {
 	}
 
 	
+	
+	
 	@Test
 	public void testGetSearchByProcedure() {
 		JavaFuncForSQL hos = new JavaFuncForSQL();
@@ -64,7 +67,7 @@ public class Test_JavaFuncForSQL {
 	}
 	
 	
-	
+		
 	
 	@Test
 	public void testCallLocationBasedOnZipCode() {
@@ -94,10 +97,9 @@ public class Test_JavaFuncForSQL {
 		System.out.println("function testReturnsortedProcedures finished");
 	}
 	
-	
 	@Test
 	public void testAddReview() {
 		JavaFuncForSQL func = new JavaFuncForSQL();
-		func.AddReview(392933,4 );
+		func.AddReview(392933,3 );
 	}
 }
