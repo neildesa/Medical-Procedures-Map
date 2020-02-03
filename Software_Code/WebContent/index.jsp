@@ -7,6 +7,7 @@
 <head>
 <link rel="stylesheet" href="/Web/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta charset="ISO-8859-1">
 <title>Maps</title>
 
@@ -25,6 +26,14 @@
         margin: 0;
         padding: 0;
       }
+      
+      .checked {
+  		color: orange;
+		}
+		
+		h1, h2, h3, h4, h5, h6{
+  			line-height: 15px; 
+		}
     </style>
 
 </head>
@@ -224,9 +233,20 @@
 	            	  content:'<div id="content">'+
 	                  '<div id="siteNotice">'+
 	                  '</div>'+
-	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + '</h5> <h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5> <br> <b>Distance:</b>' + distance +
+	                  '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + 	
+	                  '<div style="float:right">' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star checked"></span>' +
+	                  '<span class="fa fa-star"></span>' +  
+	                  '</div>' +
+	                  '<h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5></h5> <hr>'  +
 	                  '<div id="bodyContent">'+
-	                  '<p><b>Procedure: </b>' + procedure + '<hr> <b>Address:</b>' + locations[address][1]  +
+	                  '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
+	                  '<br> <b>Address: </b>' + locations[address][1]  + 
+	                  '<br> <b>Procedure: </b>' + procedure  + 
+	                  '</p>' +
 	                  '</div>'+
 	                  '</div>'
 	            	});
