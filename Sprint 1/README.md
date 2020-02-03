@@ -97,3 +97,5 @@ The aims for today are:
 3. Adding the ability to remove markers on the map for multiple procedure searches.
 4. Adding the ability to add a visual radius when doing the search medical procedure by distance.
 5. Create the Java methods for searching by distance and by cost
+
+## Day 5 (31/01/2020) 
