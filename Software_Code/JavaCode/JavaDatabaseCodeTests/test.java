@@ -1,10 +1,13 @@
-package JavaDatabaseCode;
+package JavaDatabaseCodeTests;
 
 
 
 import java.util.List;
 
 import org.junit.Test;
+
+import JavaDatabaseCode.HospitalDao;
+import JavaDatabaseCode.MixData;
 
 
 

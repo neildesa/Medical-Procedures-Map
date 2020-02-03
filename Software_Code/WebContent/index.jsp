@@ -71,8 +71,16 @@
                             		String name = procedureName.trim();
                             		
                             		System.out.println("e:" + procedureName);
-                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
-									
+                            		
+                            		// Call this function if we are searching by cost
+                   			  		//ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+                            		
+                            		// Call this function if we are searching by Rating
+                            		
+                            		// Call this function if we are searching by distance
+									ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
+                            		
+                            		
                    			  		System.out.println("hospital size: " + hospitalList.size());
                    			  		
                    				  	for (int i = 0; i < hospitalList.size(); i++) { 
