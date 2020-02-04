@@ -119,6 +119,11 @@
 	                            		String name = procedureName.trim();
 	                            		
 	                            		System.out.println("e:" + procedureName);
+                                
+                                //Needed for map testing
+	                   			  		//ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
+										
+
 	                            		System.out.println("Sort by => " + sort);
 	                            		
 	                            		if (sort.equals("Cost")) {
@@ -133,6 +138,7 @@
 	                            		}
 	                   			  			
 	                   			  			
+
 	                   			  		System.out.println("hospital size: " + hospitalList.size());
 	                   			  		
 	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
@@ -178,7 +184,9 @@
 	   // note: hospitalList.get(i).get(1) = hospitalAddress; hospitalList.get(i).get(0) = hospitalName 
 	    	var hospitalName = "<%= hospitalList.get(i).get(0) %>";
 	    	var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
-	     	var row = [hospitalName, hospitalAddress]
+	    	var hospitalLong = "<%= hospitalList.get(i).get(2) %>";
+	    	var hospitalLat = "<%= hospitalList.get(i).get(3) %>";
+	     	var row = [hospitalName, hospitalAddress, hospitalLong, hospitalLat]
 	   		locations.push(row)
 		<% } %>
 	    
@@ -200,8 +208,11 @@
 	      }
 	      
 	    //Function that calculates the distance between the origin and destination using the distance matrix API
-      	function getDistance(distanceMatrix, map, address, result, distance){
-  	  		dest = locations[address][0];
+      	function getDistance(distanceMatrix, map, address, distance){
+   			var latitude =  locations[address][3];
+   			var longitude = locations[address][2];
+   			var dest = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
+  	  		alert("TESTING");
     	  	distanceMatrix.getDistanceMatrix({
          		origins: [origin],
          		destinations: [dest],
@@ -221,7 +232,7 @@
           	          	        var duration = element.duration.text;
           	          	        var from = origins[i];
           	          	        var to = destinations[j];
-          	          	      	placeMarker(map, address, result, distance);
+          	          	      	placeMarker(map, address, dest, distance);
           	          		}
           	        	}
           			removeMarkers();
@@ -240,7 +251,7 @@
 	      
 	    //Function that converts an address to latatude/longatude using the Geocoding API
 	    //n.b. Geocoding query limit ~10 query/s
-   		function codeAddress(geocoder, map, address, distanceMatrix, user) {
+/*    		function codeAddress(geocoder, map, address, distanceMatrix, user) {
 	    	  
 	  		if(user == true){
 	    		geocoder.geocode({'address': address}, function(results, status) {
@@ -260,7 +271,25 @@
 	  	    		}
 	     		});
 	  		}
-	      }
+	      } */
+	      
+	    
+   		function codeAddress(geocoder, map, address, distanceMatrix, user) {
+   			
+	  		if(user == true){
+	    		geocoder.geocode({'address': address}, function(results, status) {
+	   				if (status === 'OK') { 
+	   					
+    	     			placeMarkerUser(map, results[0].geometry.location);
+    	  			}	    		
+	   			});
+	    	}
+	  		
+	 		else{
+	 			
+	    		getDistance(distanceMatrix, map, address, distance); 
+  			}
+		}
 	      
         //Function that places a custom marker at the location of the hospitals and initializes the markers infowindow   
 		function placeMarker(map, address, result, distance){
