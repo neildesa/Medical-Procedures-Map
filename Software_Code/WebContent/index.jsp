@@ -107,16 +107,31 @@
 	                            <tbody>
 									<% 
 	                            		// procedureName would be received from the details.html drop-down object the user selects
+	                            		ArrayList<ArrayList<String>> hospitalList = new ArrayList<ArrayList<String>>();
 	                            		String procedure = request.getParameter("procedure"); 
 	                            		String procedureName = procedure;
+	                            		String sort = request.getParameter("sort");
 	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
 	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
+	                            		
 	                            		
 	                            		String name = procedureName.trim();
 	                            		
 	                            		System.out.println("e:" + procedureName);
-	                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
-										
+	                            		System.out.println("Sort by => " + sort);
+	                            		
+	                            		if (sort.equals("Cost")) {
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+	                   			  			// Sort by cost
+	                            		} else if (sort.equals("Distance")) {
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+	                   			  			// Sort by distance
+	                            		} else if (sort.equals("Rating")) {
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+	                   			  			// Sort by rating
+	                            		}
+	                   			  			
+	                   			  			
 	                   			  		System.out.println("hospital size: " + hospitalList.size());
 	                   			  		
 	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 

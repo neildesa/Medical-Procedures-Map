@@ -40,6 +40,8 @@
             <div class="container-flex px-lg-5 w-auto content-box stuff-holder">    
                 <form action="index.jsp" method="POST">
 
+					<input type="hidden" name="sort" value="Cost">
+
                     <script>
 	                    $(document).ready(function() {
 	                        $('.js-example-basic-single').select2();
