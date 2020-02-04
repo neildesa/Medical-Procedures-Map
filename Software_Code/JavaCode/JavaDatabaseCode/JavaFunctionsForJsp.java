@@ -15,6 +15,10 @@ public class JavaFunctionsForJsp {
 	
 	public static Connection conn = null;
 	
+	
+	
+	
+	
 	public static void main(String[] args) throws Exception
 	{
 		 ArrayList<ArrayList<String>> hospitalListTest = new ArrayList<ArrayList<String>>();
@@ -26,10 +30,12 @@ public class JavaFunctionsForJsp {
 		/* returnListOfProcedures(); */
 	}
 	
+	
+	
+	
+	
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure) throws ClassNotFoundException
-	{
-		ArrayList<ArrayList<String>> hospitalListToReturn = new ArrayList<ArrayList<String>>();
-		
+	{	
 		// structure for code taken from: https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-connect-drivermanager.html
 		try 
 		{
@@ -44,14 +50,23 @@ public class JavaFunctionsForJsp {
 					
 			ArrayList<ArrayList<String>> hospitalList = new ArrayList<ArrayList<String>>();
 			while (rs.next()) 
-			{   //Retrieve by column name 
+			{   //Retrieve by column name and store in 1-D ArrayList 
+				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
 				
 				// store and add each hospital and address into hospitalList
-				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
 				String hospital = rs.getString("Provider_Name");
 				hospitalListRowToAdd.add(hospital);
 				String address = rs.getString("Provider_Street_Address");
 				hospitalListRowToAdd.add(address);
+				
+				// retrieve, convert to String, and store longitude and latitude
+				Double x = rs.getDouble("Longitude");
+				Double y = rs.getDouble("Latitude");
+				String longitude = Double.toString(x);
+				String latitude = Double.toString(y);
+				hospitalListRowToAdd.add(longitude);
+				hospitalListRowToAdd.add(latitude);
+				
 				
 				hospitalList.add(hospitalListRowToAdd);
 				
@@ -131,6 +146,12 @@ public class JavaFunctionsForJsp {
 		}
 		
 	}
+	
+	
+	
+	
+	
+	
 	
 	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 
 	{
