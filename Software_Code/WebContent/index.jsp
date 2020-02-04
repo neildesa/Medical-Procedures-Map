@@ -76,19 +76,19 @@
 						    Filter By
 						  </button>
               <form action="index.jsp" method="POST">
-						    <input type="hidden" name="procedure"  value="<% request.getParameter("procedure"); %>">
-						    <input type="hidden" name="minRange"   value="<% request.getParameter("minRange"); %>">
-						    <input type="hidden" name="maxRange"   value="<% request.getParameter("maxRange"); %>">
-						    <input type="hidden" name="starRating" value="<% request.getParameter("starRating"); %>">
-						    <input type="hidden" name="rangeRange" value="<% request.getParameter("rangeRange"); %>">
-						    <input type="hidden" name="location"   value="<% request.getParameter("location"); %>">
+						<input type="hidden" name="procedure"  value="<%= request.getParameter("procedure")  %>">
+						<input type="hidden" name="minRange"   value="<%= request.getParameter("minRange")   %>">
+						<input type="hidden" name="maxRange"   value="<%= request.getParameter("maxRange")   %>">
+						<input type="hidden" name="starRating" value="<%= request.getParameter("starRating") %>">
+						<input type="hidden" name="rangeRange" value="<%= request.getParameter("rangeRange") %>">
+						<input type="hidden" name="location"   value="<%= request.getParameter("location")   %>">
 							
-						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							  <input type="submit" class="dropdown-item" name="sort" value="cost"    >Cost    </input>
-							  <input type="submit" class="dropdown-item" name="sort" value="distance">Distance</input>
-							  <input type="submit" class="dropdown-item" name="sort" value="rating"  >Rating  </input>
-						  </div>
-					  </form>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<input type="submit" class="dropdown-item" name="sort" value="Cost"    >
+							<input type="submit" class="dropdown-item" name="sort" value="Distance">
+							<input type="submit" class="dropdown-item" name="sort" value="Rating"  >
+						</div>
+					</form>
 						
 						</div>
                 <div class="row align-items-center">
