@@ -54,22 +54,29 @@
                 </div>
             </nav>
             
-            
-            
-      		<div id="map">
-      			
-			</div> 
+      		<div id="map"></div>
+      		 
             <div class="container-flex content-box"> 
             	<div class="dropdown"  >
-						  <button style="width: 30%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    Filter By
-						  </button>
-						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						    <a class="dropdown-item" href="#">Cost</a>
-						    <a class="dropdown-item" href="#">Distance</a>
-						    <a class="dropdown-item" href="#">Rating</a>
-						  </div>
+					<button style="width: 30%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Filter By
+					</button>
+					
+					<form action="index.jsp" method="POST">
+						<input type="hidden" name="procedure"  value="<% request.getParameter("procedure"); %>">
+						<input type="hidden" name="minRange"   value="<% request.getParameter("minRange"); %>">
+						<input type="hidden" name="maxRange"   value="<% request.getParameter("maxRange"); %>">
+						<input type="hidden" name="starRating" value="<% request.getParameter("starRating"); %>">
+						<input type="hidden" name="rangeRange" value="<% request.getParameter("rangeRange"); %>">
+						<input type="hidden" name="location"   value="<% request.getParameter("location"); %>">
+							
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<input type="submit" class="dropdown-item" name="sort" value="cost"    >Cost    </input>
+							<input type="submit" class="dropdown-item" name="sort" value="distance">Distance</input>
+							<input type="submit" class="dropdown-item" name="sort" value="rating"  >Rating  </input>
 						</div>
+					</form>
+				</div>
                 <div class="row align-items-center">
                 	
                     <div class="col overflow-auto" style="height: calc(100vh - 113px); padding: 0px">
