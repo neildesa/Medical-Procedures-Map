@@ -24,7 +24,8 @@ public class JavaFuncForSQL {
 	
 	
 	// get List of data which searched by procedure definition and cost range(average covered charges) 
-	// arguments are procedures DRG definition, minimum cost and maximum cost 
+	// arguments are procedures DRG definition, minimum cost and maximum cost
+	// order by cost
 	public List<MixData> GetSearchByCost(String DRGdefinition,double minCost, double maxCost){
 		
 		Connection conn = null;
@@ -39,38 +40,24 @@ public class JavaFuncForSQL {
 			sql="call SearchByCost('"+DRGdefinition+"',"+minCost+","+maxCost+")";
 			
 			res = st.executeQuery(sql);
-			List<MixData> list = new ArrayList<MixData>();
+			List<MixData> hosList = new ArrayList<MixData>();
 			
 			while(res.next()) {
-				HospitalData hos = new HospitalData();
-				ProcedureData pro = new ProcedureData();
-				GEOlocation geo = new GEOlocation();
 				MixData mix = new MixData();
-				hos.setProviderId(res.getInt("Provider_Id"));
-				hos.setProviderName(res.getString("Provider_Name"));
-				hos.setProviderStreetAddress(res.getString("Provider_Street_Address"));
-				hos.setProviderCity(res.getString("Provider_City"));
-				hos.setProviderZipCode(res.getString("Provider_Zip_Code"));
-				pro.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
-				pro.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
-				pro.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				geo.setLatitude(res.getDouble("Latitude"));
-				geo.setLongitude(res.getDouble("Longitude"));
-				
-				
-				mix.setProviderId(hos.getProviderId());
-				mix.setProviderName(hos.getProviderName());
-				mix.setProviderStreetAddress(hos.getProviderStreetAddress());
-				mix.setProviderCity(hos.getProviderCity());
-				mix.setProviderZipCode(hos.getProviderZipCode());
-				mix.setAvgCoveredCharges(pro.getAvgCoveredCharges());
-				mix.setAvgTotalPayments(pro.getAvgTotalPayments());
-				mix.setAvgMedicarePayments(pro.getAvgMedicarePayments());
-				mix.setLatitude(geo.getLatitude());
-				mix.setLongitude(geo.getLongitude());
-				list.add(mix);
+				mix.setProviderId(res.getInt("Provider_Id"));
+				mix.setProviderName(res.getString("Provider_Name"));
+				mix.setProviderStreetAddress(res.getString("Provider_Street_Address"));
+				mix.setProviderCity(res.getString("Provider_City"));
+				mix.setProviderZipCode(res.getString("Provider_Zip_Code"));
+				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
+				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
+				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
+				//mix.setCustomerRating(res.getInt("CustomerRating"));
+				mix.setLatitude(res.getDouble("Latitude"));
+				mix.setLongitude(res.getDouble("Longitude"));
+				hosList.add(mix);
 			}	
-			return list;
+			return hosList;
 			
 		}catch(Exception E) {
 			E.printStackTrace();
@@ -80,12 +67,54 @@ public class JavaFuncForSQL {
 		return null;
 	}
 	
-	
-
+	// get List of data which searched by procedure definition and cost range(average covered charges) and customer rating
+	// arguments are procedures DRG definition, minimum cost and maximum cost 
+	// order by customer rating
+	public List<MixData> GetSearchByCostWithRating(String DRGdefinition,double minCost, double maxCost,int rating){
+		
+		Connection conn = null;
+		Statement st =null;
+		ResultSet res=null;
+		try{
+			conn = JDBCUtil.getconn();
+			String sql="use 19agileteam3db";
+			st = conn.createStatement();
+			st.execute(sql);
+			
+			sql="call SearchByCostWithRating('"+DRGdefinition+"',"+minCost+","+maxCost+","+rating+")";
+			
+			res = st.executeQuery(sql);
+			List<MixData> hosList = new ArrayList<MixData>();
+			
+			while(res.next()) {
+				MixData mix = new MixData();
+				mix.setProviderId(res.getInt("Provider_Id"));
+				mix.setProviderName(res.getString("Provider_Name"));
+				mix.setProviderStreetAddress(res.getString("Provider_Street_Address"));
+				mix.setProviderCity(res.getString("Provider_City"));
+				mix.setProviderZipCode(res.getString("Provider_Zip_Code"));
+				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
+				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
+				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
+				mix.setCustomerRating(res.getInt("CustomerRating"));
+				mix.setLatitude(res.getDouble("Latitude"));
+				mix.setLongitude(res.getDouble("Longitude"));
+				hosList.add(mix);
+			}	
+			return hosList;
+			
+		}catch(Exception E) {
+			E.printStackTrace();
+		}finally{
+			JDBCUtil.close(conn, st, res);
+		}
+		return null;
+	}
 
 
 	// get List of data which searched by procedure definition
 	// arguments are procedures DRG definition
+	// order by cost
 	public List<MixData> GetSearchByProcedure(String procedure){
 		Connection conn = null;
 		Statement st =null;
@@ -103,26 +132,18 @@ public class JavaFuncForSQL {
 			List<MixData> hosList = new ArrayList<MixData>();
 			
 			while(res.next()) {
-				HospitalData hos = new HospitalData();
-				ProcedureData pro = new ProcedureData();
 				MixData mix = new MixData();
-				hos.setProviderId(res.getInt("Provider_Id"));
-				hos.setProviderName(res.getString("Provider_Name"));
-				hos.setProviderStreetAddress(res.getString("Provider_Street_Address"));
-				hos.setProviderCity(res.getString("Provider_City"));
-				hos.setProviderZipCode(res.getString("Provider_Zip_Code"));
-				pro.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
-				pro.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
-				pro.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				
-				mix.setProviderId(hos.getProviderId());
-				mix.setProviderName(hos.getProviderName());
-				mix.setProviderStreetAddress(hos.getProviderStreetAddress());
-				mix.setProviderCity(hos.getProviderCity());
-				mix.setProviderZipCode(hos.getProviderZipCode());
-				mix.setAvgCoveredCharges(pro.getAvgCoveredCharges());
-				mix.setAvgTotalPayments(pro.getAvgTotalPayments());
-				mix.setAvgMedicarePayments(pro.getAvgMedicarePayments());
+				mix.setProviderId(res.getInt("Provider_Id"));
+				mix.setProviderName(res.getString("Provider_Name"));
+				mix.setProviderStreetAddress(res.getString("Provider_Street_Address"));
+				mix.setProviderCity(res.getString("Provider_City"));
+				mix.setProviderZipCode(res.getString("Provider_Zip_Code"));
+				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
+				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
+				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
+				//mix.setCustomerRating(res.getInt("CustomerRating"));
+				mix.setLatitude(res.getDouble("Latitude"));
+				mix.setLongitude(res.getDouble("Longitude"));
 				hosList.add(mix);
 			}	
 			return hosList;
@@ -137,10 +158,55 @@ public class JavaFuncForSQL {
 	
 	
 	
+	// get List of data which searched by procedure definition and minimum rating
+	// arguments are procedures DRG definition and minimum rating
+	// order by rating 
+	public List<MixData> GetSearchByProcedureWithRating(String procedure, int rating) {
+		Connection conn = null;
+		Statement st =null;
+		ResultSet res=null;
+		try{
+			conn = JDBCUtil.getconn();
+			String sql="use 19agileteam3db";
+			st = conn.createStatement();
+			st.execute(sql);
+			
+			sql="call SearchByProcedureWithRating('"+procedure+"',"+rating+")";
+			
+			res = st.executeQuery(sql);
+			
+			List<MixData> hosList = new ArrayList<MixData>();
+			
+			while(res.next()) {
+				MixData mix = new MixData();
+				mix.setProviderId(res.getInt("Provider_Id"));
+				mix.setProviderName(res.getString("Provider_Name"));
+				mix.setProviderStreetAddress(res.getString("Provider_Street_Address"));
+				mix.setProviderCity(res.getString("Provider_City"));
+				mix.setProviderZipCode(res.getString("Provider_Zip_Code"));
+				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
+				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
+				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
+				mix.setCustomerRating(res.getInt("CustomerRating"));
+				mix.setLatitude(res.getDouble("Latitude"));
+				mix.setLongitude(res.getDouble("Longitude"));
+				hosList.add(mix);
+			}	
+			return hosList;
+			
+		}catch(Exception E) {
+			E.printStackTrace();
+		}finally{
+			JDBCUtil.close(conn, st, res);
+		}
+		return null;
+	}
+	
 	
 	
 	// get List of data which searched by Zip_Code and procedure definition
 	// arguments are zip_code and procedures DRG definition
+	// 
 	public List<MixData> CallLocationBasedOnZipCode(String zipCode,String procedure){
 		Connection conn = null;
 		Statement st =null;
@@ -158,24 +224,14 @@ public class JavaFuncForSQL {
 			List<MixData> hosList = new ArrayList<MixData>();
 			
 			while(res.next()) {
-				HospitalData hos = new HospitalData();
-				ProcedureData pro = new ProcedureData();
 				MixData mix = new MixData();
-				hos.setProviderId(res.getInt("Provider_Id"));
-				hos.setProviderName(res.getString("Provider_Name"));
-				hos.setProviderZipCode(res.getString("Provider_Zip_Code"));
-				pro.setDrgDefinition(res.getString("DRGDefinition"));
-				pro.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
-				pro.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
-				pro.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				
-				mix.setProviderId(hos.getProviderId());
-				mix.setProviderName(hos.getProviderName());
-				mix.setProviderZipCode(hos.getProviderZipCode());
-				mix.setDrgDefinition(pro.getDrgDefinition());
-				mix.setAvgCoveredCharges(pro.getAvgCoveredCharges());
-				mix.setAvgTotalPayments(pro.getAvgTotalPayments());
-				mix.setAvgMedicarePayments(pro.getAvgMedicarePayments());
+				mix.setProviderId(res.getInt("Provider_Id"));
+				mix.setProviderName(res.getString("Provider_Name"));
+				mix.setProviderZipCode(res.getString("Provider_Zip_Code"));
+				mix.setDrgDefinition(res.getString("DRGDefinition"));
+				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
+				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
+				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
 				hosList.add(mix);
 			}	
 			return hosList;
@@ -208,6 +264,7 @@ public class JavaFuncForSQL {
 			
 			while(res.next()) {
 				MixData mix = new MixData();
+				mix.setIdDefiniton(res.getInt("idDefinitionsTable"));
 				mix.setDrgDefinition(res.getString("DRG_Definition"));
 				proList.add(mix);
 			}	
@@ -219,7 +276,6 @@ public class JavaFuncForSQL {
 			JDBCUtil.close(conn, st, res);
 		}
 		return null;
-	
 	}
 	
 	
