@@ -40,6 +40,8 @@
             <div class="container-flex px-lg-5 w-auto content-box stuff-holder">    
                 <form action="index.jsp" method="POST">
 
+					<input type="hidden" name="sort" value="Cost">
+
                     <script>
 	                    $(document).ready(function() {
 	                        $('.js-example-basic-single').select2();
@@ -82,7 +84,7 @@
                         <div class="col">
                             <div class="slidecontainer">                        
                                 <p>Maximum Price: $<span id="max"></span></p>
-                                <input type="range" name="maxRange" min="1" max="2000000" value="300000" class="slider" id="maxRange">
+                                <input type="range" name="maxRange" min="1" max="2000000" value="1500000" class="slider" id="maxRange">
                             </div>
         
                             <script>
@@ -102,6 +104,8 @@
                     <div class="form-item">
 	                    <label for="exampleFormControlSelect2">Minimum Star Rating</label>
 	                    <div class="form-group">
+	                            <input type="hidden" name="starRating" id="inlineCheckbox0" value="0" checked>
+	                    	
 	                        <div class="form-check form-check-inline">
 	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox1" value="1">
 	                            <label class="form-check-label" for="inlineCheckbox1">1</label>
@@ -128,7 +132,7 @@
                     <!-- Range -->
                     <div class="slidecontainer form-item">                        
                         <p>Distance from you: <span id="range"></span> Miles</p>
-                        <input type="range" name="rangeRange" min="10" max="5000" value="50" class="slider" id="rangeRange">
+                        <input type="range" name="rangeRange" min="10" max="5000" value="500" class="slider" id="rangeRange">
                     </div>
 
                     <script>
