@@ -16,3 +16,19 @@ The aims for today are:
 2. Creating coloured markers that represent different costs for procedures on the google map.
 3. Updating the UI to reflect the changes covered in the Scrum Review (change names of the search button and shift searching to the homepage).
 4. Creat Sprint Backlog for this week and begin process of updating it throughout week. 
+
+---
+## DAy 2 (04/02/2020) - Scrum Meeting Summary (10am)
+The Scrum Master for this meeting was **Neilson Desa**
+
+### Members Present:
+All members present
+
+### Summary of Conversation
+The team concluded their current progress with some of the tests for each of the procedures in SQL called through Java methods. Additionally the searh procedure by distance was updated to store longitude & latitude in the distance to bypass the query limit google's api provided. The UI has been updated to improve visability and to begin including the layout for doing sorts after a search. The cost of each procedure on the map now has a colour which reflects how expensive they are.
+
+Todays aims are:
+1. Changing the colour of the procedure markers on the map to reflect their costs.
+2. Finishing the tests for the search procedure by distance and integrating it with the front-end.
+3. Creating and finshing the tests for the two other procedures search via cost and rating.
+4. Updating the UI to allow user to allow them to search by cost or ratings (instead of by distance - default option).
