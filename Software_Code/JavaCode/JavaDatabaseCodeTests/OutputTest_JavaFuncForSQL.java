@@ -11,7 +11,7 @@ import JavaDatabaseCode.MixData;
 
 
 
-public class Test_JavaFuncForSQL {
+public class OutputTest_JavaFuncForSQL {
 	
 	
 	
