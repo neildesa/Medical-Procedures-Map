@@ -8,7 +8,8 @@ public class ProcedureData {
 	double avgCoveredCharges;
 	double avgTotalPayments;
 	double avgMedicarePayments;
-	
+	int customerRating;
+	int numberOfReview;
 	
 	public int getProcedureId() {
 		return procedureId;
@@ -52,12 +53,23 @@ public class ProcedureData {
 	public void setAvgMedicarePayments(double avgMedicarePayments) {
 		this.avgMedicarePayments = avgMedicarePayments;
 	}
-	@Override
+	public int getCustomerRating() {
+		return customerRating;
+	}
+	public void setCustomerRating(int customerRating) {
+		this.customerRating = customerRating;
+	}
+	public int getNumberOfReview() {
+		return numberOfReview;
+	}
+	public void setNumberOfReview(int numberOfReview) {
+		this.numberOfReview = numberOfReview;
+	}
+		@Override
 	public String toString() {
 		return "ProceduresData [procedureId=" + procedureId + ", drgDefinition=" + drgDefinition + ", providerId="
 				+ providerId + ", totalDischarges=" + totalDischarges + ", avgCoveredCharges=" + avgCoveredCharges
 				+ ", avgTotalPayments=" + avgTotalPayments + ", avgMedicarePayments=" + avgMedicarePayments + "]";
 	}
-	
 	
 }

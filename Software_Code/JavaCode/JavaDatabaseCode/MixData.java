@@ -3,14 +3,18 @@ package JavaDatabaseCode;
 public class MixData {
 	int procedureId;
 	String drgDefinition;
+	int idDefiniton;
 	int providerId;
 	int totalDischarges;
 	double avgCoveredCharges;
 	double avgTotalPayments;
 	double avgMedicarePayments;
+	int customerRating;
+	int numberOfReview;
 
 	String providerName;
 	String providerStreetAddress;
+	
 	String providerCity;
 	String providerState;
 	String providerZipCode;
@@ -21,6 +25,24 @@ public class MixData {
 	int timeZone;
 	int dayLightSaving;
 	
+	public int getIdDefiniton() {
+		return idDefiniton;
+	}
+	public void setIdDefiniton(int idDefiniton) {
+		this.idDefiniton = idDefiniton;
+	}
+	public int getCustomerRating() {
+		return customerRating;
+	}
+	public void setCustomerRating(int customerRating) {
+		this.customerRating = customerRating;
+	}
+	public int getNumberOfReview() {
+		return numberOfReview;
+	}
+	public void setNumberOfReview(int numberOfReview) {
+		this.numberOfReview = numberOfReview;
+	}
 	public int getProcedureId() {
 		return procedureId;
 	}
