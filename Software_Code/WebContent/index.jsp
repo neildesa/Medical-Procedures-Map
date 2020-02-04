@@ -113,6 +113,7 @@
 	                            		String sort = request.getParameter("sort");
 	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
 	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
+	                            		int starRating = Integer.parseInt(request.getParameter("starRating"));
 	                            		
 	                            		
 	                            		String name = procedureName.trim();
@@ -121,13 +122,13 @@
 	                            		System.out.println("Sort by => " + sort);
 	                            		
 	                            		if (sort.equals("Cost")) {
-	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 1);
 	                   			  			// Sort by cost
 	                            		} else if (sort.equals("Distance")) {
-	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 2);
 	                   			  			// Sort by distance
 	                            		} else if (sort.equals("Rating")) {
-	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 3);
 	                   			  			// Sort by rating
 	                            		}
 	                   			  			
