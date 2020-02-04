@@ -18,7 +18,7 @@ The aims for today are:
 4. Creat Sprint Backlog for this week and begin process of updating it throughout week. 
 
 ---
-## DAy 2 (04/02/2020) - Scrum Meeting Summary (10am)
+## Day 2 (04/02/2020) - Scrum Meeting Summary (10am)
 The Scrum Master for this meeting was **Neilson Desa**
 
 ### Members Present:
