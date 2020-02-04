@@ -67,7 +67,7 @@ public class JavaFunctionsForJsp {
 				hospitalListRowToAdd.add(longitude);
 				hospitalListRowToAdd.add(latitude);
 				
-				
+				// Add info about this procedure entry to hospitalList
 				hospitalList.add(hospitalListRowToAdd);
 				
 			}
@@ -96,8 +96,6 @@ public class JavaFunctionsForJsp {
 	
 	public static ArrayList<ArrayList<String>> findHospitalByProcedure(String procedure, int lowerBound, int upperBound) throws ClassNotFoundException
 	{
-		ArrayList<ArrayList<String>> hospitalListToReturn = new ArrayList<ArrayList<String>>();
-		
 		// structure for code taken from: https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-usagenotes-connect-drivermanager.html
 		try 
 		{
@@ -115,21 +113,37 @@ public class JavaFunctionsForJsp {
 			while (rs.next()) 
 			{   //Retrieve by column name 
 				
-				// store and add each hospital and address into hospitalList
+				// Create a 1-D arrayList to store into procedure information for each row
 				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
+				
+				// store and add each hospital and address into hospitalList
 				String hospital = rs.getString("Provider_Name");
 				hospitalListRowToAdd.add(hospital);
 				String address = rs.getString("Provider_Street_Address");
 				hospitalListRowToAdd.add(address);
 				
+				// retrieve, convert from Double to String, and add longitude and latitude 
+				Double x = rs.getDouble("longitude");
+				Double y = rs.getDouble("latitude");
+				String longitude = Double.toString(x);
+				String latitude = Double.toString(y);
+				hospitalListRowToAdd.add(longitude);
+				hospitalListRowToAdd.add(latitude);
+				
+				// retrieve, convert from Double to String, and add cost
+				Double cost = rs.getDouble("AverageTotalPayments");
+				String procedureCost = Double.toString(cost);
+				hospitalListRowToAdd.add(procedureCost);
+				
+				// Add info about this procedure entry to hospitalList
 				hospitalList.add(hospitalListRowToAdd);
 				
 			}
 			
-			/*
-			 * System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
-			 * 0; i < hospitalList.size(); i++) { System.out.println(hospitalList.get(i)); }
-			 */
+			
+			  System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
+			  0; i < hospitalList.size(); i++) { System.out.println(hospitalList.get(i)); }
+			 
 			 
 			// set return list if procedure successfully ran
 			return hospitalList;

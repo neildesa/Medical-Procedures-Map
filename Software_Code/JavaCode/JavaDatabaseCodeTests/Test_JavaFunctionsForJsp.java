@@ -62,7 +62,7 @@ public class Test_JavaFunctionsForJsp {
 	 * @throws ClassNotFoundException
 	 */
 	@Test
-	public void testFindHospitalByrocedureViaDistanceRowsAreEqualLength() throws ClassNotFoundException
+	public void testFindHospitalByProcedureViaDistanceRowsAreEqualLength() throws ClassNotFoundException
 	{
 		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
 		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName);
@@ -80,5 +80,10 @@ public class Test_JavaFunctionsForJsp {
 		}
 		
 		assertFalse(errorMessage, rowsAreNotEqual);
+	}
+	
+	@Test
+	public void testFindHospitalByProcedureViaCostIsNotEmpty() {
+		
 	}
 }
