@@ -26,7 +26,9 @@ public class JavaFuncForSQL {
 	// get List of data which searched by procedure definition and cost range(average covered charges) 
 	// arguments are procedures DRG definition, minimum cost and maximum cost
 	// order by cost
-	public List<MixData> GetSearchByCost(String DRGdefinition,double minCost, double maxCost,int Rating){
+
+	public List<MixData> GetSearchByCost(String DRGdefinition,double minCost, double maxCost, int rating){
+
 		
 		Connection conn = null;
 		Statement st =null;
@@ -37,7 +39,8 @@ public class JavaFuncForSQL {
 			st = conn.createStatement();
 			st.execute(sql);
 			
-			sql="call SearchByCost('"+DRGdefinition+"',"+minCost+","+maxCost+,"+Rating+")";
+			sql="call SearchByCost('"+DRGdefinition+"',"+minCost+","+maxCost+","+rating+")";
+
 			
 			res = st.executeQuery(sql);
 			List<MixData> hosList = new ArrayList<MixData>();
@@ -52,7 +55,7 @@ public class JavaFuncForSQL {
 				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
 				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
 				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				//mix.setCustomerRating(res.getInt("CustomerRating"));
+				mix.setCustomerRating(res.getInt("CustomerRating"));
 				mix.setLatitude(res.getDouble("Latitude"));
 				mix.setLongitude(res.getDouble("Longitude"));
 				hosList.add(mix);

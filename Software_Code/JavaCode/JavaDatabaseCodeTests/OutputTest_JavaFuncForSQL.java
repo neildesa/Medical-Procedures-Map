@@ -21,7 +21,8 @@ public class OutputTest_JavaFuncForSQL {
 		boolean success=true;
 		double min=1000;
 		double max=13000;
-		List<MixData> list = func.GetSearchByCost("038 - EXTRACRANIAL PROCEDURES W CC", min, max);
+		int rating =3;
+		List<MixData> list = func.GetSearchByCost("038 - EXTRACRANIAL PROCEDURES W CC", min, max,rating);
 		for(MixData obj:list) {
 			System.out.println(obj.getProviderId());
 			System.out.println(obj.getProviderName());
