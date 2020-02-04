@@ -9,8 +9,12 @@ import org.junit.Test;
 import JavaDatabaseCode.*;
 
 
-public class TestJavaFuncForSQL {
+public class UnitTestJavaFuncForSQL {
 	
+	
+	
+	
+	//Tests for procedure getSearchByCost 
 	@Test
 	public void testGetSearchByCostIsEmpty(){
 		JavaFuncForSQL func = new JavaFuncForSQL();
@@ -19,6 +23,12 @@ public class TestJavaFuncForSQL {
 		assertFalse("data search by cost is empty",isEmpty);		
 	}
 	
+	
+	
+	
+	
+	
+	//Tests for procedure getSearchByCostWithRating 
 	@Test
 	public void testGetSearchByCostWithRatingIsEmpty(){
 		JavaFuncForSQL func = new JavaFuncForSQL();
@@ -27,6 +37,11 @@ public class TestJavaFuncForSQL {
 		assertFalse("data search by cost is empty",isEmpty);		
 	}
 	
+	
+	
+	
+	
+	//Test for procedure getSearchByProcedure
 	@Test
 	public void testGetSearchByProcedureIsEmpty() {
 		JavaFuncForSQL hos = new JavaFuncForSQL();
@@ -35,6 +50,10 @@ public class TestJavaFuncForSQL {
 		assertFalse("data search by cost is empty",isEmpty);
 	}
 	
+	
+	
+	
+	//Test for procedure getSearchByProcedureWithRating
 	@Test
 	public void testGetSearchByProcedureWithRatingIsEmpty() {
 		JavaFuncForSQL hos = new JavaFuncForSQL();
@@ -43,6 +62,10 @@ public class TestJavaFuncForSQL {
 		assertFalse("data search by cost is empty",isEmpty);
 	}
 	
+	
+	
+	
+	//Test for procedure callLoCationBaseOnZipCode
 	@Test
 	public void testCallLocationBasedOnZipCodeIsEmpty() {
 		JavaFuncForSQL hos = new JavaFuncForSQL();
@@ -51,6 +74,12 @@ public class TestJavaFuncForSQL {
 		assertFalse("data search by cost is empty",isEmpty);
 	}
 	
+	
+	
+	
+	
+	
+	//Test for procedure returnsortedProcedures
 	@Test
 	public void testReturnsortedProceduresIsEmpty() {
 		JavaFuncForSQL func = new JavaFuncForSQL();
@@ -59,33 +88,7 @@ public class TestJavaFuncForSQL {
 		assertFalse("data search by cost is empty",isEmpty);
 	}
 
-//	@Test
-//	public void testGetSearchByCostNotNull(){
-//		JavaFuncForSQL func = new JavaFuncForSQL();
-//		List<MixData> list = func.GetSearchByCost("038 - EXTRACRANIAL PROCEDURES W CC", 1000, 13000);
-//		boolean isNull = false;
-//		
-//		
-//		for(MixData obj:list) {
-//			if(obj.getProcedureId() != null) {
-//				
-//			}
-//
-//		/*	obj.getProviderName()
-//			obj.getProviderStreetAddress()
-//			obj.getProviderCity()
-//			obj.getProviderZipCode()
-//			obj.getAvgCoveredCharges()
-//			obj.getAvgTotalPayments()
-//			obj.getAvgMedicarePayments()
-//			obj.getLatitude()
-//			obj.getLongitude()
-//		}
-//		
-//		
-//		assertFalse("data search by cost is empty",isNull);		
-//	}
-	
+
 	
 	
 }
