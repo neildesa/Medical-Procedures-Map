@@ -278,7 +278,65 @@ public class JavaFuncForSQL {
 		return null;
 	}
 	
-	
+	public List<MixData> GetSortByRating(String DRGdefinition,int Rating)
+	{
+		
+		//Connection clause, called later
+		Connection conn = null;
+		Statement state =null;
+		ResultSet result=null;
+		try{
+			//Try Connection to the database, use the schema provided
+			conn = JDBCUtil.getconn();
+			String sql="use 19agileteam3db";
+			state = conn.createStatement();
+			state.execute(sql);
+		
+			//Calls the specific method with its parametres
+			sql="call SearchByCost('"+DRGdefinition+"',"+Rating+")";
+		
+			//Calls the valued Results
+			result = state.executeQuery(sql);
+			List<MixData> list = new ArrayList<MixData>();
+		
+			//While the data has another entry, call to here
+			while(result.next()) 
+			{
+				//All of the Calls are performed here, they function as set values, then apply that to the list
+				HospitalData hospital = new HospitalData();
+				ProcedureData procedure = new ProcedureData();
+				GEOlocation geoloc = new GEOlocation();
+				MixData mix = new MixData();
+				hospital.setProviderName(result.getString("Provider_Name"));
+				hospital.setProviderStreetAddress(result.getString("Provider_Street_Address"));
+				geoloc.setLatitude(result.getDouble("Latitude"));
+				geoloc.setLongitude(result.getDouble("Longitude"));
+				procedure.setAvgCoveredCharges(result.getDouble("AverageCoveredCharges"));
+				procedure.setAvgTotalPayments(result.getDouble("AverageTotalPayments"));
+				procedure.setAvgMedicarePayments(result.getDouble("AverageMedicarePayments"));
+				
+				mix.setProviderName(hospital.getProviderName());
+				mix.setLatitude(geoloc.getLatitude());
+				mix.setLongitude(geoloc.getLongitude());
+				mix.setAvgCoveredCharges(procedure.getAvgCoveredCharges());
+				mix.setAvgTotalPayments(procedure.getAvgTotalPayments());
+				mix.setAvgMedicarePayments(procedure.getAvgMedicarePayments());
+				list.add(mix);
+			}	
+			return list;
+			
+		}
+		//Finishes the Catch Statement
+		catch(Exception E) 
+		{
+			E.printStackTrace();
+		}
+		finally
+		{
+			JDBCUtil.close(conn, state, result);
+		}
+		return null;
+	}
 	
 	
 	
