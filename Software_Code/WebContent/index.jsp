@@ -76,19 +76,19 @@
 						    Filter By
 						  </button>
               <form action="index.jsp" method="POST">
-						    <input type="hidden" name="procedure"  value="<% request.getParameter("procedure"); %>">
-						    <input type="hidden" name="minRange"   value="<% request.getParameter("minRange"); %>">
-						    <input type="hidden" name="maxRange"   value="<% request.getParameter("maxRange"); %>">
-						    <input type="hidden" name="starRating" value="<% request.getParameter("starRating"); %>">
-						    <input type="hidden" name="rangeRange" value="<% request.getParameter("rangeRange"); %>">
-						    <input type="hidden" name="location"   value="<% request.getParameter("location"); %>">
+						<input type="hidden" name="procedure"  value="<%= request.getParameter("procedure")  %>">
+						<input type="hidden" name="minRange"   value="<%= request.getParameter("minRange")   %>">
+						<input type="hidden" name="maxRange"   value="<%= request.getParameter("maxRange")   %>">
+						<input type="hidden" name="starRating" value="<%= request.getParameter("starRating") %>">
+						<input type="hidden" name="rangeRange" value="<%= request.getParameter("rangeRange") %>">
+						<input type="hidden" name="location"   value="<%= request.getParameter("location")   %>">
 							
-						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							  <input type="submit" class="dropdown-item" name="sort" value="cost"    >Cost    </input>
-							  <input type="submit" class="dropdown-item" name="sort" value="distance">Distance</input>
-							  <input type="submit" class="dropdown-item" name="sort" value="rating"  >Rating  </input>
-						  </div>
-					  </form>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<input type="submit" class="dropdown-item" name="sort" value="Cost"    >
+							<input type="submit" class="dropdown-item" name="sort" value="Distance">
+							<input type="submit" class="dropdown-item" name="sort" value="Rating"  >
+						</div>
+					</form>
 						
 						</div>
                 <div class="row align-items-center">
@@ -107,16 +107,32 @@
 	                            <tbody>
 									<% 
 	                            		// procedureName would be received from the details.html drop-down object the user selects
+	                            		ArrayList<ArrayList<String>> hospitalList = new ArrayList<ArrayList<String>>();
 	                            		String procedure = request.getParameter("procedure"); 
 	                            		String procedureName = procedure;
+	                            		String sort = request.getParameter("sort");
 	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
 	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
+	                            		int starRating = Integer.parseInt(request.getParameter("starRating"));
+	                            		
 	                            		
 	                            		String name = procedureName.trim();
 	                            		
 	                            		System.out.println("e:" + procedureName);
-	                   			  		ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound);
-										
+	                            		System.out.println("Sort by => " + sort);
+	                            		
+	                            		if (sort.equals("Cost")) {
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 1);
+	                   			  			// Sort by cost
+	                            		} else if (sort.equals("Distance")) {
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 2);
+	                   			  			// Sort by distance
+	                            		} else if (sort.equals("Rating")) {
+	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 3);
+	                   			  			// Sort by rating
+	                            		}
+	                   			  			
+	                   			  			
 	                   			  		System.out.println("hospital size: " + hospitalList.size());
 	                   			  		
 	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
