@@ -82,6 +82,67 @@ public class Test_JavaFunctionsForJsp {
 		assertFalse(errorMessage, rowsAreNotEqual);
 	}
 	
+	
+	/**
+	 * Test class for checking that Java call to SQL procedure "SearchByProcedure(String ProcedureName)"
+	 * does
+	 * 
+	 * @throws ClassNotFoundException
+	 */
+	@Test
+	public void testFindHospitalByProcedureViaCostOutOfRange() throws ClassNotFoundException
+	{
+		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		int min = 100000, max = 1000000, rating =0;
+		
+		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName, min, max, rating, 1);
+		
+		// being test
+		boolean costOutOfRange = false;
+		String errorMessage = "";
+		for (int i = 0; i < listOfHospitals.size() - 1; i++) 
+		{
+			if (Integer.parseInt(listOfHospitals.get(i).get(6)) > max || Integer.parseInt(listOfHospitals.get(i).get(6)) < min) {
+				costOutOfRange = true;
+				errorMessage += "Cost out of range: max=" + max + ", min=" + min + ", cost=" + listOfHospitals.get(i).get(6) + ", i=" + i + "/n";
+			}
+				
+		}
+		
+		assertFalse(errorMessage, costOutOfRange);
+	}
+	
+	
+	/**
+	 * Test class for checking that Java call to SQL procedure "SearchByProcedure(String ProcedureName)"
+	 * does
+	 * 
+	 * @throws ClassNotFoundException
+	 */
+	@Test
+	public void testFindHospitalByProcedureViaRatingBelowMin() throws ClassNotFoundException
+	{
+		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		int min = 0, max = 2000000, rating = 0;
+		
+		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName, min, max, rating, 1);
+		
+		// being test
+		boolean ratingBelowMin = false;
+		String errorMessage = "";
+		for (int i = 0; i < listOfHospitals.size() - 1; i++) 
+		{
+			if (Integer.parseInt(listOfHospitals.get(i).get(8)) > max || Integer.parseInt(listOfHospitals.get(i).get(8)) < min) {
+				ratingBelowMin = true;
+				errorMessage += "Rating below minimum: min=" + min + ", rating=" + listOfHospitals.get(i).get(8) + ", i=" + i + "/n";
+			}
+				
+		}
+		
+		assertFalse(errorMessage, ratingBelowMin);
+	}
+	
+	
 	@Test
 	public void testFindHospitalByProcedureViaCostIsNotEmpty() {
 		
