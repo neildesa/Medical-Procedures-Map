@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" href="/Web/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -13,7 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+  
 <meta charset="ISO-8859-1">
 <title>Maps</title>
 
@@ -144,8 +145,8 @@
 	                   			  		
 	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
 	                   				%>
-	                   				  	<tr>
-	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+	                   				  	<tr id='<%= hospitalList.get(i).get(0) %>'>
+	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %> </td>
 	                   				  	</tr>
 	                   				  	<% } %>	
 	                                <tr><td id="HospitalName">Hospital Name</td></tr>
@@ -215,6 +216,7 @@
    			var latitude =  locations[address][3];
    			var longitude = locations[address][2];
    			var dest = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
+
     	  	distanceMatrix.getDistanceMatrix({
          		origins: [origin],
          		destinations: [dest],
@@ -317,6 +319,20 @@
                   '</div>'+
                   '</div>'
             	});
+            
+            	//POSSIBLE WAY TO GET INFO WINDOW OPEN FROM CLICKING ON CELL IN TABLE//////////////////////////////////////////////
+            
+            	/* tablecells.addListener(marker, 'click', function() {
+            		
+	            if(prevInfoWindow){
+	            	prevInfoWindow.close();
+	            }
+	            
+	            prevInfoWindow = infowindow;
+	          	
+	         	infowindow.open(map,marker)); */
+	         	
+	         	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			google.maps.event.addListener(marker, 'click', function() {
             		
@@ -327,7 +343,8 @@
 	            prevInfoWindow = infowindow;
 	          	
 	         	infowindow.open(map,marker)
-	         	highlightClick()}                        
+	         	//alert(locations[address][0]);
+	         	highlightClick(locations[address][0])}                        
 	       	);
 	    }
 	    
@@ -346,10 +363,17 @@
 		}
 	     
 	    //Function that highlights and sctolls to the hospital in the table of hospitals
-        function highlightClick(){
-       		var elmnt = document.getElementById("HospitalName");
-        	elmnt.scrollIntoView({behavior: "smooth"});
-       		elmnt.style.backgroundColor = "#FDFF47";
+        function highlightClick(Address){
+        	var elmnt = document.getElementById(Address);
+        	elmnt.classList.toggle("highlight");
+        	elmnt.animate({
+        		background:	["#ffef9f", "#00000000"],
+        		transform:	["scale(1, 1)", "scale(1.1, 1.1)", "scale(1, 1)"]
+        	}, 800);        	
+            elmnt.scrollIntoView({behavior: "smooth"});
+            
+            
+            //document.querySelector("#HospitalName").classList.toggle("highlight")
         }
 
         //Function to remove markers that are outside the users selected range
