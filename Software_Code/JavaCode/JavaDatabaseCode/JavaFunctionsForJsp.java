@@ -16,6 +16,7 @@ public class JavaFunctionsForJsp {
 	public static Connection conn = null;
 	
 	
+	
 	/**
 	 * Order of ArrayList indices
 	 * .get(0) hospital name
@@ -110,6 +111,51 @@ public class JavaFunctionsForJsp {
 		    return null;
 		}
 		
+	}
+	
+	/**
+	 * Method returns a listOfHospitals as it was received but additionally with the distance of the hospital 
+	 * from the client added onto the the end.
+	 * 
+	 * @param hospitalList - list of hospitals searched for via procedure
+	 * @param currentLong - longitude of the user
+	 * @param currentLat - latitude of the user
+	 * @param maxDistance - maximum distance of hospitals that should be displayed
+	 * @return
+	 */
+	public static ArrayList<ArrayList<String>> addHospitalDistancesToArray(ArrayList<ArrayList<String>> hospitalList, 
+			double currentLong, double currentLat, double maxDistance) 
+	{
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		
+		for (int i = 0; i < hospitalList.size(); i++) {
+			
+			double hospitalLong = Double.parseDouble(hospitalList.get(i).get(2));
+			double hospitalLat = Double.parseDouble(hospitalList.get(i).get(3));
+			
+			double distance = Haversine.haversine(hospitalLat, hospitalLong, currentLat, currentLong);
+			
+			
+			String hospitalDistance = Double.toString(distance);
+			hospitalList.get(i).add(hospitalDistance);
+			
+			//System.out.println(i + " : " + hospitalList.get(i));
+			
+			// if hospital is out of the search radius
+			if (distance >= maxDistance) {
+				indices.add(i);
+			}
+			//System.out.println(i + " : " + hospitalList.get(i) + "\n");	
+		}
+		
+		for (int i = indices.size() - 1; i >= 0; i--) {
+			int index = indices.get(i);
+			hospitalList.remove(index);
+		}
+		
+		
+		
+		return hospitalList;
 	}
 	
 	

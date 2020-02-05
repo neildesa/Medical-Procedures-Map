@@ -32,6 +32,7 @@ public class OutputTest_JavaFuncForSQL {
 			System.out.println(obj.getAvgCoveredCharges());
 			System.out.println(obj.getAvgTotalPayments());
 			System.out.println(obj.getAvgMedicarePayments());
+			System.out.println(obj.getCustomerRating());
 			System.out.println(obj.getLatitude());
 			System.out.println(obj.getLongitude());
 			System.out.println("");
@@ -90,7 +91,7 @@ public class OutputTest_JavaFuncForSQL {
 			System.out.println(obj.getAvgCoveredCharges());
 			System.out.println(obj.getAvgTotalPayments());
 			System.out.println(obj.getAvgMedicarePayments());
-			//System.out.println(obj.getCustomerRating());
+			System.out.println(obj.getCustomerRating());
 			System.out.println(obj.getLatitude());
 			System.out.println(obj.getLongitude());
 			System.out.println("");
@@ -120,24 +121,7 @@ public class OutputTest_JavaFuncForSQL {
 	}
 		
 	
-	
-	@Test
-	public void testCallLocationBasedOnZipCode() {
-		JavaFuncForSQL hos = new JavaFuncForSQL();
-		List<MixData> list = hos.CallLocationBasedOnZipCode("36301", "027 - CRANIOTOMY & ENDOVASCULAR INTRACRANIAL PROCEDURES W/O CC/MCC");
-		for(MixData obj:list) {
-			System.out.println(obj.getProviderId());
-			System.out.println(obj.getProviderName());
-			System.out.println(obj.getProviderZipCode());
-			System.out.println(obj.getDrgDefinition());
-			System.out.println(obj.getAvgCoveredCharges());
-			System.out.println(obj.getAvgTotalPayments());
-			System.out.println(obj.getAvgMedicarePayments());
-			System.out.println("");
-		}
-		System.out.println("function callLocationBasedOnZipCode finished");
-	}
-	
+
 	
 	@Test
 	public void testReturnsortedProcedures() {
