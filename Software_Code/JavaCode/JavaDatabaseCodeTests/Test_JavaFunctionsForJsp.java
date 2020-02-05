@@ -10,6 +10,24 @@ import JavaDatabaseCode.JavaFunctionsForJsp;
 
 public class Test_JavaFunctionsForJsp {
 	
+	@Test
+	public void testAddHospitalDistancesToArray() throws ClassNotFoundException
+	{
+		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		int min = 100000, max = 1000000, rating = 0, sort = 1;
+		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName, min, max, rating, sort);
+		
+		listOfHospitals = JavaFunctionsForJsp.addHospitalDistancesToArray(listOfHospitals, 0.0, 0.0, 6000);
+		
+		  System.out.println("hospitalList size: " + listOfHospitals.size()); 
+		  for (int i = 0; i < listOfHospitals.size(); i++) 
+		  { 
+			  System.out.println(listOfHospitals.get(i)); 
+		  }
+		 
+		
+	}
+	
 	/**
 	 * Test class for checking that Java call to SQL procedure "SearchByProcedure(String ProcedureName)"
 	 * doesn't return an empty table.
