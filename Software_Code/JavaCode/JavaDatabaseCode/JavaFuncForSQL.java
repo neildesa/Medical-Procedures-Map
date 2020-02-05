@@ -144,7 +144,7 @@ public class JavaFuncForSQL {
 				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
 				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
 				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				//mix.setCustomerRating(res.getInt("CustomerRating"));
+				mix.setCustomerRating(res.getInt("CustomerRating"));
 				mix.setLatitude(res.getDouble("Latitude"));
 				mix.setLongitude(res.getDouble("Longitude"));
 				hosList.add(mix);
@@ -191,8 +191,8 @@ public class JavaFuncForSQL {
 				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
 				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
 				mix.setCustomerRating(res.getInt("CustomerRating"));
-				mix.setLatitude(res.getDouble("Latitude"));
-				mix.setLongitude(res.getDouble("Longitude"));
+				mix.setLatitude(res.getDouble("GeoLatitude"));
+				mix.setLongitude(res.getDouble("GeoLongitude"));
 				hosList.add(mix);
 			}	
 			return hosList;
@@ -204,50 +204,7 @@ public class JavaFuncForSQL {
 		}
 		return null;
 	}
-	
-	
-	
-	// get List of data which searched by Zip_Code and procedure definition
-	// arguments are zip_code and procedures DRG definition
-	// 
-	public List<MixData> CallLocationBasedOnZipCode(String zipCode,String procedure){
-		Connection conn = null;
-		Statement st =null;
-		ResultSet res=null;
-		try{
-			conn = JDBCUtil.getconn();
-			String sql="use 19agileteam3db";
-			st = conn.createStatement();
-			st.execute(sql);
-			
-			sql="call locationbasedonzipcode('"+zipCode+"','"+procedure+"')";
-			
-			res = st.executeQuery(sql);
-			
-			List<MixData> hosList = new ArrayList<MixData>();
-			
-			while(res.next()) {
-				MixData mix = new MixData();
-				mix.setProviderId(res.getInt("Provider_Id"));
-				mix.setProviderName(res.getString("Provider_Name"));
-				mix.setProviderZipCode(res.getString("Provider_Zip_Code"));
-				mix.setDrgDefinition(res.getString("DRGDefinition"));
-				mix.setAvgCoveredCharges(res.getDouble("AverageCoveredCharges"));
-				mix.setAvgTotalPayments(res.getDouble("AverageTotalPayments"));
-				mix.setAvgMedicarePayments(res.getDouble("AverageMedicarePayments"));
-				hosList.add(mix);
-			}	
-			return hosList;
-			
-		}catch(Exception E) {
-			E.printStackTrace();
-		}finally{
-			JDBCUtil.close(conn, st, res);
-		}
-		return null;
-	}
-	
-	
+		
 	
 	public List<MixData> ReturnsortedProcedures(){
 		Connection conn = null;
