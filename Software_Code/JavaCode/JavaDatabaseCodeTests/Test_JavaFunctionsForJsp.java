@@ -17,7 +17,8 @@ public class Test_JavaFunctionsForJsp {
 		int min = 100000, max = 1000000, rating = 0, sort = 1;
 		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName, min, max, rating, sort);
 		
-		listOfHospitals = JavaFunctionsForJsp.addHospitalDistancesToArray(listOfHospitals, 0.0, 0.0, 6000);
+		listOfHospitals = JavaFunctionsForJsp.addHospitalDistancesToArray(listOfHospitals, 0.0, 0.0, 8000);
+		listOfHospitals = JavaFunctionsForJsp.sortHospitalDistances(listOfHospitals);
 		
 		  System.out.println("hospitalList size: " + listOfHospitals.size()); 
 		  for (int i = 0; i < listOfHospitals.size(); i++) 
