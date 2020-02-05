@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" href="/Web/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -13,7 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+  
 <meta charset="ISO-8859-1">
 <title>Maps</title>
 
@@ -57,7 +58,7 @@
                             <a class="nav-link" href="Web/index.html">Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="details.jsp">Find a Hospital<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="details.jsp">Find a Procedure<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Web/about.html">About us</a>
@@ -111,6 +112,7 @@
 	                            		String procedure = request.getParameter("procedure"); 
 	                            		String procedureName = procedure;
 	                            		String sort = request.getParameter("sort");
+	                            		System.out.println(sort);
 	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
 	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
 	                            		int starRating = Integer.parseInt(request.getParameter("starRating"));
@@ -143,8 +145,8 @@
 	                   			  		
 	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
 	                   				%>
-	                   				  	<tr>
-	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %></td>
+	                   				  	<tr id='<%= hospitalList.get(i).get(0) %>'>
+	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %> </td>
 	                   				  	</tr>
 	                   				  	<% } %>	
 	                                <tr><td id="HospitalName">Hospital Name</td></tr>
@@ -186,7 +188,9 @@
 	    	var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
 	    	var hospitalLong = "<%= hospitalList.get(i).get(2) %>";
 	    	var hospitalLat = "<%= hospitalList.get(i).get(3) %>";
-	     	var row = [hospitalName, hospitalAddress, hospitalLong, hospitalLat]
+	    	var hospitalCost = "<%= hospitalList.get(i).get(4) %>";
+	    	var hospitalRating = "<%= hospitalList.get(i).get(5) %>";
+	     	var row = [hospitalName, hospitalAddress, hospitalLong, hospitalLat, hospitalCost, hospitalRating]
 	   		locations.push(row)
 		<% } %>
 	    
@@ -212,7 +216,7 @@
    			var latitude =  locations[address][3];
    			var longitude = locations[address][2];
    			var dest = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
-  	  		alert("TESTING");
+
     	  	distanceMatrix.getDistanceMatrix({
          		origins: [origin],
          		destinations: [dest],
@@ -249,30 +253,6 @@
    			});    
 		}
 	      
-	    //Function that converts an address to latatude/longatude using the Geocoding API
-	    //n.b. Geocoding query limit ~10 query/s
-/*    		function codeAddress(geocoder, map, address, distanceMatrix, user) {
-	    	  
-	  		if(user == true){
-	    		geocoder.geocode({'address': address}, function(results, status) {
-	   				if (status === 'OK') { 
-    	     			placeMarkerUser(map, results[0].geometry.location);
-    	  			}
-	    		});
-	    	  }
-	  		
-	 		else{
-	    		geocoder.geocode({'address': locations[address][0]}, function(results, status) {
-	    			if (status === 'OK') { 
-	    	  			getDistance(distanceMatrix, map, address, results[0].geometry.location, distance); 
-	    			} 
-	    	    	else {
-	  	        		alert('Geocode was not successful for the following reason: ' + status);
-	  	    		}
-	     		});
-	  		}
-	      } */
-	      
 	    
    		function codeAddress(geocoder, map, address, distanceMatrix, user) {
    			
@@ -293,8 +273,21 @@
 	      
         //Function that places a custom marker at the location of the hospitals and initializes the markers infowindow   
 		function placeMarker(map, address, result, distance){
-	    	
-			var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png',  scaledSize: new google.maps.Size(35,35) }
+	    	cost = locations[address][4];
+        	
+			if(cost < 250000){ 
+				var color = "green"; 
+				var image = { url: 'https://i.imgur.com/gfWgC2N.png', scaledSize: new google.maps.Size(35,35) } 
+			} 
+			else if(cost < 300000){ 
+				var color = "orange"; 
+				var image = { url: 'https://i.imgur.com/pg1QkT2.png', scaledSize: new google.maps.Size(35,35) } 
+			} 
+			else if(cost > 300000){ 
+				var color = "red"; 
+				var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png', scaledSize: new google.maps.Size(35,35) } 
+			}
+        	
 	    	var marker = new google.maps.Marker({
 	      		map: map,
 	         	icon: image,
@@ -304,16 +297,6 @@
 	            
 	       	markerArray.push(marker);
 	       	markerDistance.push(distance);
-
-           	if(cost < 50000){
-           		var color = "green";
-           	}
-           	else if(cost < 1000000){
-           		var color = "orange";
-           	}
-           	else if(cost < 1500000){
-           		var color = "red";
-           	}
 	            
             var infowindow = new google.maps.InfoWindow({
             	  content:'<div id="content">'+
@@ -327,7 +310,7 @@
                   '<span class="fa fa-star checked"></span>' +
                   '<span class="fa fa-star"></span>' +  
                   '</div>' +
-                  '<h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5></h5> <hr>'  +
+                  '<h5 style="color: ' + color + '"><b>Cost:</b> $' + cost + '</h5></h5> <hr>'  +
                   '<div id="bodyContent">'+
                   '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
                   '<br> <b>Address: </b>' + locations[address][1]  + 
@@ -336,6 +319,20 @@
                   '</div>'+
                   '</div>'
             	});
+            
+            	//POSSIBLE WAY TO GET INFO WINDOW OPEN FROM CLICKING ON CELL IN TABLE//////////////////////////////////////////////
+            
+            	/* tablecells.addListener(marker, 'click', function() {
+            		
+	            if(prevInfoWindow){
+	            	prevInfoWindow.close();
+	            }
+	            
+	            prevInfoWindow = infowindow;
+	          	
+	         	infowindow.open(map,marker)); */
+	         	
+	         	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			google.maps.event.addListener(marker, 'click', function() {
             		
@@ -346,7 +343,8 @@
 	            prevInfoWindow = infowindow;
 	          	
 	         	infowindow.open(map,marker)
-	         	highlightClick()}                        
+	         	//alert(locations[address][0]);
+	         	highlightClick(locations[address][0])}                        
 	       	);
 	    }
 	    
@@ -365,10 +363,17 @@
 		}
 	     
 	    //Function that highlights and sctolls to the hospital in the table of hospitals
-        function highlightClick(){
-       		var elmnt = document.getElementById("HospitalName");
-        	elmnt.scrollIntoView({behavior: "smooth"});
-       		elmnt.style.backgroundColor = "#FDFF47";
+        function highlightClick(Address){
+        	var elmnt = document.getElementById(Address);
+        	elmnt.classList.toggle("highlight");
+        	elmnt.animate({
+        		background:	["#ffef9f", "#00000000"],
+        		transform:	["scale(1, 1)", "scale(1.1, 1.1)", "scale(1, 1)"]
+        	}, 800);        	
+            elmnt.scrollIntoView({behavior: "smooth"});
+            
+            
+            //document.querySelector("#HospitalName").classList.toggle("highlight")
         }
 
         //Function to remove markers that are outside the users selected range
