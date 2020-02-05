@@ -113,7 +113,6 @@ public class JavaFunctionsForJsp {
 		
 	}
 	
-	
 	/**
 	 * Method returns a listOfHospitals as it was received but additionally with the distance of the hospital 
 	 * from the client added onto the the end.
@@ -158,7 +157,6 @@ public class JavaFunctionsForJsp {
 		
 		return hospitalList;
 	}
-	
 	
 	
 	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 

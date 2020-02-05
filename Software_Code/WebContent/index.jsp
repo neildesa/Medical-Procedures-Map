@@ -58,7 +58,7 @@
                             <a class="nav-link" href="Web/index.html">Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="details.jsp">Find a Hospital<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="details.jsp">Find a Procedure<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Web/about.html">About us</a>
