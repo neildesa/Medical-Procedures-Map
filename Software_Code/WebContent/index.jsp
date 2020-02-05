@@ -146,7 +146,7 @@
 	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
 	                   				%>
 	                   				  	<tr id='<%= hospitalList.get(i).get(0) %>'>
-	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %> </td>
+	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %> </td><td>$<% out.println(hospitalList.get(i).get(4)); %></td>
 	                   				  	</tr>
 	                   				  	<% } %>	
 	                                <tr><td id="HospitalName">Hospital Name</td></tr>
