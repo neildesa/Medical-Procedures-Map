@@ -1,6 +1,8 @@
 package JavaDatabaseCode;
 
 import java.sql.Connection;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +20,7 @@ public class JavaFunctionsForJsp {
 	
 	public static Connection conn = null;
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	/**
 	 * Order of ArrayList indices
@@ -83,8 +85,10 @@ public class JavaFunctionsForJsp {
 				
 				// retrieve, convert from Double to String, and add cost
 				Double cost = rs.getDouble("AverageTotalPayments");
-				String procedureCost = Double.toString(cost);
-				hospitalListRowToAdd.add(procedureCost);
+				//Added new format to cost showing "$###.##"
+				String formattedCost = df2.format(cost);
+				//String procedureCost = Double.toString(cost);
+				hospitalListRowToAdd.add(formattedCost);
 				
 				// retrieve, convert from integer to String, and add rating
 				int rating = rs.getInt("CustomerRating");
