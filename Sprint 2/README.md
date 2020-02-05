@@ -32,3 +32,18 @@ Todays aims are:
 2. Finishing the tests for the search procedure by distance and integrating it with the front-end.
 3. Creating and finshing the tests for the two other procedures search via cost and rating.
 4. Updating the UI to allow user to allow them to search by cost or ratings (instead of by distance - default option).
+
+---
+## Day 3 (05/02/2020) - Scrum Meeting Summary (10am)
+The Scrum Master for this emeting **Neilson Desa**
+
+### Members Present:
+All members present
+
+### Summary of Converstaion
+The team concluded their current progress with the completion of Java Unit tests on all functions that called SQL procedures. Additionally, the hospital markers were colour coordinated to match the price of the procedure they offer, the front-ent had UI for sorting that connected to the backend, the backend had encapsulated the entire searching and sorting functioanlity for rating and cost into one Java functions, and the longtitude's and latitude's of each hospital were now stored in the database to bypass goodgle's query limit.
+
+Aims for today:
+1. Continue improving UI for ease of use and visibility.
+2. Updating and finishing the functionality to restrict a search by distance and sort it by distance.
+3. Integrating distance calculations from the backend with the front-end.
