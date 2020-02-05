@@ -112,6 +112,7 @@
 	                            		String procedure = request.getParameter("procedure"); 
 	                            		String procedureName = procedure;
 	                            		String sort = request.getParameter("sort");
+	                            		System.out.println(sort);
 	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
 	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
 	                            		int starRating = Integer.parseInt(request.getParameter("starRating"));
@@ -187,7 +188,9 @@
 	    	var hospitalAddress = "<%= hospitalList.get(i).get(1) %>";
 	    	var hospitalLong = "<%= hospitalList.get(i).get(2) %>";
 	    	var hospitalLat = "<%= hospitalList.get(i).get(3) %>";
-	     	var row = [hospitalName, hospitalAddress, hospitalLong, hospitalLat]
+	    	var hospitalCost = "<%= hospitalList.get(i).get(4) %>";
+	    	var hospitalRating = "<%= hospitalList.get(i).get(5) %>";
+	     	var row = [hospitalName, hospitalAddress, hospitalLong, hospitalLat, hospitalCost, hospitalRating]
 	   		locations.push(row)
 		<% } %>
 	    
@@ -213,7 +216,7 @@
    			var latitude =  locations[address][3];
    			var longitude = locations[address][2];
    			var dest = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
-  	  		//alert("TESTING");
+
     	  	distanceMatrix.getDistanceMatrix({
          		origins: [origin],
          		destinations: [dest],
@@ -250,30 +253,6 @@
    			});    
 		}
 	      
-	    //Function that converts an address to latatude/longatude using the Geocoding API
-	    //n.b. Geocoding query limit ~10 query/s
-/*    		function codeAddress(geocoder, map, address, distanceMatrix, user) {
-	    	  
-	  		if(user == true){
-	    		geocoder.geocode({'address': address}, function(results, status) {
-	   				if (status === 'OK') { 
-    	     			placeMarkerUser(map, results[0].geometry.location);
-    	  			}
-	    		});
-	    	  }
-	  		
-	 		else{
-	    		geocoder.geocode({'address': locations[address][0]}, function(results, status) {
-	    			if (status === 'OK') { 
-	    	  			getDistance(distanceMatrix, map, address, results[0].geometry.location, distance); 
-	    			} 
-	    	    	else {
-	  	        		alert('Geocode was not successful for the following reason: ' + status);
-	  	    		}
-	     		});
-	  		}
-	      } */
-	      
 	    
    		function codeAddress(geocoder, map, address, distanceMatrix, user) {
    			
@@ -294,8 +273,21 @@
 	      
         //Function that places a custom marker at the location of the hospitals and initializes the markers infowindow   
 		function placeMarker(map, address, result, distance){
-	    	
-			var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png',  scaledSize: new google.maps.Size(35,35) }
+	    	cost = locations[address][4];
+        	
+			if(cost < 250000){ 
+				var color = "green"; 
+				var image = { url: 'https://i.imgur.com/gfWgC2N.png', scaledSize: new google.maps.Size(35,35) } 
+			} 
+			else if(cost < 300000){ 
+				var color = "orange"; 
+				var image = { url: 'https://i.imgur.com/pg1QkT2.png', scaledSize: new google.maps.Size(35,35) } 
+			} 
+			else if(cost > 300000){ 
+				var color = "red"; 
+				var image = { url: 'https://cdn1.iconfinder.com/data/icons/medicine-pt-7/100/051_-_hospital_map_marker_pin_doctor-512.png', scaledSize: new google.maps.Size(35,35) } 
+			}
+        	
 	    	var marker = new google.maps.Marker({
 	      		map: map,
 	         	icon: image,
@@ -305,16 +297,6 @@
 	            
 	       	markerArray.push(marker);
 	       	markerDistance.push(distance);
-
-           	if(cost < 50000){
-           		var color = "green";
-           	}
-           	else if(cost < 1000000){
-           		var color = "orange";
-           	}
-           	else if(cost < 1500000){
-           		var color = "red";
-           	}
 	            
             var infowindow = new google.maps.InfoWindow({
             	  content:'<div id="content">'+
@@ -328,7 +310,7 @@
                   '<span class="fa fa-star checked"></span>' +
                   '<span class="fa fa-star"></span>' +  
                   '</div>' +
-                  '<h5 style="color: ' + color + '"><b>Cost:</b> $6,778.64</h5></h5> <hr>'  +
+                  '<h5 style="color: ' + color + '"><b>Cost:</b> $' + cost + '</h5></h5> <hr>'  +
                   '<div id="bodyContent">'+
                   '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
                   '<br> <b>Address: </b>' + locations[address][1]  + 
