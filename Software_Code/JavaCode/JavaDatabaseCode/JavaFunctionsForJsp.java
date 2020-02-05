@@ -113,10 +113,6 @@ public class JavaFunctionsForJsp {
 	}
 	
 	
-	
-	
-	
-	
 	public static ArrayList<String> returnListOfProcedures() throws ClassNotFoundException 
 	{
 		try 
