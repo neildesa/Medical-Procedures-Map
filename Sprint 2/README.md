@@ -41,7 +41,7 @@ The Scrum Master for this emeting **Neilson Desa**
 All members present
 
 ### Summary of Converstaion
-The team concluded their current progress with the completion of Java Unit tests on all functions that called SQL procedures. Additionally, the hospital markers were colour coordinated to match the price of the procedure they offer, the front-ent had UI for sorting that connected to the backend, the backend had encapsulated the entire searching and sorting functioanlity for rating and cost into one Java functions, and the longtitude's and latitude's of each hospital were now stored in the database to bypass goodgle's query limit.
+The team concluded their current progress with the completion of Java Unit tests on all functions that called SQL procedures. Additionally, the hospital markers were colour coordinated to match the price of the procedure they offer, the front-end had UI for sorting that connected to the backend, the backend had encapsulated the entire searching and sorting functioanlity for rating and cost into one Java functions, and the longtitude's and latitude's of each hospital were now stored in the database to bypass goodgle's query limit.
 
 Aims for today:
 1. Continue improving UI for ease of use and visibility.
