@@ -38,8 +38,7 @@
             </nav>
 
             <div class="container-flex px-lg-5 w-auto content-box stuff-holder">    
-                <form action="index.jsp" method="POST">
-
+                <form action="index.jsp" method="POST" id="formSubmit">
 					<input type="hidden" name="sort" value="Cost">
 
                     <script>
@@ -84,7 +83,7 @@
                         <div class="col">
                             <div class="slidecontainer">                        
                                 <p>Maximum Price: $<span id="max"></span></p>
-                                <input type="range" name="maxRange" min="1" max="2000000" value="1500000" class="slider" id="maxRange">
+                                <input type="range" name="maxRange" min="1" max="2000000" value="300000" class="slider" id="maxRange">
                             </div>
         
                             <script>
@@ -104,8 +103,8 @@
                     <div class="form-item">
 	                    <label for="exampleFormControlSelect2">Minimum Star Rating</label>
 	                    <div class="form-group">
-	                            <input type="hidden" name="starRating" id="inlineCheckbox0" value="0" checked>
-	                    	
+	                    	<input type="hidden" name="starRating" id="inlineCheckbox0" value="0" checked>
+	                    
 	                        <div class="form-check form-check-inline">
 	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox1" value="1">
 	                            <label class="form-check-label" for="inlineCheckbox1">1</label>
@@ -132,7 +131,7 @@
                     <!-- Range -->
                     <div class="slidecontainer form-item">                        
                         <p>Distance from you: <span id="range"></span> Miles</p>
-                        <input type="range" name="rangeRange" min="10" max="5000" value="500" class="slider" id="rangeRange">
+                        <input type="range" name="rangeRange" min="10" max="5000" value="50" class="slider" id="rangeRange">
                     </div>
 
                     <script>
@@ -171,17 +170,32 @@
 					        	<div class="modal-body">
 					          		<label class="form-col-label">Tell me where you are</label><br>
 					          		<input type="text" class="form-control" name="location" id="location"></input>
+					          		<input type="hidden" name="latlong" id="latlong" value="value"></input>
 					        	</div>
 					        
 					        	<!-- Modal footer -->
 					        	<div class="modal-footer">
-					          		<input class="btn btn-success" type="submit" value="Hit Me Up" />
+					          		<button type="button" class="btn btn-success" onclick="GetLatLng()">Hit me up</button>
 					        	</div>
 					      	</div>
 					    </div>
 					</div>
 					
-		            <script >
+		            <script >            
+		            function GetLatLng(){
+		            	var location = document.getElementById("location").value;
+		            	var geocoder = new google.maps.Geocoder();
+		            	geocoder.geocode({'address': location}, function(results, status) {
+			   				if (status === 'OK') { 
+		    	     			var LatLng = results[0].geometry.location;
+		    	     			alert(document.getElementById("latlong").value);
+		    	     			document.getElementById("latlong").value = LatLng;
+		    	     			alert(document.getElementById("latlong").value);
+		    	     			document.getElementById("formSubmit").submit();
+			   				}
+		            	});
+		            }
+		            
 		            function locate() 
 		            {
 		               // document.getElementById("getLocation").onclick 
@@ -207,9 +221,13 @@
 		                navigator.geolocation.getCurrentPosition(geoSuccess);
 		                
 		            }
+		               
 		            </script>
+		                <script async defer
+					    	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9UXe18eobld12zvWvM686zLmT7NWtg_w&callback=initMap">
+					    </script>
                 </form>  
             </div>
-        </div>
+        </div>       
     </body>
 </html>
