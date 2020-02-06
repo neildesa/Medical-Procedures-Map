@@ -118,6 +118,7 @@
 	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
 	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
 	                            		int starRating = Integer.parseInt(request.getParameter("starRating"));
+	                            		double maxDistance = Double.parseDouble(request.getParameter("rangeRange"));
 	                            		String latlong = request.getParameter("latlong");
 	                            		String latlongTrim = latlong.substring(1, latlong.length() - 1);
 	                            		Scanner scanner = new Scanner(latlongTrim); 
@@ -141,13 +142,19 @@
 	                            		
 	                            		if (sort.equals("Cost")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 1);
+	                   			  			hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance);
 	                   			  			// Sort by cost
 	                            		} else if (sort.equals("Distance")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 2);
-	                   			  			//hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance)
+	                   			  			hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance);
+	                   			  			hospitalList = JavaFunctionsForJsp.sortHospitalDistances(hospitalList);
+	                   			  			
+
+	                   			  			
 	                   			  			// Sort by distance
 	                            		} else if (sort.equals("Rating")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 3);
+	                   			  			hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance);
 	                   			  			// Sort by rating
 	                            		}
 	                   			  			
@@ -161,7 +168,6 @@
 	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %> </td><td>$<% out.println(hospitalList.get(i).get(4)); %></td>
 	                   				  	</tr>
 	                   				  	<% } %>	
-	                                <tr><td id="HospitalName">Hospital Name</td></tr>
 	                            </tbody>
 	                          </table>
                           </div>
