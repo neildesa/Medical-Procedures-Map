@@ -129,7 +129,6 @@
 	                            		System.out.println("Longitude: " + currentLong);
 	                            		System.out.println("Latitude: " + currentLat); 
 	                            		
-	                            		
 	                            		String name = procedureName.trim();
 	                            		
 	                            		System.out.println("e:" + procedureName);
@@ -183,7 +182,7 @@
     	//Initializing global variables
     	var origin = "<%= loc%>"; 
     	var procedure = "<%= procedure%>"; 
-  	 	var range = "<%= range%>" * 0.621371; 
+  	 	var range = "<%= range%>" * 0.621371;
   	 	var latlong = "<%= latlong%>";
   	 	var cost = 10000;
   		var distance = "Caclulating...";
@@ -305,7 +304,8 @@
 			}
         	
 	    	var marker = new google.maps.Marker({
-	      		map: map,
+	      		title: locations[address][0],
+	    		map: map,
 	         	icon: image,
 	           	animation: google.maps.Animation.DROP,
 	          	position: result
@@ -339,6 +339,20 @@
                   '</div>'
             	});
             
+
+            
+            	
+            var opener = document.getElementById(locations[address][0]);
+            opener.addEventListener('click', function() {
+            		for (var i=0; i<markerArray.length; i++){
+            			if (markerArray[i].getTitle() == locations[address][0]){
+            				google.maps.event.trigger(markerArray[i], 'click')}
+            			}
+            		}
+            	
+            ); 
+	         	
+
 			google.maps.event.addListener(marker, 'click', function() {
             		
 	            if(prevInfoWindow){
@@ -348,7 +362,7 @@
 	            prevInfoWindow = infowindow;
 	          	
 	         	infowindow.open(map,marker)
-	         	//alert(locations[address][0]);
+	         	
 	         	highlightClick(locations[address][0])}                        
 	       	);
 	    }
@@ -367,7 +381,7 @@
   			drawCircle(map, result);
 		}
 	     
-	    //Function that highlights and sctolls to the hospital in the table of hospitals
+	    //Function that highlights and scrolls to the hospital in the table of hospitals
         function highlightClick(Address){
         	var elmnt = document.getElementById(Address);
         	elmnt.classList.toggle("highlight");
@@ -378,7 +392,7 @@
             elmnt.scrollIntoView({behavior: "smooth"});
             
             
-            //document.querySelector("#HospitalName").classList.toggle("highlight")
+           
         }
 
         //Function to remove markers that are outside the users selected range
