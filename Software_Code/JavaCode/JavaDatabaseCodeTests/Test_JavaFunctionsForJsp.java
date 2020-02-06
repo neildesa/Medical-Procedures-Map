@@ -1,6 +1,7 @@
 package JavaDatabaseCodeTests;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -10,8 +11,13 @@ import JavaDatabaseCode.JavaFunctionsForJsp;
 
 public class Test_JavaFunctionsForJsp {
 	
+	/**
+	 * Test that addHospitalDistancesToArray is adding distances to the end of the 2-D ArrayList<String>
+	 * 
+	 * @throws ClassNotFoundException
+	 */
 	@Test
-	public void testAddHospitalDistancesToArray() throws ClassNotFoundException
+	public void testAddHospitalDistancesToArrayNotAdding() throws ClassNotFoundException
 	{
 		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC", errorMessage = "";
 		int min = 100000, max = 1000000, rating = 0, sort = 1;
@@ -30,6 +36,36 @@ public class Test_JavaFunctionsForJsp {
 		 
 		assertFalse(errorMessage, isNotAdding);
 	}
+	
+	/**
+	 * Test that addHospitalDistancesToArray doesn't return hospitals above the max distanced searched by the user
+	 * 
+	 * @throws ClassNotFoundException
+	 */
+	@Test
+	public void testAddHospitalDistancesToArray() throws ClassNotFoundException
+	{
+		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		int min = 100000, max = 1000000, rating = 0, sort = 1;
+		
+		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName, min, max, rating, sort);
+		
+		double maxDistance = 7000.0;
+		boolean noOutOfRangeDistances = true;
+		
+		listOfHospitals = JavaFunctionsForJsp.addHospitalDistancesToArray(listOfHospitals, min, max, maxDistance);
+		
+		for (int i = 0; i < listOfHospitals.size(); i++) {
+			if (Double.parseDouble(listOfHospitals.get(i).get(6)) >= maxDistance) {
+				noOutOfRangeDistances = false;
+			}
+		}
+		
+		assertTrue("There is a distance out of range", noOutOfRangeDistances);
+	}
+	
+	
+	
 	
 	/**
 	 * Test class for checking that Java call to SQL procedure "SearchByProcedure(String ProcedureName)"
