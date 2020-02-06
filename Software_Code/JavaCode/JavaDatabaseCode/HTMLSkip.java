@@ -40,6 +40,10 @@ public class HTMLSkip
 			{
 	        	r.append("&quot;");
 	       	}
+			else if (c == '`') 
+	       	{
+	    		result.append("&#39;"); 
+	       	}
 	       	else 
 	       	{
 	        //the char is not a special one
