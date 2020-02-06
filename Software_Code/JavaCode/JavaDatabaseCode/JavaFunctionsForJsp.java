@@ -55,9 +55,7 @@ public class JavaFunctionsForJsp {
 			
 			String sql ="";
 
-			if (sort == 1)
-				sql = "call 19agileteam3db.SearchByCost('" + procedure + "', "+ lowerBound +", "+ upperBound +", "+starRating+");";
-			else if (sort == 2)
+			if (sort == 1 || sort == 2)
 				sql = "call 19agileteam3db.SearchByCost('" + procedure + "', "+ lowerBound +", "+ upperBound +", "+starRating+");";
 			else if (sort == 3)
 				sql = "call 19agileteam3db.SearchByCostWithRating('" + procedure + "', "+ lowerBound +", "+ upperBound +", "+starRating+");";
@@ -98,6 +96,9 @@ public class JavaFunctionsForJsp {
 				hospitalList.add(hospitalListRowToAdd);
 				
 			}
+			
+			if (sort == 2)
+				return sortHospitalDistances(hospitalList);
 			
 			/*
 			 * System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
