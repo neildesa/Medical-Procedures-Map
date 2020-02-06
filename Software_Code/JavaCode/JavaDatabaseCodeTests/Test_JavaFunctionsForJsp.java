@@ -13,20 +13,49 @@ public class Test_JavaFunctionsForJsp {
 	@Test
 	public void testAddHospitalDistancesToArray() throws ClassNotFoundException
 	{
-		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC";
+		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC", errorMessage = "";
 		int min = 100000, max = 1000000, rating = 0, sort = 1;
+		boolean isNotAdding = false;
 		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName, min, max, rating, sort);
 		
 		listOfHospitals = JavaFunctionsForJsp.addHospitalDistancesToArray(listOfHospitals, 0.0, 0.0, 8000);
-		listOfHospitals = JavaFunctionsForJsp.sortHospitalDistances(listOfHospitals);
 		
-		  System.out.println("hospitalList size: " + listOfHospitals.size()); 
-		  for (int i = 0; i < listOfHospitals.size(); i++) 
-		  { 
-			  System.out.println(listOfHospitals.get(i)); 
-		  }
+		for (int i = 0; i < listOfHospitals.size(); i++) 
+		{ 
+			if (listOfHospitals.get(i).get(6).isEmpty()) {
+				isNotAdding = true;
+				errorMessage += "Is not adding distance: i="+i+"\n";
+			}
+		}
 		 
+		assertFalse(errorMessage, isNotAdding);
+	}
+	
+	/**
+	 * Test class for checking that Java call to SQL procedure "SearchByProcedure(String ProcedureName)"
+	 * doesn't return an empty table.
+	 * 
+	 * @throws ClassNotFoundException
+	 */
+	@Test
+	public void testFindHospitalByProcedureViaDistanceFiltersCorrectly() throws ClassNotFoundException 
+	{
+		String procedureName = "001 - HEART TRANSPLANT OR IMPLANT OF HEART ASSIST SYSTEM W MCC", errorMessage = "";
+		int minCost = 1, maxCost = 2000000, starRating = 0, typeOfSort = 1;
+		double latitude = 0.0, longitude = 0.0, maxRange = 8000;
+		boolean outOfRange = false;
+		ArrayList<ArrayList<String>> listOfHospitals = JavaFunctionsForJsp.findHospitalByProcedure(procedureName, minCost, maxCost, starRating, typeOfSort);
 		
+		listOfHospitals = JavaFunctionsForJsp.addHospitalDistancesToArray(listOfHospitals, latitude, longitude, maxRange);
+		
+		for (int i=0; i<listOfHospitals.size(); i++) {
+			if (Double.parseDouble(listOfHospitals.get(i).get(6)) > maxRange) {
+				outOfRange = true;
+				errorMessage += "Out of Max Range: i="+i+", hospital="+ listOfHospitals.get(i).get(0)+", range="+listOfHospitals.get(i).get(6)+"\n";
+			}
+		}
+		
+		assertFalse(errorMessage, outOfRange);
 	}
 	
 	/**
