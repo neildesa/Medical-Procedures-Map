@@ -42,7 +42,7 @@ public class HTMLSkip
 	       	}
 			else if (c == '`') 
 	       	{
-	    		result.append("&#39;"); 
+	    		r.append("&#39;"); 
 	       	}
 	       	else 
 	       	{

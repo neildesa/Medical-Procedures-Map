@@ -97,9 +97,6 @@ public class JavaFunctionsForJsp {
 				
 			}
 			
-			if (sort == 2)
-				return sortHospitalDistances(hospitalList);
-			
 			/*
 			 * System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
 			 * 0; i < hospitalList.size(); i++) { System.out.println(hospitalList.get(i)); }
@@ -138,8 +135,7 @@ public class JavaFunctionsForJsp {
 	        public int compare(ArrayList<String> o1, ArrayList<String> o2) {
 	            return o1.get(6).compareTo(o2.get(6));
 	        }  
-		});
-		
+		});		
 		return hospitalList;	
 	}
 	
