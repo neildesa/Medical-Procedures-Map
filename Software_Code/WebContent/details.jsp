@@ -190,9 +190,7 @@
 		            	geocoder.geocode({'address': location}, function(results, status) {
 			   				if (status === 'OK') { 
 		    	     			var LatLng = results[0].geometry.location;
-		    	     			alert(document.getElementById("latlong").value);
 		    	     			document.getElementById("latlong").value = LatLng;
-		    	     			alert(document.getElementById("latlong").value);
 		    	     			document.getElementById("formSubmit").submit();
 			   				}
 		            	});
