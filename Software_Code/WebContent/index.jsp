@@ -288,6 +288,8 @@
         //Function that places a custom marker at the location of the hospitals and initializes the markers infowindow   
 		function placeMarker(map, address, result, distance){
 	    	cost = locations[address][4];
+	    	rating = parseInt(locations[address][5]);
+	    	
         	
 			if(cost < 250000){ 
 				var color = "green"; 
@@ -312,42 +314,31 @@
 	       	markerArray.push(marker);
 	       	markerDistance.push(distance);
 	            
+
+	       	
+	       	
             var infowindow = new google.maps.InfoWindow({
             	  content:'<div id="content">'+
                   '<div id="siteNotice">'+
                   '</div>'+
                   '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + 	
-                  '<div style="float:right">' +
-                  '<span class="fa fa-star checked"></span>' +
-                  '<span class="fa fa-star checked"></span>' +
-                  '<span class="fa fa-star checked"></span>' +
-                  '<span class="fa fa-star checked"></span>' +
-                  '<span class="fa fa-star"></span>' +  
+                  '<div style="float:right">' + 
+                  "<span class=\"fa fa-star checked\"></span>" + 
+                  "<span class=\"fa fa-star  checked\"></span>" + 
+                  "<span class=\"fa fa-star checked\"></span>" + 
+                  "<span class=\"fa fa-star\"></span>" + 
+                  "<span class=\"fa fa-star\"></span>" + 
                   '</div>' +
                   '<h5 style="color: ' + color + '"><b>Cost:</b> $' + cost + '</h5></h5> <hr>'  +
                   '<div id="bodyContent">'+
                   '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
                   '<br> <b>Address: </b>' + locations[address][1]  + 
-                  '<br> <b>Procedure: </b>' + procedure  + 
+                  '<br> <b>Procedure: </b>' + procedure   + 
                   '</p>' +
                   '</div>'+
                   '</div>'
             	});
             
-            	//POSSIBLE WAY TO GET INFO WINDOW OPEN FROM CLICKING ON CELL IN TABLE//////////////////////////////////////////////
-            
-            	/* tablecells.addListener(marker, 'click', function() {
-            		
-	            if(prevInfoWindow){
-	            	prevInfoWindow.close();
-	            }
-	            
-	            prevInfoWindow = infowindow;
-	          	
-	         	infowindow.open(map,marker)); */
-	         	
-	         	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 			google.maps.event.addListener(marker, 'click', function() {
             		
 	            if(prevInfoWindow){
