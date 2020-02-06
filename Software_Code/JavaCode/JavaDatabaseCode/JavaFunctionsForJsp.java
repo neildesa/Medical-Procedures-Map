@@ -1,11 +1,16 @@
 package JavaDatabaseCode;
 
 import java.sql.Connection;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class JavaFunctionsForJsp {
 	public static String url = "jdbc:mysql://silva.computing.dundee.ac.uk:3306";
@@ -15,7 +20,7 @@ public class JavaFunctionsForJsp {
 	
 	public static Connection conn = null;
 	
-	
+	private static DecimalFormat df2 = new DecimalFormat("#.##");
 	
 	/**
 	 * Order of ArrayList indices
@@ -50,9 +55,7 @@ public class JavaFunctionsForJsp {
 			
 			String sql ="";
 
-			if (sort == 1)
-				sql = "call 19agileteam3db.SearchByCost('" + procedure + "', "+ lowerBound +", "+ upperBound +", "+starRating+");";
-			else if (sort == 2)
+			if (sort == 1 || sort == 2)
 				sql = "call 19agileteam3db.SearchByCost('" + procedure + "', "+ lowerBound +", "+ upperBound +", "+starRating+");";
 			else if (sort == 3)
 				sql = "call 19agileteam3db.SearchByCostWithRating('" + procedure + "', "+ lowerBound +", "+ upperBound +", "+starRating+");";
@@ -80,8 +83,10 @@ public class JavaFunctionsForJsp {
 				
 				// retrieve, convert from Double to String, and add cost
 				Double cost = rs.getDouble("AverageTotalPayments");
-				String procedureCost = Double.toString(cost);
-				hospitalListRowToAdd.add(procedureCost);
+				//Added new format to cost showing "$###.##"
+				String formattedCost = df2.format(cost);
+				//String procedureCost = Double.toString(cost);
+				hospitalListRowToAdd.add(formattedCost);
 				
 				// retrieve, convert from integer to String, and add rating
 				int rating = rs.getInt("CustomerRating");
@@ -91,6 +96,9 @@ public class JavaFunctionsForJsp {
 				hospitalList.add(hospitalListRowToAdd);
 				
 			}
+			
+			if (sort == 2)
+				return sortHospitalDistances(hospitalList);
 			
 			/*
 			 * System.out.println("hospitalList size: " + hospitalList.size()); for (int i =
@@ -113,10 +121,34 @@ public class JavaFunctionsForJsp {
 		
 	}
 	
+	/**
+	 * Method logic got from: https://stackoverflow.com/questions/20480723/how-to-sort-2d-arrayliststring-by-only-the-first-element
+	 * accessed on: 05/02/2020 by Neilson Desa
+	 * 
+	 * Sorts a 2-D arrayList of hospitalInformation by distance (i.e. distance of hospital from user);
+	 * sorts from shortest to longest such shortest hospital distance is at the beginning of the arrayList.
+	 * 
+	 * @param hospitalList
+	 * @return hospitalList sorted by distance (shortest to longest)
+	 */
+	public static ArrayList<ArrayList<String>> sortHospitalDistances(ArrayList<ArrayList<String>> hospitalList)
+	{
+		Collections.sort(hospitalList, new Comparator<ArrayList<String>>() {
+			@Override
+	        public int compare(ArrayList<String> o1, ArrayList<String> o2) {
+	            return o1.get(6).compareTo(o2.get(6));
+	        }  
+		});
+		
+		return hospitalList;	
+	}
+	
 	
 	/**
 	 * Method returns a listOfHospitals as it was received but additionally with the distance of the hospital 
 	 * from the client added onto the the end.
+	 * 
+	 * arrayList.get(i).get(6) will access the distance in row i of the arrayList.
 	 * 
 	 * @param hospitalList - list of hospitals searched for via procedure
 	 * @param currentLong - longitude of the user
