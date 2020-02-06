@@ -2,7 +2,6 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="JavaDatabaseCode.JavaFunctionsForJsp" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.*"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,7 +83,6 @@
 						<input type="hidden" name="starRating" value="<%= request.getParameter("starRating") %>">
 						<input type="hidden" name="rangeRange" value="<%= request.getParameter("rangeRange") %>">
 						<input type="hidden" name="location"   value="<%= request.getParameter("location")   %>">
-						<input type="hidden" name="latlong"    value="<%= request.getParameter("latlong")  	 %>">
 							
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<input type="submit" class="dropdown-item" name="sort" value="Cost"    >
@@ -118,16 +116,6 @@
 	                            		int lowerBound = Integer.parseInt(request.getParameter("minRange"));
 	                            		int upperBound = Integer.parseInt(request.getParameter("maxRange"));
 	                            		int starRating = Integer.parseInt(request.getParameter("starRating"));
-	                            		String latlong = request.getParameter("latlong");
-	                            		String latlongTrim = latlong.substring(1, latlong.length() - 1);
-	                            		Scanner scanner = new Scanner(latlongTrim); 
-	                            		scanner.useDelimiter(","); 
-	                            		String Latitude = scanner.next();
-	                            		String Longitude = scanner.next();
-	                            		double currentLong = Double.parseDouble(Longitude);
-	                            		double currentLat = Double.parseDouble(Latitude);
-	                            		System.out.println("Longitude: " + currentLong);
-	                            		System.out.println("Latitude: " + currentLat); 
 	                            		
 	                            		
 	                            		String name = procedureName.trim();
@@ -145,7 +133,6 @@
 	                   			  			// Sort by cost
 	                            		} else if (sort.equals("Distance")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 2);
-	                   			  			//hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance)
 	                   			  			// Sort by distance
 	                            		} else if (sort.equals("Rating")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 3);
@@ -184,7 +171,6 @@
     	var origin = "<%= loc%>"; 
     	var procedure = "<%= procedure%>"; 
   	 	var range = "<%= range%>" * 0.621371; 
-  	 	var latlong = "<%= latlong%>";
   	 	var cost = 10000;
   		var distance = "Caclulating...";
       	var prevInfoWindow;
@@ -303,7 +289,8 @@
 			}
         	
 	    	var marker = new google.maps.Marker({
-	      		map: map,
+	      		title: locations[address][0],
+	    		map: map,
 	         	icon: image,
 	           	animation: google.maps.Animation.DROP,
 	          	position: result
@@ -336,15 +323,16 @@
             
             	//POSSIBLE WAY TO GET INFO WINDOW OPEN FROM CLICKING ON CELL IN TABLE//////////////////////////////////////////////
             
-            	/* tablecells.addListener(marker, 'click', function() {
-            		
-	            if(prevInfoWindow){
-	            	prevInfoWindow.close();
-	            }
-	            
-	            prevInfoWindow = infowindow;
-	          	
-	         	infowindow.open(map,marker)); */
+            	
+            var opener = document.getElementById(locations[address][0]);
+            opener.addEventListener('click', function() {
+            		for (var i=0; i<markerArray.length; i++){
+            			if (markerArray[i].getTitle() == locations[address][0]){
+            				google.maps.event.trigger(markerArray[i], 'click')}
+            			}
+            		}
+            	
+            ); 
 	         	
 	         	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -357,7 +345,7 @@
 	            prevInfoWindow = infowindow;
 	          	
 	         	infowindow.open(map,marker)
-	         	//alert(locations[address][0]);
+	         	
 	         	highlightClick(locations[address][0])}                        
 	       	);
 	    }
@@ -376,7 +364,7 @@
   			drawCircle(map, result);
 		}
 	     
-	    //Function that highlights and sctolls to the hospital in the table of hospitals
+	    //Function that highlights and scrolls to the hospital in the table of hospitals
         function highlightClick(Address){
         	var elmnt = document.getElementById(Address);
         	elmnt.classList.toggle("highlight");
@@ -387,7 +375,7 @@
             elmnt.scrollIntoView({behavior: "smooth"});
             
             
-            //document.querySelector("#HospitalName").classList.toggle("highlight")
+           
         }
 
         //Function to remove markers that are outside the users selected range
