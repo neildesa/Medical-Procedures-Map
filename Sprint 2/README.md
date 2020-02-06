@@ -35,15 +35,30 @@ Todays aims are:
 
 ---
 ## Day 3 (05/02/2020) - Scrum Meeting Summary (10am)
-The Scrum Master for this emeting **Neilson Desa**
+The Scrum Master for this meeting was **Neilson Desa**
 
 ### Members Present:
 All members present
 
-### Summary of Converstaion
+### Summary of Conversation
 The team concluded their current progress with the completion of Java Unit tests on all functions that called SQL procedures. Additionally, the hospital markers were colour coordinated to match the price of the procedure they offer, the front-end had UI for sorting that connected to the backend, the backend had encapsulated the entire searching and sorting functioanlity for rating and cost into one Java functions, and the longtitude's and latitude's of each hospital were now stored in the database to bypass goodgle's query limit.
 
 Aims for today:
 1. Continue improving UI for ease of use and visibility.
 2. Updating and finishing the functionality to restrict a search by distance and sort it by distance.
 3. Integrating distance calculations from the backend with the front-end.
+
+---
+## Day 4 (06/02/2020) - Scrum Meeting Summary (13:00pm)
+The Scrum Master for this meeting was **Neilson Desa**
+
+### Members Present:
+All members present
+
+### Summary of Conversation
+The team concluded their current progress with the completion of the distance search and sort methods in Java with appropriate tests - the distance search function creation was recorded and used as the example for our TDD video. Additionally the longtitude and latitude of the current user is successfully being passed through the to the front-end jsp files for the Java to access and process.
+
+Aims for today: 
+1. fix hosting of the website
+2. Finalize the main functioanlity of the local hosted website by integrating the filter and sort by distance functioanlity.
+3. Finish the projects two reports.
