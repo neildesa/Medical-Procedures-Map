@@ -15,32 +15,34 @@ public class HTMLSkip
 	{
 		this.passedInfo = passedInfo;
 	}
-	
-	 public static String forHTML(String aText){
-	     StringBuilder result = new StringBuilder();
+	//This method was inspired by http://www.javapractices.com/topic/TopicAction.do?Id=96 In which it is based off
+	public static String forHTML(String aText)
+	{
+	     StringBuilder r = new StringBuilder();
 	     StringCharacterIterator iterator = new StringCharacterIterator(aText);
-	     char character =  iterator.current();
-	     while (character != CharacterIterator.DONE ){
-	       if (character == '<') {
-	         result.append("&lt;");
+	     char c =  iterator.current();
+	     while (c != CharacterIterator.DONE ){
+	       if (c == '<') {
+	         r.append("&lt;");
 	       }
-	       else if (character == '>') {
-	         result.append("&gt;");
+	       else if (c == '>') {
+	         r.append("&gt;");
 	       }
-	       else if (character == '&') {
-	         result.append("&amp;");
+	       else if (c == '&') {
+	         r.append("&amp;");
 	      }
-	       else if (character == '\"') {
-	         result.append("&quot;");
+	       else if (c == '\"') {
+	         r.append("&quot;");
 	       }
-	       else {
+	       else 
+	       {
 	         //the char is not a special one
 	         //add it to the result as is
-	         result.append(character);
+	         r.append(c);
 	       }
-	       character = iterator.next();
+	       c = iterator.next();
 	     }
-	     System.out.println(result.toString());
-	     return result.toString();
-	  }
-
+	     System.out.println(r.toString());
+	     return r.toString();
+	}
+}
