@@ -68,7 +68,7 @@ public class JavaFunctionsForJsp {
 				
 				// store and add each hospital and address into hospitalList
 				ArrayList<String> hospitalListRowToAdd = new ArrayList<String>();
-				String hospital = rs.getString("Provider_Name");
+				String hospital = rs.getString("Provider_Name").replace("'", "");
 				hospitalListRowToAdd.add(hospital);
 				String address = rs.getString("Provider_Street_Address");
 				hospitalListRowToAdd.add(address);
