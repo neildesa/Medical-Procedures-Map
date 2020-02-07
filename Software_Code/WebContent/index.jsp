@@ -188,7 +188,7 @@
     	//Initializing global variables
     	var origin = "<%= loc%>"; 
     	var procedure = "<%= procedure%>"; 
-  	 	var range = "<%= range%>" * 0.621371;
+  	 	var range = "<%= range%>";
   	 	var latlong = "<%= latlong%>";
   	 	var cost = 10000;
   		var distance = "Caclulating...";
@@ -328,12 +328,8 @@
                   '<div id="siteNotice">'+
                   '</div>'+
                   '<h5 id="firstHeading" class="firstHeading">' + locations[address][0] + 	
-                  '<div style="float:right">' + 
+                  '<div style="float:right">' + rating + 
                   "<span class=\"fa fa-star checked\"></span>" + 
-                  "<span class=\"fa fa-star  checked\"></span>" + 
-                  "<span class=\"fa fa-star checked\"></span>" + 
-                  "<span class=\"fa fa-star\"></span>" + 
-                  "<span class=\"fa fa-star\"></span>" + 
                   '</div>' +
                   '<h5 style="color: ' + color + '"><b>Cost:</b> $' + cost + '</h5></h5> <hr>'  +
                   '<div id="bodyContent">'+
