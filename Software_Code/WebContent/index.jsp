@@ -75,7 +75,7 @@
             <div class="container-flex content-box"> 
             	<div class="dropdown"  >
 						  <button style="width: 30%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    Filter By
+						    Sort By
 						  </button>
               <form action="index.jsp" method="POST">
 						<input type="hidden" name="procedure"  value="<%= request.getParameter("procedure")  %>">
