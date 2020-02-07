@@ -135,10 +135,6 @@
 	                            		String name = procedureName.trim();
 	                            		
 	                            		System.out.println("e:" + procedureName);
-                                
-                                //Needed for map testing
-	                   			  		//ArrayList<ArrayList<String>> hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name);
-										
 
 	                            		System.out.println("Sort by => " + sort);
                                 		
@@ -202,18 +198,14 @@
            <% String range = request.getParameter("rangeRange"); %>
            <% String procedures = request.getParameter("procedure"); %>
             	
-    	<script>
+    	    	<script>
     	
     	//Initializing global variables
     	var origin = "<%= loc%>"; 
     	var procedure = "<%= procedure%>"; 
   	 	var range = "<%= range%>";
-  	 	var latlong = "<%= latlong%>";
-  	 	var cost = 10000;
-  		var distance = "Caclulating...";
       	var prevInfoWindow;
       	var markerArray = [];
-     	var markerDistance = [];
      	var map;
      	
      	//Initializing a 2D array of hospitals and their address
@@ -228,7 +220,8 @@
 	    	var hospitalLat = "<%= hospitalList.get(i).get(3) %>";
 	    	var hospitalCost = "<%= hospitalList.get(i).get(4) %>";
 	    	var hospitalRating = "<%= hospitalList.get(i).get(5) %>";
-	     	var row = [hospitalName, hospitalAddress, hospitalLong, hospitalLat, hospitalCost, hospitalRating]
+	    	var hospitalDistance = "<%= hospitalList.get(i).get(6) %>";
+	     	var row = [hospitalName, hospitalAddress, hospitalLong, hospitalLat, hospitalCost, hospitalRating, hospitalDistance]
 	   		locations.push(row)
 		<% } %>
 	    
@@ -244,54 +237,13 @@
           	codeAddress(geocoder, map, origin, service, true);
 	          
 			for(var location in locations){
-				codeAddress(geocoder, map, location, service, false);
+				placeMarker(map, location);
 			}
 
 	      }
 	      
-	    //Function that calculates the distance between the origin and destination using the distance matrix API
-      	function getDistance(distanceMatrix, map, address, distance){
-   			var latitude =  locations[address][3];
-   			var longitude = locations[address][2];
-   			var dest = new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
 
-    	  	distanceMatrix.getDistanceMatrix({
-         		origins: [origin],
-         		destinations: [dest],
-            	travelMode: 'DRIVING',
-            	unitSystem: google.maps.UnitSystem.IMPERIAL,
-         	}, function(response, status){
-         		
-           		if (status == 'OK') {
-           			var origins = response.originAddresses;
-            		var destinations = response.destinationAddresses;
-            	          	    
-          	      		for (var i = 0; i < origins.length; i++) {
-          	         		var results = response.rows[i].elements;
-         	          		for (var j = 0; j < results.length; j++) {
-          	          	    	var element = results[j];
-          	          	        distance = element.distance.text;
-          	          	        var duration = element.duration.text;
-          	          	        var from = origins[i];
-          	          	        var to = destinations[j];
-          	          	      	placeMarker(map, address, dest, distance);
-          	          		}
-          	        	}
-          			removeMarkers();
-          			changeColour();
-          		}
-           		
-          	 	if (status == 'NOT_FOUND') {
-          	   		alert("The origin and/or destination of this pairing could not be geocoded.");
-          	  	}
-          	 	
-          		if (status == 'ZERO_RESULTS'){
-          			alert("No route could be found between the origin and destination.");				
-          		}
-   			});    
-		}
-	      
-	    
+	    //Function to geocode users location
    		function codeAddress(geocoder, map, address, distanceMatrix, user) {
    			
 	  		if(user == true){
@@ -302,17 +254,18 @@
     	  			}	    		
 	   			});
 	    	}
-	  		
-	 		else{
-	 			
-	    		getDistance(distanceMatrix, map, address, distance); 
-  			}
 		}
 	      
         //Function that places a custom marker at the location of the hospitals and initializes the markers infowindow   
-		function placeMarker(map, address, result, distance){
-	    	cost = locations[address][4];
-	    	rating = parseInt(locations[address][5]);
+		function placeMarker(map, address){
+	    	var cost = locations[address][4];
+	    	var price = numberWithCommas(cost);
+	    	var rating = parseInt(locations[address][5]);
+	    	var distance = parseInt(locations[address][6]);
+	    	
+	    	var Lat = parseFloat(locations[address][3]);
+	    	var Long = parseFloat(locations[address][2]);
+	    	var LatLong = new google.maps.LatLng(Lat, Long);
 	    	
         	
 			if(cost < 250000){ 
@@ -333,15 +286,11 @@
 	    		map: map,
 	         	icon: image,
 	           	animation: google.maps.Animation.DROP,
-	          	position: result
+	          	position: LatLong
 	    	});
 	            
 	       	markerArray.push(marker);
-	       	markerDistance.push(distance);
 	            
-
-	       	
-	       	
             var infowindow = new google.maps.InfoWindow({
             	  content:'<div id="content">'+
                   '<div id="siteNotice">'+
@@ -350,18 +299,15 @@
                   '<div style="float:right">' + rating + 
                   "<span class=\"fa fa-star checked\"></span>" + 
                   '</div>' +
-                  '<h5 style="color: ' + color + '"><b>Cost:</b> $' + cost + '</h5></h5> <hr>'  +
+                  '<h5 style="color: ' + color + '"><b>Cost:</b> $' + price + '</h5></h5> <hr>'  +
                   '<div id="bodyContent">'+
-                  '<p style="font-size: 17px"><b>Distance: </b>' + distance + 
+                  '<p style="font-size: 17px"><b>Distance: </b>' + distance + " Miles" +
                   '<br> <b>Address: </b>' + locations[address][1]  + 
                   '<br> <b>Procedure: </b>' + procedure   + 
                   '</p>' +
                   '</div>'+
                   '</div>'
             	});
-            
-
-            
             	
             var opener = document.getElementById(locations[address][0]);
             opener.addEventListener('click', function() {
@@ -370,10 +316,8 @@
             				google.maps.event.trigger(markerArray[i], 'click')}
             			}
             		}
-            	
             ); 
 	         	
-
 			google.maps.event.addListener(marker, 'click', function() {
             		
 	            if(prevInfoWindow){
@@ -387,6 +331,12 @@
 	         	highlightClick(locations[address][0])}                        
 	       	);
 	    }
+        
+        //Function to add commas to cost
+        //Source: https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+		function numberWithCommas(x) {
+		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
 	    
 	    //Function that places a marker at the users selected location
 	    function placeMarkerUser(map, result){
@@ -411,26 +361,11 @@
         		transform:	["scale(1, 1)", "scale(1.1, 1.1)", "scale(1, 1)"]
         	}, 800);        	
             elmnt.scrollIntoView({behavior: "smooth"});
-            
-            
-           
-        }
-
-        //Function to remove markers that are outside the users selected range
-        function removeMarkers(){
-			for(var marker in markerArray){
-				var distance = (markerDistance[marker].replace(" mi", "")).replace(",", "");
-				var distanceInt = parseInt(distance, 10); 
-				
-				if(distanceInt > range ){
-					markerArray[marker].setMap(null);
-				}
-			}
         }
         
         //Function that draws a circle, with origin of the users location and a radius of the users selected range
         function drawCircle(map, address) {
-        	circleRadius = range*1.60934;
+        	circleRadius = range*1.62934;
             var antennasCircle = new google.maps.Circle({
             	strokeColor: "#000000",
               	strokeOpacity: 0.4,
