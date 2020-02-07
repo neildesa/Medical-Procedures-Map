@@ -1,16 +1,14 @@
 package JavaDatabaseCode;
 
 import java.sql.Connection;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
+import java.lang.Math;
 
 public class JavaFunctionsForJsp {
 	public static String url = "jdbc:mysql://silva.computing.dundee.ac.uk:3306";
@@ -173,7 +171,7 @@ public class JavaFunctionsForJsp {
 			double distance = Haversine.haversine(hospitalLat, hospitalLong, currentLat, currentLong);
 			
 			
-			String hospitalDistance = Double.toString(distance);
+			String hospitalDistance = Double.toString(Math.round(distance));
 			hospitalList.get(i).add(hospitalDistance);
 			
 			//System.out.println(i + " : " + hospitalList.get(i));
