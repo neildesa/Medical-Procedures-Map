@@ -22,10 +22,6 @@ o	Updating more frequently
 What will we commit to improve in the next Sprint
 -	More activity tracking (Daily) 
 -	Committing more detailed elements
-From feedback video
--	More assistance in scrums
--	Multiple people in peer programming
--	Difficulties channel in slack created
 
 From feedback video
 -	More assistance in scrums
