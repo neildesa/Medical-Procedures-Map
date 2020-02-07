@@ -27,3 +27,7 @@ From feedback video
 -	Multiple people in peer programming
 -	Difficulties channel in slack created
 
+From feedback video
+-	More assistance in scrums
+-	Multiple people in peer programming
+-	Difficulties channel in slack created
