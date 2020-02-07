@@ -119,8 +119,6 @@ public class JavaFunctionsForJsp {
 	}
 	
 	/**
-	 * Method logic got from: https://stackoverflow.com/questions/20480723/how-to-sort-2d-arrayliststring-by-only-the-first-element
-	 * accessed on: 05/02/2020 by Neilson Desa
 	 * 
 	 * Sorts a 2-D arrayList of hospitalInformation by distance (i.e. distance of hospital from user);
 	 * sorts from shortest to longest such shortest hospital distance is at the beginning of the arrayList.
@@ -128,16 +126,26 @@ public class JavaFunctionsForJsp {
 	 * @param hospitalList
 	 * @return hospitalList sorted by distance (shortest to longest)
 	 */
-	public static ArrayList<ArrayList<String>> sortHospitalDistances(ArrayList<ArrayList<String>> hospitalList)
+	public static ArrayList<ArrayList<String>> sortDistances(ArrayList<ArrayList<String>> hospitalList) 
 	{
-		Collections.sort(hospitalList, new Comparator<ArrayList<String>>() {
-			@Override
-	        public int compare(ArrayList<String> o1, ArrayList<String> o2) {
-	            return o1.get(6).compareTo(o2.get(6));
-	        }  
-		});		
-		return hospitalList;	
+	      for (int i = 0; i < hospitalList.size(); i++) 
+	        {
+	            for (int j = i + 1; j < hospitalList.size(); j++) 
+	            {
+	                if (Double.parseDouble(hospitalList.get(i).get(6)) < Double.parseDouble(hospitalList.get(j).get(6))) 
+	                {
+
+	                    Collections.swap(hospitalList, i, j);
+	                }
+	            }
+	        }
+	      
+	      Collections.reverse(hospitalList);
+		
+		return hospitalList;
+		
 	}
+
 	
 	
 	/**
