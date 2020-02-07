@@ -77,6 +77,7 @@
                                 // Update the current slider value (each time you drag the slider handle)
                                 minSlider.oninput = function() {
                                     minOutput.innerHTML = this.value;
+                                    disableButton.call();
                                 }
                             </script>
                         </div>
@@ -94,6 +95,24 @@
                                 // Update the current slider value (each time you drag the slider handle)
                                 maxSlider.oninput = function() {
                                     maxOutput.innerHTML = this.value;
+                                    disableButton.call();
+                                }
+                                
+                                function disableButton() {
+                                	if (parseInt(document.getElementById("maxRange").value, 10) < parseInt(document.getElementById("minRange").value, 10)) {
+                                		document.getElementById("continue").disabled = true;
+                                		document.getElementById("continue").classList.remove("btn-info");
+                                		document.getElementById("continue").classList.remove("btn-danger");
+                                		document.getElementById("continue").classList.add("btn-danger");
+                                		document.querySelector('#continue').innerHTML = 'Min is greater than Max';
+                                		
+                                	} else {
+                                		document.getElementById("continue").disabled = false;
+                                		document.getElementById("continue").classList.remove("btn-info");
+                                		document.getElementById("continue").classList.remove("btn-danger");
+                                		document.getElementById("continue").classList.add("btn-info");
+                                		document.querySelector('#continue').innerHTML = 'Find me a Procedure';
+                                	}
                                 }
                             </script>
                         </div>
@@ -146,7 +165,7 @@
                     
                     
                     <!-- Location -->
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Find me a procedure</button>
+                    <button type="button"  id="continue" class="btn btn-info" data-toggle="modal" data-target="#myModal">Find me a procedure</button>
                     
                     <!-- Location Modal -->
 					<div class="modal fade" id="myModal">
