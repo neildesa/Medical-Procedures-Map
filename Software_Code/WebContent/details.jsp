@@ -103,10 +103,9 @@
                     <div class="form-item">
 	                    <label for="exampleFormControlSelect2">Minimum Star Rating</label>
 	                    <div class="form-group">
-	                    	<input type="hidden" name="starRating" id="inlineCheckbox0" value="0" checked>
 	                    
 	                        <div class="form-check form-check-inline">
-	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox1" value="1">
+	                            <input class="form-check-input" type="radio" name="starRating" id="inlineCheckbox1" value="1" checked>
 	                            <label class="form-check-label" for="inlineCheckbox1">1</label>
 	                        </div>
 	                        <div class="form-check form-check-inline">
