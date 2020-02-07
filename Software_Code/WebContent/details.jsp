@@ -146,7 +146,7 @@
                     
                     
                     <!-- Location -->
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Find me a hospital</button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Find me a procedure</button>
                     
                     <!-- Location Modal -->
 					<div class="modal fade" id="myModal">
@@ -175,7 +175,7 @@
 					        	<!-- Modal footer -->
 					        	<div class="modal-footer">
 
-					          		<button type="button" class="btn btn-success" onclick="GetLatLng()">Hit me up</button>
+					          		<button type="button" class="btn btn-info" onclick="GetLatLng()">Hit me up</button>
 
 					        	</div>
 					      	</div>

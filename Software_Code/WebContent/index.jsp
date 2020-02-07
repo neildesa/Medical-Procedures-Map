@@ -87,10 +87,12 @@
 						<input type="hidden" name="latlong"    value="<%= request.getParameter("latlong")  	 %>">
 							
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<input type="submit" class="dropdown-item" name="sort" value="Cost"    >
-							<input type="submit" class="dropdown-item" name="sort" value="Distance">
-							<input type="submit" class="dropdown-item" name="sort" value="Rating"  >
+							<input type="submit" id="Cost"     class="dropdown-item" name="sort" value="Cost"    >
+							<input type="submit" id="Distance" class="dropdown-item" name="sort" value="Distance">
+							<input type="submit" id="Rating"   class="dropdown-item" name="sort" value="Rating"  >
 						</div>
+						
+						<script> document.getElementById("<%= request.getParameter("sort")%>").classList.add("active");</script>
 					</form>
 						
 						</div>
@@ -104,7 +106,7 @@
 	                        <table class="table table-hover table-borderless table-striped">
 	                            <thead>
 	                              <tr>
-	                                <th scope="col">Hospital</th>
+	                                <th scope="col" style="width: 80%;">Hospital</th>
 	                              </tr>
 	                            </thead>
 	                            <tbody>
@@ -139,22 +141,26 @@
 										
 
 	                            		System.out.println("Sort by => " + sort);
+                                		
+	                   			  		int type = 4;
 	                            		
 	                            		if (sort.equals("Cost")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 1);
 	                   			  			hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance);
+	                   			  			type = 4;
 	                   			  			// Sort by cost
+	                            		
 	                            		} else if (sort.equals("Distance")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 2);
 	                   			  			hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance);
-	                   			  			hospitalList = JavaFunctionsForJsp.sortHospitalDistances(hospitalList);
-	                   			  			
-
-	                   			  			
+	                   			  			hospitalList = JavaFunctionsForJsp.sortDistances(hospitalList);
+	                   			  			type = 6;
 	                   			  			// Sort by distance
+
 	                            		} else if (sort.equals("Rating")) {
 	                   			  			hospitalList = JavaFunctionsForJsp.findHospitalByProcedure(name, lowerBound, upperBound, starRating, 3);
 	                   			  			hospitalList = JavaFunctionsForJsp.addHospitalDistancesToArray(hospitalList, currentLong, currentLat, maxDistance);
+	                   			  			type = 5;
 	                   			  			// Sort by rating
 	                            		}
 	                   			  			
@@ -162,10 +168,23 @@
 
 	                   			  		System.out.println("hospital size: " + hospitalList.size());
 	                   			  		
+	                   			  		String otherColumn = "";
+	                   			  		
+	                   			  		
 	                   				  	for (int i = 0; i < hospitalList.size(); i++) { 
-	                   				%>
+	                   				  		if (type == 4) {
+	                   				  			otherColumn = "$" + hospitalList.get(i).get(type);
+	                   				  			
+	                   				  		} else if (type == 6) {
+	                   				  			otherColumn = hospitalList.get(i).get(type) + " Mi";
+	                   				  			
+	                   				  		} else if (type == 5) {
+	                   				  			otherColumn = hospitalList.get(i).get(type) + " Star(s)";
+	                   				  			
+	                   				  		} 
+	                   				  	%>
 	                   				  	<tr id='<%= hospitalList.get(i).get(0) %>'>
-	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %> </td><td>$<% out.println(hospitalList.get(i).get(4)); %></td>
+	                   				  		<td><% out.println(hospitalList.get(i).get(0)); %> </td><td><% out.println(otherColumn); %></td>
 	                   				  	</tr>
 	                   				  	<% } %>	
 	                            </tbody>
