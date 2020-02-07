@@ -66,7 +66,7 @@
                         <div class="col">
                             <div class="slidecontainer">                        
                                 <p>Minimum Price: $<span id="min"></span></p>
-                                <input type="range" name="minRange" min="1" max="2000000" value="150000" class="slider" id="minRange">
+                                <input type="range" name="minRange" min="1" max="2000000" value="1" class="slider" id="minRange">
                             </div>
         
                             <script>
@@ -84,7 +84,7 @@
                         <div class="col">
                             <div class="slidecontainer">                        
                                 <p>Maximum Price: $<span id="max"></span></p>
-                                <input type="range" name="maxRange" min="1" max="2000000" value="150000" class="slider" id="maxRange">
+                                <input type="range" name="maxRange" min="1" max="2000000" value="2000000" class="slider" id="maxRange">
                             </div>
         
                             <script>
@@ -149,7 +149,7 @@
                     <!-- Range -->
                     <div class="slidecontainer form-item">                        
                         <p>Distance from you: <span id="range"></span> Miles</p>
-                        <input type="range" name="rangeRange" min="10" max="5000" value="50" class="slider" id="rangeRange">
+                        <input type="range" name="rangeRange" min="10" max="5000" value="1000" class="slider" id="rangeRange">
                     </div>
 
                     <script>
